@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <!-- App Name -->
+   <string name="app_name">计算器</string>
+   <string name="author">Thomas James Barrasso</string>
+   <string name="version">伽玛之一 (2)</string>
+    
+   <!-- Other -->
+   <string name="confirm">确认</string>
+   <string name="settings">设置</string>
+   <string name="accent">调色</string>
+   <string name="m">M</string>
+   <string name="accents">选择强调色</string>
+    
+   <!-- Vibration Option -->
+   <string name="vibrate">启用按下按钮上的振动？</string>
+   <string name="status">启用自定义状态栏？</string>
+   <string name="animate">启用弹出动画？</string>
+   <string name="vibration_activation">给您的设备，使能/禁止振动（加速度）的一个很好的动摇。</string>
+   <string name="yes">是</string>
+   <string name="no">没有</string>
+
+    <!-- History -->
+   <string name="history">历史</string>
+   <string name="history_close">关闭</string>
+   <string name="history_clear">明确</string>
+    
+    <!-- Change log -->
+    <string name="changelog_title_full">更改日志</string>
+    <string name="changelog_title">什么是新</string>
+    <string name="changelog_ok">行</string>
+    
+    <!-- Theme strings -->
+    <string name="default_theme">默认</string>
+    <string name="theme">选择一个主题</string>
+    <string name="change">变化</string>
+    <string name="cancel">取消</string>
+    
+    <!-- Color Names -->
+    <string-array name="color_names">
+        <item>品红</item>
+        <item>紫</item>
+        <item>浅蓝色</item>
+        <item>浅绿色</item>
+        <item>棕色</item>
+        <item>粉红色</item>
+        <item>橙色</item>
+        <item>蓝色</item>
+        <item>红色</item>
+        <item>绿色</item>
+    </string-array>
+    
+    <!-- Calculator -->
+    
+    <!-- 0 - 9 -->
+    <string name="zero">0</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    
+    <!-- Top Row -->
+    <string name="clear">C</string>
+    <string name="memclear">MC</string>
+    <string name="memrecall">MR</string>
+    <string name="memplus">M&#043;</string>
+    
+    <!-- Second Row -->
+    <string name="plusminus">&#177;</string>
+    <string name="percent">&#037;</string>
+    <string name="period">&#046;</string>
+    
+    <!-- Operators -->
+    <string name="divide">&#247;</string>
+    <string name="multiply">&#215;</string>
+    <string name="minus">&#045;</string>
+    <string name="plus">&#043;</string>
+    <string name="equals">&#061;</string>
+    
+    <!-- Landscape Buttons -->
+    <string name="paren_open">(</string>
+    <string name="paren_close">)</string>
+    <string name="pi">Pi</string>
+    <string name="degree">Deg</string>
+    <string name="radian">Rad</string>
+    <string name="grad">Grad</string>
+    <string name="sqrt">sqrt</string>
+    
+    <!-- Trig -->
+    <string name="sin">sin</string>
+    <string name="cos">cos</string>
+    <string name="tan">tan</string>
+    
+    <!-- Logs -->
+    <string name="ln">ln</string>
+    <string name="log">log</string>
+    <string name="exponential_ten">10^x</string>
+    
+    <!-- Final Row -->
+    <string name="power">^</string>
+    <string name="factorial">n!</string>
+    <string name="squared">x^2</string>
+    <string name="exponential">x^y</string>
+</resources>

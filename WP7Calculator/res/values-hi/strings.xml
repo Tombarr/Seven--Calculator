@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- App Name -->
+  <string name="app_name">कैलकुलेटर</string>
+  <string name="author">Thomas James Barrasso</string>
+  <string name="version">gamma one (2)</string>
+  <!-- Other -->
+  <string name="confirm">पक्का</string>
+  <string name="settings">सेटिंग</string>
+  <string name="prefs">प्रेफरन्स</string>
+  <string name="accent">ऐक्सेन्ट(रंग)</string>
+  <string name="m">M</string>
+  <string name="accents">रंग पसन्द करो</string>
+  <!-- Vibration Option -->
+  <string name="vibrate">बटन प्रेस पर कंपन?</string>
+  <string name="status">कस्टम स्टेटस बार चाहिये?</string>
+  <string name="animate">एनीमेशन चाहिये?</string>
+  <string name="vibration_activation">Give your device a good shake to enable/ disable vibration (accelerometer required).</string>
+  <string name="yes">हाँ </string>
+  <string name="no">नही</string>
+  <!-- History -->
+  <string name="history">हिस्ट्री</string>
+  <string name="history_close">बंद</string>
+  <string name="history_clear">हिस्ट्री साफ</string>
+  <!-- Change log -->
+  <string name="changelog_title_full">Change Log</string>
+  <string name="changelog_title">नया क्या है?</string>
+  <string name="changelog_ok">ठीक</string>
+  <!-- Theme strings -->
+  <string name="default_theme">डिफॉल्ट</string>
+  <string name="theme">थीम चुनो</string>
+  <string name="change">बदलो</string>
+  <string name="cancel">रद्द करो</string>
+  <!-- Color Names -->
+  <string-array name="color_names">
+    <item>गहरा गुलाबी</item>
+    <item>जामुनी</item>
+    <item>टील</item>
+    <item>लाईम</item>
+    <item>ब्राउन</item>
+    <item>गुलाबी </item>
+    <item>नारंगी</item>
+    <item>नीला</item>
+    <item>लाल</item>
+    <item>हरा</item>
+  </string-array>
+  <!-- Calculator -->
+  <!-- 0 - 9 -->
+  <string name="zero">0</string>
+  <string name="one">1</string>
+  <string name="two">2</string>
+  <string name="three">3</string>
+  <string name="four">4</string>
+  <string name="five">5</string>
+  <string name="six">6</string>
+  <string name="seven">7</string>
+  <string name="eight">8</string>
+  <string name="nine">9</string>
+  <!-- Top Row -->
+  <string name="clear">C</string>
+  <string name="memclear">MC</string>
+  <string name="memrecall">MR</string>
+  <string name="memplus">M&#043;</string>
+  <!-- Second Row -->
+  <string name="plusminus">&#177;</string>
+  <string name="percent">&#037;</string>
+  <string name="period">&#046;</string>
+  <!-- Operators -->
+  <string name="divide">&#247;</string>
+  <string name="multiply">&#215;</string>
+  <string name="minus">&#045;</string>
+  <string name="plus">&#043;</string>
+  <string name="equals">&#061;</string>
+  <!-- Landscape Buttons -->
+  <string name="paren_open">(</string>
+  <string name="paren_close">)</string>
+  <string name="pi">Pi</string>
+  <string name="degree">Deg</string>
+  <string name="radian">Rad</string>
+  <string name="grad">Grad</string>
+  <string name="sqrt">sqrt</string>
+  <!-- Trig -->
+  <string name="sin">sin</string>
+  <string name="cos">cos</string>
+  <string name="tan">tan</string>
+  <!-- Logs -->
+  <string name="ln">ln</string>
+  <string name="log">log</string>
+  <string name="exponential_ten">10^x</string>
+  <!-- Final Row -->
+  <string name="power">^</string>
+  <string name="factorial">n!</string>
+  <string name="squared">x^2</string>
+  <string name="exponential">x^y</string>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:calc="http://schemas.android.com/apk/res/com.tombarrasso.android.wp7calculator"
+	xmlns:wp="http://schemas.tombarrasso.com/wp7ui"
+	android:orientation="vertical"
+	android:background="#1F1F1F"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:id="@id/root">
+	
+	<ViewStub android:id="@id/statusbarstub"
+               android:inflatedId="@id/statusbarview"
+               android:layout="@layout/statusbar"
+               android:layout_width="fill_parent"
+               android:layout_height="wrap_content" />
+
+	<com.tombarrasso.android.wp7ui.widget.WPThemeView
+	    android:id="@id/themeview"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" />
+
+</LinearLayout>

@@ -1,0 +1,89 @@
+<html>
+   <head>
+     <style type='text/css'>
+       a {color: #a0a0e0}
+       div.title {
+           color: #C0F0C0;
+           font-size: 1.2em;
+           font-weight: bold;
+           margin-top: 1em;
+           margin-bottom: 0.5em;
+           text-align: center}
+       div.subtitle {
+           color: #C0F0C0;
+           font-size: 0.8em;
+           margin-bottom: 1em;
+           text-align: center}
+       div.freetext {color: #f0f0f0}
+       div.list {color: #C0C0F0}
+     </style>
+   </head>
+   <body>
+$ 1.9
+  % gamma one (2)
+  _ 2011-09-02
+	* Wenn Sie diese Anwendung beachten Sie bitte die <a href="https://market.android.com/details?id=com.tombarrasso.android.wp7calculatordonate">Unterstützung</a>.
+	* Verbesserte französisch Übersetzungen von Guillaume.
+$ 1.8
+   % gamma ein
+   _ 2011-08-31
+	* Fehlerbehebungen vor allem im Zusammenhang mit der Statusleiste.
+	* Neues Symbol für die Akzent-Farbwähler.
+	* Removed schütteln, um Einstellungen zu ändern (über den Button im Menü).
+	* Verbesserte Koreanisch Übersetzungen von 도회린.
+$ 1.7
+  % beta six (2)
+  _ 2011-08-14
+    * If you like this application please consider <a href="https://market.android.com/details?id=com.tombarrasso.android.wp7calculatordonate">supporting</a>.
+    * Verbesserte Übersetzung durch Dzakus.
+    * Fly-Out-Animation machte eine Einstellung, Thema Motor entfernt (bis Fehler behoben sind).
+$ 1.6
+  % beta sechs
+  _ 2011-08-14
+   ! Schütteln Sie zum Anzeigen / Verbergen Einstellungen (jetzt einschließlich kundenspezifischer Statusleiste).
+    * Eine Reihe von Bug Fixes mit den benutzerdefinierten Status bar verbunden sind.
+    * Verbesserte Leistung durch Bindung Zuhörer weltweit einmal.
+$ 1.5
+  % beta fünf
+  _ 2011-08-12
+   ! Führte den Brauch WP7 Stil Statusleiste!
+$ 1.4
+  % beta vier
+  _ 2011-08-05
+    * Aktualisiert ein paar Übersetzungen.
+    * Feste FC bei Verwendung deinstalliert Thema.
+    * Hinzugefügt ein paar mehr Features, um das Thema Motor.
+    * Möchten Sie den Fly-in-Animation deaktivieren? Schauen Sie sich die <a href="https://market.android.com/details?id=com.tombarrasso.android.wp7calculator.theme.nofly">NoFly</a> Thema.
+$ 1.3
+  % beta drei (2)
+  _ 2011-08-02
+    * Wenn Sie diese Anwendung beachten Sie bitte <a href="https://market.android.com/details?id=com.tombarrasso.android.wp7calculatordonate">die Unterstützung</a>.
+    * Feste M + bug (fügt jetzt aktuelle Zahl).
+    * Aktualisiert polnische Übersetzung (Dank Paweł).
+$ 1.2
+   % beta drei
+   _ 2011-07-30
+    ! Drücken Sie die Buch-Symbol aus dem Menü, um Ihre Geschichte zu durchsuchen, bis auf den letzten 100 Einträge!
+     * Added eine russische Übersetzung (Dank calm1).
+     * Für das Zeichen nach Lösungen verändert werden können.
+     * Tweaks, die zu schütteln und zu Vibrationen umzuschalten.
+$ 1.1
+   % beta zwei
+   _ 2011-07-23
+    ! Das neue Theme-Engine wurde eingeführt!
+     * Menüs, dass die Achtung Achtung Orientierung.
+     * Shake zum Aktivieren / Deaktivieren Vibrationen.
+     * Performance-und Bug-Fixes.
+     * API-Version erhöht bis 7 (Android 2.1).
+     * In-App-Änderungsprotokolle!
+     * Added eine koreanische Übersetzung.
+$ 1.0
+   % beta ein
+   _ 2011-07-15
+   ! Dies war die erste öffentliche Version.
+     * Metro UI Themen-Rechner.
+     * Bei Verwendung von Stelligkeit für arithmetische Berechnungen.
+     * Ein Teil der Windows Phone 7 UI-Projekt für Android.
+$ END_OF_CHANGE_LOG
+   </body>
+</html>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="root" />
+    <item type="id" name="buttons" />
+    <item type="id" name="equation" />
+    <item type="id" name="memory" />
+    <item type="id" name="result" />
+    <item type="id" name="statusbarview" />
+    <item type="id" name="statusbarstub" />
+    <item type="id" name="statusbar_signal" />
+    <item type="id" name="statusbar_data" />
+    <item type="id" name="statusbar_wifi" />
+    <item type="id" name="statusbar_roaming" />
+    <item type="id" name="statusbar_bluetooth" />
+    <item type="id" name="statusbar_clock" />
+    <item type="id" name="statusbar_battery" />
+    <item type="id" name="setting_desc" />
+    <item type="id" name="setting_toggle" />
+    <item type="id" name="settings_status" />
+    <item type="id" name="settings_vibration" />
+    <item type="id" name="themeview" />
+</resources>

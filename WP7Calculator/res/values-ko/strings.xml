@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- App Name -->
+    <string name="app_name">계산기</string>
+    <string name="author">Thomas James Barrasso</string>
+    <string name="version">gamma one</string>
+    
+    <!-- Other -->
+    <string name="confirm">확인</string>
+    <string name="settings">설정</string>
+    <string name="prefs">확인 설정</string>
+    <string name="accent">강조색</string>
+    <string name="m">M</string>
+    <string name="accents">강조할 색을 고르십시오.</string>
+   
+   <!-- Vibration Option -->
+   <string name="vibrate">버튼을 눌렀을때 진동이 울리는 것을 허용하시겠습니까?</string>
+   <string name="status">커스텀 상태바를 사용하시겠습니까?</string>
+   <string name="animate">플라이 아웃 애니메이션을 사용하시겠습니까?</string>
+   <string name="vibration_activation">단말기를 흔들어 진동을 켜고 끕니다.(가속도 센서가 필요합니다)</string>
+   <string name="yes">네</string>
+   <string name="no">아니오</string>
+
+   <!-- History -->
+   <string name="history">기록</string>
+   <string name="history_close">닫기</string>
+   <string name="history_clear">지우기</string>
+    
+    <!-- Change log -->
+    <string name="changelog_title_full">업데이트 기록</string>
+    <string name="changelog_title">업데이트 내용</string>
+    <string name="changelog_ok">확인</string>
+    
+    <!-- Theme strings -->
+    <string name="default_theme">기본</string>
+    <string name="theme">테마 선택</string>
+    <string name="change">변경</string>
+    <string name="cancel">취소</string>
+    
+    <!-- Color Names -->
+    <string-array name="color_names">
+        <item>자홍색</item>
+        <item>보라색</item>
+        <item>청록색</item>
+        <item>라임색</item>
+        <item>갈색</item>
+        <item>분홍색</item>
+        <item>주황색</item>
+        <item>파란색</item>
+        <item>빨간색</item>
+        <item>초록색</item>
+    </string-array>
+    
+    <!-- Calculator -->
+    
+    <!-- 0 - 9 -->
+    <string name="zero">0</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    
+    <!-- Top Row -->
+    <string name="clear">C</string>
+    <string name="memclear">MC</string>
+    <string name="memrecall">MR</string>
+    <string name="memplus">M&#043;</string>
+    
+    <!-- Second Row -->
+    <string name="plusminus">&#177;</string>
+    <string name="percent">&#037;</string>
+    <string name="period">&#046;</string>
+    
+    <!-- Operators -->
+    <string name="divide">&#247;</string>
+    <string name="multiply">&#215;</string>
+    <string name="minus">&#045;</string>
+    <string name="plus">&#043;</string>
+    <string name="equals">&#061;</string>
+    
+    <!-- Landscape Buttons -->
+    <string name="paren_open">(</string>
+    <string name="paren_close">)</string>
+    <string name="pi">Pi</string>
+    <string name="degree">Deg</string>
+    <string name="radian">Rad</string>
+    <string name="grad">Grad</string>
+    <string name="sqrt">sqrt</string>
+    
+    <!-- Trig -->
+    <string name="sin">sin</string>
+    <string name="cos">cos</string>
+    <string name="tan">tan</string>
+    
+    <!-- Logs -->
+    <string name="ln">ln</string>
+    <string name="log">log</string>
+    <string name="exponential_ten">10^x</string>
+    
+    <!-- Final Row -->
+    <string name="power">^</string>
+    <string name="factorial">n!</string>
+    <string name="squared">x^2</string>
+    <string name="exponential">x^y</string>
+</resources>

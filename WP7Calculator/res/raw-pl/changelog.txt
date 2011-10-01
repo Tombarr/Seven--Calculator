@@ -1,0 +1,84 @@
+<html>
+  <head>
+    <style type='text/css'>
+      a            { color:#a0a0e0 }
+      div.title    { 
+          color:#C0F0C0; 
+          font-size:1.2em; 
+          font-weight:bold; 
+          margin-top:1em; 
+          margin-bottom:0.5em; 
+          text-align:center }
+      div.subtitle { 
+          color:#C0F0C0; 
+          font-size:0.8em; 
+          margin-bottom:1em; 
+          text-align:center }
+      div.freetext { color:#F0F0F0 }
+      div.list     { color:#C0C0F0 }
+    </style>
+  </head>
+  <body>
+$ 1.9
+  % gamma one (2)
+  _ 2011-08-31
+	* <a href="https://market.android.com/details?id=com.tombarrasso.android.wp7calculatordonate">Jeśli tak proszę aplikacji rozważyć wsparcie.</a>
+	* Poprawa francuski tłumaczenia przez Guillaume.
+$ 1.8
+  % gamma one
+  _ 2011-08-31
+	* Bug poprawki związane przede wszystkim z paska stanu.
+	* Nowa ikona wyboru koloru akcentem.
+	* Naprawiono wibracji, gdy przycisk jest wciśnięty.
+	* Usunięto wstrząsnąć, aby zmienić ustawienia (może skorzystać z przycisku w menu).
+    * Poprawa tłumaczenia na koreański przez 도회린.
+	* Dodano tłumaczenia hindi przez Chaitanya Bangera.
+$ 1.6
+  % beta sześć
+  _ 2011-08-14
+   ! Potrząśnij, aby pokazać / ukryć ustawienia (obecnie w tym niestandardowych pasku stanu).
+    * Wiele poprawek błędów związanych z niestandardowego paska stanu.
+    * Zwiększona wydajność poprzez wiązanie słuchaczy na całym świecie tylko raz.
+$ 1.5
+   % beta pięć
+   _ 12.08.2011
+    ! Wprowadził zwyczaj WP7 pasku stanu stylu!
+$ 1.4
+  % beta cztery
+  _ 08.05.2011
+    * Poprawiono kilka tłumaczeń.
+    * Naprawiono FC podczas korzystania odinstalować temat.
+    * Dodano kilka funkcji do silnika tematu.
+    * <a href="https://market.android.com/details?id=com.tombarrasso.android.wp7calculator.theme.nofly">Aby wyłączyć latać w animacji? Zapoznaj się z NoFly tematu</a>.
+$ 1.3
+  % beta trzy (2)
+  _ 02.08.2011
+    * Naprawiono błąd M + (teraz dodaje bieżący numer).
+    * Aktualizacja polskiego tłumaczenia (dzięki Paweł).
+$ 1.2
+  % beta trzy
+   _ 30.07.2011
+    ! Naciśnij ikonę książki z menu, aby uzyskać dostęp do historii 100 ostatnich wpisów!
+     * Dodano tłumaczenie na język rosyjski (dzięki calm1).
+     * Możliwość zmiany znaku rozwiązań.
+     * Usprawnienia w przełączeniem funkcji wibracji poprzez potrząśnięcie urządzeniem.
+$ 1.1
+   % beta dwa
+   _ 23.07.2011
+    ! Wprowadzono możliwość zmany motywów!
+     * Menu uwzględnia orientację ekranu.
+     * Potrząśnij, aby włączyć / wyłączyć wibracje.
+     * Poprawa wydajności i naprawienie błędów.
+     * API wersji podniesiono do 7 (Android 2.1).
+     * Lista zmian w aplikacji!
+     * Dodano tłumaczenie na język koreański.
+$ 1.0
+   % beta jeden
+   _ 15.07.2011
+   ! To była pierwsza publiczna wersja.
+     * Kalkulator w stylu Metro UI.
+     * Możliwość wykonywania obliczeń arytmetycznych.
+     * Część projektu Windows Phone 7 UI dla systemu Android.
+$ END_OF_CHANGE_LOG
+   </body>
+</html>

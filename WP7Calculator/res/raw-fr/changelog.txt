@@ -1,0 +1,89 @@
+<html>
+  <head>
+    <style type='text/css'>
+      a            { color:#a0a0e0 }
+      div.title    { 
+          color:#C0F0C0; 
+          font-size:1.2em; 
+          font-weight:bold; 
+          margin-top:1em; 
+          margin-bottom:0.5em; 
+          text-align:center }
+      div.subtitle { 
+          color:#C0F0C0; 
+          font-size:0.8em; 
+          margin-bottom:1em; 
+          text-align:center }
+      div.freetext { color:#F0F0F0 }
+      div.list     { color:#C0C0F0 }
+    </style>
+  </head>
+  <body>
+$ 1.9
+  % Gamma 1 (2)
+  _ 02/09/2011
+	* Si vous aimez cette application, pensez à nous <a href="https://market.android.com/details?id=com.tombarrasso.android.wp7calculatordonate">aider</a>.
+	* Amélioration de la traduction françaises par Guillaume.
+$ 1.8
+  % Gamma 1
+  _ 31/08/2011
+	* Correction de bugs (notamment dus à la barre de statut).
+	* Nouvelle icône pour la sélection des couleurs d'accentuation.
+	* Correction de la vibration lors de l'appui d'un bouton.
+	* L'accès aux paramètres se fait maintenant via l'icône du menu (non plus en secouant le téléphone).
+    * Amélioration de la traduction coréenne par 도회린.
+	* Ajout de la traduction hindie par Chaitanya Bangera.
+$ 1.7
+  % Bêta 6 (2)
+  _ 14/08/2011
+    * Amélioration de la traduction polonaise grâce à Dzakus.
+    * Animation Fly-out désormais dans les paramètres, désactivable et moteur de thèmes temporairement supprimé.
+$ 1.6
+  % Bêta 6
+  _ 14/08/2011
+   ! Secouer le téléphone pour faire apparaître/disparaître les paramètres (qui incluent maintenant une barre de statut personnalisée).
+    * Correction d'un certain nombre de bugs en lien avec la barre de statut personnalisée.
+    * Amélioration des performances.
+$ 1.5
+  % Bêta 5
+  _ 12/08/2011
+   ! Ajout de la barre de statut de Windows Phone 7 !
+$ 1.4
+  % Bêta 4
+  _ 05/08/2011
+    * Mise à jour de quelques traductions.
+    * Correction des FC en utilisant un thème désinstallé.
+    * Ajout de quelques nouvelles fonctionnalités au moteur de thèmes.
+    * Si vous voulez désactiver l'animation Fly-out, essayez le thème <a href="https://market.android.com/details?id=com.tombarrasso.android.wp7calculator.theme.nofly">NoFly</a>.
+$ 1.3
+  % Bêta 3 (2)
+  _ 02/08/2011
+    * Correction du bug M+ (ajoute maintenant le nombre courant).
+    * Mise à jour de la traduction polonaise (merci à Paweł).
+$ 1.2
+  % Bêta 3
+  _ 30/07/2011
+   ! Appuyez sur l'icône Livre depuis le menu pour parcourir votre historique, qui contient jusqu'aux 100 dernières entrées !
+    * Ajout de la traduction russe (merci à calm1).
+    * Le signe du résultat peut maintenant être changé.
+    * Tweaks pour la fonctionnalité de vibration de secouer son téléphone.
+$ 1.1
+  % Bêta 2
+  _ 23/07/2011
+   ! Le nouveau moteur de thème a été ajouté !
+    * Les menus respectent l'orientation du téléphone.
+    * Secouer pour (dés)activer la vibration.
+    * Correction de bugs et gain de performance.
+    * Version de l'API augmentée à 7 (Android 2.1).
+    * Changelog inclu dans l'application !
+    * Ajout d'une traduction corréenne.
+$ 1.0
+  % Bêta 1
+  _ 15/07/2011
+  ! Sortie publique initiale.
+    * Calculatrice au thème Metro UI.
+    * Utilise Arity pour les calculs arithmétiques.
+    * Fait partie du projet Windows Phone 7 UI pour Android.
+$ END_OF_CHANGE_LOG
+  </body>
+</html>

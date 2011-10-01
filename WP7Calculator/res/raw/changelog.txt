@@ -1,0 +1,99 @@
+<html>
+  <head>
+    <style type='text/css'>
+      a            { color:#a0a0e0 }
+      div.title    { 
+          color:#C0F0C0; 
+          font-size:1.2em; 
+          font-weight:bold; 
+          margin-top:1em; 
+          margin-bottom:0.5em; 
+          text-align:center }
+      div.subtitle { 
+          color:#C0F0C0; 
+          font-size:0.8em; 
+          margin-bottom:1em; 
+          text-align:center }
+      div.freetext { color:#F0F0F0 }
+      div.list     { color:#C0C0F0 }
+    </style>
+  </head>
+  <body>
+$ 2.1
+  % gamma two
+  _ 2011-09-30
+	* If you like this application please consider <a href="https://market.android.com/details?id=com.tombarrasso.android.wp7calculatordonate">supporting</a>.
+	* Fixed bug where color preference was not saving (please remember to update your Market comment/ rating).
+	* This application is now open source!
+$ 2.0
+  % gamma one (3)
+  _ 2011-09-14
+	* Improved Dutch translations by Pieter-Jelle.
+	* Added Hebrew translations by Da-DoN.
+$ 1.9
+  % gamma one (2)
+  _ 2011-09-02
+	* Improved French translations by Guillaume.
+$ 1.8
+  % gamma one
+  _ 2011-08-31
+	* Bug fixes primarily associated with the status bar.
+	* New icon for accent color chooser.
+	* Fixed vibration when a button is pressed.
+	* Removed shake to change settings (use button in menu).
+    * Improved Korean translations by 도회린.
+	* Added Hindi translations by Chaitanya Bangera.
+$ 1.7
+  % beta six (2)
+  _ 2011-08-14
+    * Improved Polish translation thanks to Dzakus.
+    * Fly-out animation made a setting, theme engine removed (until bugs are fixed).
+$ 1.6
+  % beta six
+  _ 2011-08-14
+   ! Shake to show/ hide settings (now including custom status bar).
+    * A number of bug fixes associated with the custom status bar.
+    * Improved performance by binding listeners globally once.
+$ 1.5
+  % beta five
+  _ 2011-08-12
+   ! Introduced the custom WP7 style status bar!
+$ 1.4
+  % beta four
+  _ 2011-08-05
+    * Updated a few translations.
+    * Fixed FC when using uninstalled theme.
+    * Added a few more features to the theme engine.
+    * Want to disable the fly-in animation? Check out the <a href="https://market.android.com/details?id=com.tombarrasso.android.wp7calculator.theme.nofly">NoFly</a> theme.
+$ 1.3
+  % beta three (2)
+  _ 2011-08-02
+    * Fixed M+ bug (now adds current number).
+    * Updated Polish translation (thanks Paweł).
+$ 1.2
+  % beta three
+  _ 2011-07-30
+   ! Press the book icon from the menu to browse your history, up to the last 100 entries!
+    * Added a Russian translation (thanks calm1).
+    * Allow for the sign to be changed for solutions.
+    * Tweaks to the shake and toggle vibration functionality.
+$ 1.1
+  % beta two
+  _ 2011-07-23
+   ! The new theme engine has been introduced!
+    * Menus that respect respect orientation.
+    * Shake to enable/ disable vibration.
+    * Performance and bug fixes.
+    * API version raised to 7 (Android 2.1).
+    * In-app change logs!
+    * Added a Korean translation.
+$ 1.0
+  % beta one
+  _ 2011-07-15
+  ! This was the initial public release.
+    * Metro UI themed calculator.
+    * Using Arity for arithmetic calculations.
+    * Part of the Windows Phone 7 UI project for Android.
+$ END_OF_CHANGE_LOG
+  </body>
+</html>

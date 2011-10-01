@@ -1,0 +1,87 @@
+<html>
+   <head>
+     <style type='text/css'>
+       a {color: #a0a0e0}
+       div.title {
+           color: #C0F0C0;
+           font-size: 1.2em;
+           font-weight: bold;
+           margin-top: 1em;
+           margin-bottom: 0.5em;
+           text-align: center}
+       div.subtitle {
+           color: #C0F0C0;
+           font-size: 0.8em;
+           margin-bottom: 1em;
+           text-align: center}
+       div.freetext {color: #F0F0F0}
+       div.list {color: #C0C0F0}
+     </style>
+   </head>
+   <body>
+$ 1.9
+   % gamma uno (2)
+   _ 2011-09-02
+     * Se ti piace questo si prega di prendere in considerazione l'applicazione di <a href="https://market.android.com/details?id=com.tombarrasso.android.wp7calculatordonate">supporto</a>.
+	* Migliorata traduzione francese di Guillaume.
+$ 1.8
+   % gamma uno
+   _ 2011-08-31
+	* Bug fix principalmente associati alla barra di stato.
+	* Nuova icona per chooser accento di colore.
+	* Scuotere Rimosso per modificare le impostazioni (usa il tasto nel menu).
+	* Migliorata traduzione dal coreano 도회린.
+$ 1.7
+  % beta sei (2)
+  _ 2011-08-14
+   * Migliorata grazie alla traduzione in polacco Dzakus.
+   * Fly-out di animazione fatto, motore dei temi luogo lontano (fino al bug sono stati corretti).
+$ 1.6
+  % beta sei
+  _ 2011-08-14
+   ! Agitare per vedere / nascondere le impostazioni (ora anche barra di stato personalizzato).
+    * Un certo numero di correzioni di bug associati con la barra di stato personalizzato.
+    * Miglioramento delle prestazioni dagli ascoltatori vincolanti a livello globale una volta.
+$ 1.5
+   % beta cinque
+   _ 2011-08-12
+    ! Ha introdotto l'usanza WP7 barra di stato stile!
+$ 1.4
+  % beta quattro
+  _ 2011-08-05
+    * Aggiornato alcune traduzioni.
+    * FC fisso quando si utilizzano tema disinstallato.
+    * Aggiunto alcune caratteristiche più al motore tema.
+    * Per disattivare la fly-in animazione? Guarda il tema <a href="https://market.android.com/details?id=com.tombarrasso.android.wp7calculator.theme.nofly">NoFly</a>.
+$ 1.3
+  % beta tre (2)
+  _ 2011-08-02
+    * Risolto bug M+ (ora aggiunge il numero attuale).
+    * Aggiornato traduzione in polacco (grazie Paweł).
+$ 1.2
+   % beta tre
+   _ 2011-07-30
+    ! Premere l'icona libro dal menu per sfogliare la storia, fino agli ultimi 100 voci!
+     * Aggiunta una traduzione russa (grazie calm1).
+     * Lasciare il segno di essere cambiato per le soluzioni.
+     * Tweaks al scuotere e attivare o disattivare la funzionalità di vibrazione.
+$ 1.1
+  % beta due
+   _ 2011-07-23
+    ! Il motore nuovo tema è stato introdotto!
+     * I menu che l'orientamento rispetto rispetto.
+     * Agitare per attivare / disattivare le vibrazioni.
+     * Prestazioni e correzioni di bug.
+     * Versione API alzato a 7 (Android 2.1).
+     * In-App log cambiare!
+     * Aggiunta una traduzione in coreano.
+$ 1.0
+   % beta uno
+   _ 2011-07-15
+   ! Questa è stata la prima versione pubblica.
+     * Metro UI tema calcolatrice.
+     * L'utilizzo Arity per i calcoli aritmetici.
+     * Parte del telefono Windows 7 UI progetto per Android.
+$ END_OF_CHANGE_LOG
+   </body>
+</html>

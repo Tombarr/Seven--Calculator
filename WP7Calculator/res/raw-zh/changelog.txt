@@ -1,0 +1,87 @@
+<html>
+  <head>
+    <style type='text/css'>
+      a            { color:#a0a0e0 }
+      div.title    { 
+          color:#C0F0C0; 
+          font-size:1.2em; 
+          font-weight:bold; 
+          margin-top:1em; 
+          margin-bottom:0.5em; 
+          text-align:center }
+      div.subtitle { 
+          color:#C0F0C0; 
+          font-size:0.8em; 
+          margin-bottom:1em; 
+          text-align:center }
+      div.freetext { color:#F0F0F0 }
+      div.list     { color:#C0C0F0 }
+    </style>
+  </head>
+  <body>
+$ 1.9
+	％ 伽玛一 (2)
+	_ 2011-09-02
+    * <a href="https://market.android.com/details?id=com.tombarrasso.android.wp7calculatordonate">如果你喜欢这个应用程序，请考虑支持。</a>
+	* 纪尧姆提高法语翻译。
+$ 1.8
+	％ 伽玛一
+	_ 2011-08-31
+	* Bug修正，主要与状态栏。
+	* 新的图标口音的颜色选择。
+	* 移除摇来改变设置（使用菜单按钮）。
+	* 改进도회린韩国翻译。
+$ 1.7
+  % beta six (2)
+  _ 2011-08-14
+  * 改进Dzakus波兰语翻译，感谢。
+  * 飞出动画的设置，主题引擎中删除（直到错误是固定的）。
+$ 1.6
+  % beta six
+  _ 2011-08-14
+   ! 摇来显示/隐藏设置（包括自定义状态栏）。
+    * 一些与自定义状态栏相关的错误修复。
+    * 全球一次改进通过具有约束力的听众的性能。
+$ 1.5
+  ％ beta five
+  _ 2011-08-12
+   ！介绍了自WP7风格的状态吧！
+$ 1.4
+  % beta four
+  _ 2011-08-05
+    * 更新了一些翻译。
+    * 固定的FC使用时卸载主题。
+    * 主题引擎增加了一些更多的功能。.
+    * <a href="https://market.android.com/details?id=com.tombarrasso.android.wp7calculator.theme.nofly">要禁用飞的动画吗？退房NoFly主题。</a>.
+$ 1.3
+  % beta three (2)
+  _ 2011-08-02
+    * 固定的 M+ 的 bug（现在增加了目前的数）。
+    * 更新波兰语翻译（感谢帕维尔）。
+$ 1.2
+  % beta three
+  _ 2011-7-30
+  ! 按书从菜单图标，浏览你的历史记录，高达近100个条目！
+    * 增加了一个俄语翻译（感谢calm1）。
+    * 允许的解决方案改变的迹象。
+    * 微调的震动，并切换振动功能。
+$ 1.1
+ % beta two
+   - 2011-7-23
+  ! 已经出台新的主题引擎！
+    * 菜单，尊尊方向。
+    * 摇启用/禁用振动。
+    * 性能和bug修复。
+    * API的版本号提高到7（Android 2.1的）。
+    * 在应用程序的更改日志！
+    * 增加了一个韩语翻译。
+$ 1.0
+ % beta one
+   - 2011-7-15
+  ! 这是首次公开发行。
+    * 地铁UI主题计算器。
+    * 使用算术运算元数。
+    * 部分的Windows Phone 7 Android的UI项目。
+$ END_OF_CHANGE_LOG
+  </body>
+</html>

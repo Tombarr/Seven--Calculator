@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Name -->
+    <string name="app_name">Calcolatrice</string>
+    <string name="author">Thomas James Barrasso</string>
+    <string name="version">gamma uno (2)</string>
+    
+    <!-- Other -->
+    <string name="confirm">confermare</string>
+    <string name="settings">impostazioni</string>
+    <string name="accent">ACCENTI</string>
+    <string name="m">M</string>
+    <string name="accents">Scegliere un Colore Accento</string>
+    
+    <!-- Opzione Vibration -->
+    <string name="vibrate">vibrazioni Attiva premere il pulsante?</string>
+    <string name="status">Abilita barra di stato personalizzato?</string>
+    <string name="animate">Abilita animazioni comparsa?</string>
+    <string name="vibration_activation">Lascia la tua dispositivo una buona scossa per attivare / disattivare le vibrazioni (accelerometro richiesto).</string>
+    <string name="yes">sì</string>
+    <string name="no">non</string>
+
+    <!-- Storia -->
+    <string name="history">Storia</string>
+    <string name="history_close">chiudere</string>
+    <string name="history_clear">chiaro</string>
+    
+    <!-- Change Log -->
+    <string name="changelog_title_full">delle news</string>
+    <string name="changelog_title">Novità</string>
+    <string name="changelog_ok">OK</string>
+    
+    <!-- Stringhe tema -->
+    <string name="default_theme">predefinito</string>
+    <string name="theme">scegliere un tema</string>
+    <string name="change">cambiare</string>
+    <string name="cancel">annullare</string>
+    
+    <!-- Color Names -->
+    <string-array name="color_names">
+        <item>magenta</item>
+        <item>porpora</item>
+        <item>alzavola</item>
+        <item>calce</item>
+        <item>marrone</item>
+        <item>rosa</item>
+        <item>arancione</item>
+        <item>blue</item>
+        <item>rosso</item>
+        <item>verde</item>
+    </string-array>
+    
+    <!-- Calculator -->
+    
+    <!-- 0 - 9 -->
+    <string name="zero">0</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    
+    <!-- Top Row -->
+    <string name="clear">C</string>
+    <string name="memclear">MC</string>
+    <string name="memrecall">MR</string>
+    <string name="memplus">M&#043;</string>
+    
+    <!-- Second Row -->
+    <string name="plusminus">&#177;</string>
+    <string name="percent">&#037;</string>
+    <string name="period">&#046;</string>
+    
+    <!-- Operators -->
+    <string name="divide">&#247;</string>
+    <string name="multiply">&#215;</string>
+    <string name="minus">&#045;</string>
+    <string name="plus">&#043;</string>
+    <string name="equals">&#061;</string>
+    
+    <!-- Landscape Buttons -->
+    <string name="paren_open">(</string>
+    <string name="paren_close">)</string>
+    <string name="pi">Pi</string>
+    <string name="degree">Deg</string>
+    <string name="radian">Rad</string>
+    <string name="grad">Grad</string>
+    <string name="sqrt">radq</string>
+    
+    <!-- Trig -->
+    <string name="sin">sin</string>
+    <string name="cos">cos</string>
+    <string name="tan">tan</string>
+    
+    <!-- Logs -->
+    <string name="ln">ln</string>
+    <string name="log">log</string>
+    <string name="exponential_ten">10^x</string>
+    
+    <!-- Final Row -->
+    <string name="power">^</string>
+    <string name="factorial">n!</string>
+    <string name="squared">x^2</string>
+    <string name="exponential">x^y</string>
+</resources>

@@ -1,0 +1,88 @@
+<html>
+  <head>
+    <style type='text/css'>
+      a            { color:#a0a0e0 }
+      div.title    { 
+          color:#C0F0C0; 
+          font-size:1.2em; 
+          font-weight:bold; 
+          margin-top:1em; 
+          margin-bottom:0.5em; 
+          text-align:center }
+      div.subtitle { 
+          color:#C0F0C0; 
+          font-size:0.8em; 
+          margin-bottom:1em; 
+          text-align:center }
+      div.freetext { color:#F0F0F0 }
+      div.list     { color:#C0C0F0 }
+    </style>
+  </head>
+  <body>
+$ 1.9
+   % gamma een (2)
+   _ 2011-09-02
+	* <a href="https://market.android.com/details?id=com.tombarrasso.android.wp7calculatordonate">Als u van deze applicatie kunt u overwegen ondersteunt.</a>
+	* Verbeterde Franse vertalingen van Guillaume.
+$ 1.8
+   % gamma een
+   _ 2011-08-31
+	* Bug fixes voornamelijk geassocieerd met de statusbalk.
+	* Nieuw pictogram voor accentkleur chooser.
+	* Verwijderd schudden om instellingen te wijzigen (gebruik de knop in het menu).
+	* Verbeterde Koreaanse vertalingen door 도회린.
+$ 1.7
+  % beta zes (2)
+  _ 2011-08-14
+   * Verbeterde Poolse vertaling dankzij Dzakus.
+   * Fly-out animatie gemaakt een instelling, de thema-motor verwijderd (tot bugs zijn vast).
+$ 1.6
+  % beta zes
+  _ 2011-08-14
+   ! Schud om tonen / verbergen instellingen (nu inclusief aangepaste statusbalk).
+    * Een aantal bug fixes in verband met de aangepaste statusbalk.
+    * Verbeterde prestaties door binding luisteraars wereldwijd een keer.
+$ 1.5
+   % beta vijf
+   _ 2011-08-12
+    ! Introduceerde de custom WP7 stijl van de status bar!
+$ 1.4
+  % beta vier
+  _ 2011-08-05
+    * Vast FC bij het gebruik van verwijderd thema.
+    * Bijgewerkt een paar vertalingen.
+    * Nog een paar functies toegevoegd aan het thema motor.
+    * Wilt u de fly-in animatie uit te schakelen? Bekijk de <a href="https://market.android.com/details?id=com.tombarrasso.android.wp7calculator.theme.nofly">NoFly thema</a>.
+$ 1.3
+  % beta drie (2)
+  _ 2011-08-02
+    * Vast M+ bug (nu voegt de huidige nummer).
+    * Bijgewerkt Poolse vertaling (met dank aan Paweł).
+$ 1.2
+   % beta drie
+   _ 2011-07-30
+    ! Druk op het boek icoon uit het menu om uw geschiedenis bladeren, tot de laatste 100 inzendingen!
+     * <a href="https://market.android.com/details?id=com.tombarrasso.android.wp7calculatordonate">Als u van deze applicatie kunt u overwegen ondersteunt.</a>
+     * Toegevoegd een Russische vertaling (met dank aan calm1).
+     * Laat het teken te veranderen naar oplossingen.
+     * Tweaks de schudden en om over te schakelen trillingen functionaliteit.
+$ 1.1
+   % Beta twee
+   _ 2011-07-23
+    ! Het nieuwe thema motor is geïntroduceerd!
+     * Menu's dat opzicht respect oriëntatie.
+     * Schud om / uit te schakelen trillingen.
+     * Prestaties en bug fixes.
+     * API-versie verhoogd naar 7 (Android 2.1).
+     * In-app veranderen logs!
+     * Toegevoegd een Koreaanse vertaling.
+$ 1.0
+   % Beta een
+   _ 2011-07-15
+   ! Dit was de eerste publieke release.
+     * Metro UI thema-calculator.
+     * Het gebruik van ariteit voor rekenkundige berekeningen.
+     * Een deel van de Windows Phone 7 UI project voor Android.
+$ END_OF_CHANGE_LOG
+   </body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TableLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:calc="http://schemas.android.com/apk/res/com.tombarrasso.android.wp7calculator"
+	xmlns:wp="http://schemas.tombarrasso.com/wp7ui"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:stretchColumns="*"
+	android:layout_marginTop="4dp"
+	android:layout_marginBottom="4dp"
+	android:background="@android:color/transparent"
+	android:weightSum="20">
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<com.tombarrasso.android.wp7ui.widget.WPTextView
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:textSize="22dp"
+			android:gravity="left"
+			android:layout_alignParentLeft="true"
+			android:layout_weight="10"
+			android:id="@+id/equation" />
+		<com.tombarrasso.android.wp7ui.widget.WPTextView
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:textSize="22dp"
+			android:gravity="right"
+			android:layout_alignParentRight="true"
+			android:layout_weight="10"
+			android:id="@+id/result" />
+	</TableRow>
+</TableLayout>

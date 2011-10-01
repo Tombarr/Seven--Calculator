@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<declare-styleable name="Calc">
+	   	<!-- 
+			The color attribute is used to set
+			the background color of the button.
+		-->
+		<attr name="color">
+			<enum name="accent" value="1" />
+			<enum name="light" value="2" />
+			<enum name="dark" value="3" />
+		</attr>
+		<!-- 
+			The type of font used
+		-->
+		<attr name="font">
+			<enum name="normal" value="-4752" />
+			<enum name="bold" value="-1349" />
+			<enum name="light" value="-5937" />
+			<enum name="medium" value="-3853" />
+			<enum name="italic" value="-2837" />
+		</attr>
+		<!-- 
+			The text color to be used when
+			the button is pressed down.
+		-->
+		<attr name="textColor" format="color" />
+		<attr name="textColorDown" format="color" />
+		<!--
+			Drawbales to be used for CalcImageButton.
+		 -->
+		<attr name="srcdown" format="reference" />			
+		<attr name="src" format="reference" />				
+		<!-- 
+		    The function attribute controls the behavior of the button
+		-->
+		<attr name="function">
+			<enum name="clear" value="1" />
+			<enum name="memclear" value="2" />
+			<enum name="memrecall" value="3" />
+			<enum name="memplus" value="4" />
+			<enum name="delete" value="5" />
+			<enum name="plusminus" value="6" />
+			<enum name="percent" value="7" />
+			<enum name="divide" value="8" />
+			<enum name="seven" value="9" />
+			<enum name="eight" value="10" />
+			<enum name="nine" value="11" />
+			<enum name="multiply" value="12" />
+			<enum name="four" value="13" />
+			<enum name="five" value="14" />
+			<enum name="six" value="15" />
+			<enum name="minus" value="16" />
+			<enum name="one" value="17" />
+			<enum name="two" value="18" />
+			<enum name="three" value="19" />
+			<enum name="plus" value="20" />
+			<enum name="zero" value="21" />
+			<enum name="period" value="22" />
+			<enum name="equals" value="23" />
+			<enum name="paren_open" value="24" />
+			<enum name="paren_close" value="25" />
+			<enum name="pi" value="26" />
+			<enum name="degree" value="27" />
+			<enum name="radian" value="28" />
+			<enum name="gradian" value="29" />
+			<enum name="sqrt" value="30" />
+			<enum name="sin" value="31" />
+			<enum name="cos" value="32" />
+			<enum name="tan" value="33" />
+			<enum name="ln" value="34" />
+			<enum name="log" value="35" />
+			<enum name="exponential_ten" value="36" />
+			<enum name="factorial" value="37" />
+			<enum name="squared" value="38" />
+			<enum name="exponential" value="39" />
+		</attr>
+	</declare-styleable>
+</resources>

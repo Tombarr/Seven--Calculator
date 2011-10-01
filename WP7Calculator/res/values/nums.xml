@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- How long each flyout animation should take.
+         If it is <= 0 then no animation will occur. -->
+    <integer name="flyout_duration">350</integer>
+    <!-- How long a vibration occurs when the user
+	 presses a button (if this setting is enabled).
+	 If <= 0 no vibration will occur. -->
+    <integer name="vibration_duration">40</integer>
+</resources>
