@@ -5,6 +5,9 @@
 # files for the dex VM
 *.dex
 
+# OS X shit
+.DS_Store
+
 # Java class files
 *.class
 
