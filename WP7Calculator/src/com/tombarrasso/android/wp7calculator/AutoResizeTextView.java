@@ -3,31 +3,97 @@ package com.tombarrasso.android.wp7calculator;
 // Java Packages
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.lang.reflect.Method;
 
 // App Packages
 import com.tombarrasso.android.wp7ui.WPFonts;
+import com.tombarrasso.android.wp7ui.widget.WPToast;
 
 // Android Packages
 import android.content.Context;
 import android.graphics.Canvas;
 import android.text.Layout.Alignment;
+import android.content.res.Resources;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.text.ClipboardManager;
+import android.text.TextUtils;
+import android.view.ActionMode;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.View;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.widget.TextView;
+import android.preference.PreferenceManager;
+import android.content.SharedPreferences;
+import android.view.HapticFeedbackConstants;
+import android.util.Log;
 
 /**
  * Text view that auto adjusts text size to fit within the view.
  * If the text size equals the minimum text size and still does not
- * fit, append with an ellipsis. 
+ * fit, append with an ellipsis.<br />
+ * Modified by Thomas Barrasso on June 6, 2012 to support {@link ClipboardManager}
+ * integration, automatic comma separation, and more.
  * 
+ * @see http://stackoverflow.com/questions/5033012/auto-scale-textview-text-to-fit-within-bounds
  * @author Chase Colburn
- * @since Apr 4, 2011
+ * @since  Apr 4, 2011
+ * 
+ * @version 2.0
  */
-public class AutoResizeTextView extends TextView
+public final class AutoResizeTextView
+	extends TextView
 {
 	public static final String TAG = AutoResizeTextView.class.getSimpleName();
+	
+	private String[] mMenuItemsStrings;
+    
+    private static final Class<TextView> mViewClass = TextView.class;
+    
+    private static Method mMethod;
+    
+    public static final boolean setCustomSelectionActionModeCallback(
+    	View mView, ActionMode.Callback mCallback)
+    {
+    	// Cache the Method for performance.
+		if (mMethod == null)
+		{
+			try
+			{
+				// Check to see if an overscroll method exists.
+				mMethod = mViewClass.getMethod("setCustomSelectionActionModeCallback",
+					new Class[] { ActionMode.Callback.class });
+			}
+			catch(NoSuchMethodException e)
+			{
+				return false;
+			}
+		}
+		
+		// Call the method if it exists.
+		// It is bad practice to catch all exceptions
+		// but Reflection has so many, all with the
+		// same meaning that no method was called.
+		try
+		{
+			mMethod.invoke(mView,
+				new Object[] { mCallback });
+		}
+		catch(Exception e)
+		{
+			return false;
+		}
+
+		return true;
+    }
+    
+    private static final int CUT = 0;
+    private static final int COPY = 1;
+    private static final int PASTE = 2;
 	
     // Minimum text size for this text view
     public static final float MIN_TEXT_SIZE = 2;
@@ -59,10 +125,10 @@ public class AutoResizeTextView extends TextView
     private float mMinTextSize = MIN_TEXT_SIZE;
 
     // Text view line spacing multiplier
-    private float mSpacingMult = 1.1f;
+    private float mSpacingMult = 1.0f;
 
     // Text view additional line spacing
-    private float mSpacingAdd = -1.0f;
+    private float mSpacingAdd = -2.0f;
 
     // Add ellipsis to text that overflows at the smallest text size
     private boolean mAddEllipsis = false;
@@ -88,8 +154,70 @@ public class AutoResizeTextView extends TextView
     
     private void init()
     {
-    	setTypeface(WPFonts.regular);
+    	WPFonts.setDefaultFonts(getContext().getResources().getAssets());
+    	setTypeface(WPFonts.getFontSet().getRegular());
+    	
+    	//max size defaults to the initially specified text size unless it is too small
+        mMaxTextSize = this.getTextSize();
+    	
+    	// Only bother if the API might be available.
+    	if (android.os.Build.VERSION.SDK_INT >= 11)
+    	{
+    		try
+    		{
+	    		setCustomSelectionActionModeCallback(
+	    			this, new NoTextSelectionMode());
+	    	}
+	    	catch (Throwable e) { }
+	    }
     };
+    
+    /* Re size the font so the specified text fits in the text box
+	 * assuming the text box is the specified width.
+	 */
+	//TODO binary search
+	private void refitText(String text, int textWidth) {
+		if (textWidth > 0) {
+			int availableWidth = textWidth - this.getPaddingLeft() - this.getPaddingRight();
+			float trySize = mMaxTextSize;
+	
+			this.setTextSize(TypedValue.COMPLEX_UNIT_PX, trySize);
+			while ((trySize > mMinTextSize) && (this.getPaint().measureText(text) > availableWidth)) {
+				trySize -= 1;
+				if (trySize <= mMinTextSize) {
+					trySize = mMinTextSize;
+					break;
+				}
+				this.setTextSize(TypedValue.COMPLEX_UNIT_PX, trySize);
+			}
+			this.setTextSize(TypedValue.COMPLEX_UNIT_PX, trySize);
+		}
+	}
+	
+	@Override
+    protected void onTextChanged(final CharSequence text, final int start, final int before, final int after) {
+        mNeedsResize = true;
+        refitText(text.toString(), this.getWidth());
+    }
+    
+    private int mWidth;
+
+    @Override
+    protected void onSizeChanged (int w, int h, int oldw, int oldh) {
+		mNeedsResize = true;
+		mWidth = w;
+		refitText(this.getText().toString(), this.getWidth());
+    }
+    
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
+    {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int parentWidth = MeasureSpec.getSize(widthMeasureSpec);
+        
+        //int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
+        // refitText(this.getText().toString(), parentWidth);
+    }
     
     // Custom setText methods to handle adding commas
     // and general number formatting issues.
@@ -133,22 +261,22 @@ public class AutoResizeTextView extends TextView
     /**
      * When text changes, set the force resize flag to true and reset the text size.
      */
-    @Override
+    /*@Override
     protected void onTextChanged(final CharSequence text, final int start, final int before, final int after) {
         mNeedsResize = true;
         // Since this view may be reused, it is good to reset the text size
         resetTextSize();
-    }
+    }*/
 
     /**
      * If the text view size changed, set the force resize flag to true
      */
-    @Override
+    /*@Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         if (w != oldw || h != oldh) {
             mNeedsResize = true;
         }
-    }
+    }/*
 
     /**
      * Register listener to receive resize notifications
@@ -245,6 +373,153 @@ public class AutoResizeTextView extends TextView
         super.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
         mMaxTextSize = mTextSize;
     }
+    
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+       if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+            // Hack to prevent keyboard and insertion handle from showing.
+           cancelLongPress();
+        }
+        return super.onTouchEvent(event);
+    }
+    
+    @Override
+    public boolean performLongClick() {
+    
+    	final SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
+    	final boolean mShouldVibrate = mPrefs.getBoolean(HomeActivity.VIBRATE_KEY, false);
+    	
+    	// Cause a small vibration
+    	if (mShouldVibrate) {
+    		performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY,
+						HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING |
+						HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+    	}
+    
+        showContextMenu();
+        return true;
+    }
+    
+    private final class MenuHandler implements MenuItem.OnMenuItemClickListener {
+    	@Override
+        public boolean onMenuItemClick(MenuItem item) {
+            return onTextContextMenuItem(item.getTitle());
+        }
+    }
+
+    public boolean onTextContextMenuItem(CharSequence title) {
+        boolean handled = false;
+        if (TextUtils.equals(title, mMenuItemsStrings[CUT])) {
+            cutContent();
+            handled = true;
+        } else if (TextUtils.equals(title,  mMenuItemsStrings[COPY])) {
+            copyContent();
+            handled = true;
+        } else if (TextUtils.equals(title,  mMenuItemsStrings[PASTE])) {
+            pasteContent();
+            handled = true;
+        }
+        return handled;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu) {
+        MenuHandler handler = new MenuHandler();
+        if (mMenuItemsStrings == null) {
+            Resources resources = getResources();
+            mMenuItemsStrings = new String[3];
+            mMenuItemsStrings[CUT] = resources.getString(android.R.string.cut);
+            mMenuItemsStrings[COPY] = resources.getString(android.R.string.copy);
+            mMenuItemsStrings[PASTE] = resources.getString(android.R.string.paste);
+        }
+        for (int i = 0; i < mMenuItemsStrings.length; i++) {
+            menu.add(Menu.NONE, i, i, mMenuItemsStrings[i]).setOnMenuItemClickListener(handler);
+        }
+        if (getText().length() == 0) {
+            menu.getItem(CUT).setVisible(false);
+            menu.getItem(COPY).setVisible(false);
+        }
+        CharSequence primaryClip = getClipText();
+        if (primaryClip == null || !canPaste(primaryClip)) {
+            menu.getItem(PASTE).setVisible(false);
+        }
+    }
+
+    private void setClipText(CharSequence clip) {
+        final ClipboardManager clipboard = (ClipboardManager) getContext().
+                getSystemService(Context.CLIPBOARD_SERVICE);
+        clipboard.setText(clip);
+    }
+
+    private void copyContent() {
+        final String text = (String) getText();
+        int textLength = text.length();
+        final ClipboardManager clipboard = (ClipboardManager)
+        	getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        clipboard.setText(text);
+        
+        // Toast to having been copied.
+        WPToast.makeText(getContext().getApplicationContext(),
+        	getContext().getString(R.string.text_copied_toast),
+        	WPToast.LENGTH_SHORT).show();
+    }
+
+    private void cutContent() {
+        final String text = (String) getText();
+        int textLength = text.length();
+        setClipText(text);
+        setText(R.string.zero);
+    }
+
+    private CharSequence getClipText() {
+        final ClipboardManager clipboard = (ClipboardManager)
+        	getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        return clipboard.getText();
+    }
+
+    private void pasteContent() {
+        CharSequence clip = getClipText();
+        if (clip != null) {
+			if (canPaste(clip)) {
+				setText(clip);
+			}
+		}
+    }
+
+    private boolean canPaste(CharSequence paste) {
+        boolean canPaste = true;
+        try {
+            Float.parseFloat(paste.toString());
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "Error turning string to integer. Ignoring paste.", e);
+            canPaste = false;
+        }
+        return canPaste;
+    }
+
+    private final class NoTextSelectionMode
+    	implements ActionMode.Callback
+    {
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            return false;
+        }
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            copyContent();
+            // Prevents the selection action mode on double tap.
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {}
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+    }
 
     /**
      * Override drawing and resize text if necessary
@@ -254,6 +529,7 @@ public class AutoResizeTextView extends TextView
         if(mNeedsResize) {
             resizeText(getWidth(), getHeight());
         }
+        
         super.onDraw(canvas);
     }
 
@@ -284,7 +560,7 @@ public class AutoResizeTextView extends TextView
         // Store the current text size
         float oldTextSize = textPaint.getTextSize();
         // If there is a max text size set, use the lesser of that and the default text size
-        float targetTextSize = mMaxTextSize > 0 ? Math.min(mTextSize, mMaxTextSize) : mTextSize;
+        float targetTextSize = (mMaxTextSize > 0) ? Math.min(mTextSize, mMaxTextSize) : mTextSize;
 
         // Get the required text height
         int textHeight = getTextHeight(text, textPaint, width, targetTextSize);

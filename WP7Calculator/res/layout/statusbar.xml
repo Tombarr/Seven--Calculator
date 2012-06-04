@@ -2,43 +2,87 @@
 <com.tombarrasso.android.wp7ui.statusbar.StatusBarView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:calc="http://schemas.android.com/apk/res/com.tombarrasso.android.wp7calculator"
-    xmlns:wp="http://schemas.tombarrasso.com/wp7ui"
+    xmlns:wp="http://schema.tombarrasso.com/wp7ui"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/status_bar_height"
+	wp:indexable="true"
     android:paddingBottom="5dp">
+
+	<!--
+		Index values range from 0 - n, incremented by 1 with
+		each step. The View with the greatest value will be
+		dropped first, and the one with the least value last.
+		This allows complete control over the order in which
+		Views are pulled up/ down.
+	 -->
 
 	<com.tombarrasso.android.wp7ui.statusbar.SignalView
 	    android:layout_width="21dp"
 	    android:layout_height="14dp"
 	    android:layout_marginLeft="8dp"
+	    android:layout_marginRight="8dp"
 	    android:layout_marginTop="5dp"
 	    android:layout_alignParentTop="true"
 	    android:layout_alignParentLeft="true"
 	    android:id="@id/statusbar_signal"
 	    wp:live="true"
-	    wp:color="#FFFFFF" />
+		wp:index="0"
+	    wp:color="@android:color/white" />
 
 	<com.tombarrasso.android.wp7ui.statusbar.DataView
-	    android:layout_width="32dp"
+	    android:layout_width="wrap_content"
+	    android:maxWidth="32dp"
+		android:minWidth="26dp"
 	    android:layout_height="15dp"
-	    android:layout_marginLeft="10dp"
 	    android:layout_marginTop="2dp"
 	    android:layout_alignParentTop="true"
 	    android:layout_toRightOf="@id/statusbar_signal"
 	    android:id="@id/statusbar_data"
-	    android:textSize="16dp"
-	    android:textColor="#FFFFFF"
+	    android:textSize="15dp"
+	    android:textColor="@android:color/white"
+		wp:index="1"
 	    wp:live="true" />
+
+	<com.tombarrasso.android.wp7ui.statusbar.CarrierView
+	    android:layout_width="wrap_content"
+	    android:maxWidth="42dp"
+		android:minWidth="32dp"
+	    android:layout_height="16dp"
+	    android:textSize="16dp"
+		android:gravity="left"
+		android:singleLine="true"
+		android:lines="1"
+		android:layout_marginLeft="2dp"
+	    android:layout_marginTop="2dp"
+	    android:id="@id/statusbar_carrier"
+	    android:layout_alignParentTop="true"
+	    android:layout_toRightOf="@id/statusbar_data"
+	    android:textColor="@android:color/white"
+		wp:index="2"
+	    wp:live="true" />
+
+	<com.tombarrasso.android.wp7ui.statusbar.BluetoothView
+	    android:layout_width="7dp"
+	    android:layout_height="11dp"
+	    android:layout_marginTop="5dp"
+	    android:layout_marginLeft="11dp"
+	    android:layout_alignParentTop="true"
+	    android:id="@id/statusbar_bluetooth"
+		android:layout_centerHorizontal="true"
+	    wp:live="true"
+		wp:index="5"
+	    wp:color="@android:color/white" />
 
 	<com.tombarrasso.android.wp7ui.statusbar.WifiView
 	    android:layout_width="16dp"
 	    android:layout_height="16dp"
 	    android:layout_marginTop="3dp"
 	    android:layout_alignParentTop="true"
-	    android:layout_centerHorizontal="true"
 	    android:id="@id/statusbar_wifi"
+		android:layout_toLeftOf="@id/statusbar_bluetooth"
 	    wp:live="true"
-	    wp:color="#FFFFFF" />
+		wp:index="4"
+	    wp:color="@android:color/white" />
 
 	<com.tombarrasso.android.wp7ui.statusbar.RoamingView
 	    android:layout_width="28dp"
@@ -49,42 +93,83 @@
 	    android:layout_toLeftOf="@id/statusbar_wifi"
 	    android:id="@id/statusbar_roaming"
 	    wp:live="true"
-	    wp:color="#FFFFFF" />
+		wp:index="3"
+	    wp:color="@android:color/white" />
 
-	<com.tombarrasso.android.wp7ui.statusbar.BluetoothView
-	    android:layout_width="7dp"
-	    android:layout_height="11dp"
-	    android:layout_marginTop="5dp"
-	    android:layout_marginLeft="10dp"
-	    android:layout_marginRight="10dp"
-	    android:layout_alignParentTop="true"
-	    android:id="@id/statusbar_bluetooth"
-	    android:layout_toRightOf="@id/statusbar_wifi"
-	    wp:live="true"
-	    wp:color="#FFFFFF" />
-
+	<!-- Use Invisible Anchors to Allow Any Icon to be Removed -->
 	<com.tombarrasso.android.wp7ui.widget.WPDigitalClock
-	    android:layout_width="42dp"
+	    android:layout_width="wrap_content"
 	    android:layout_height="16dp"
 	    android:textSize="16dp"
 		android:gravity="right"
-	    android:layout_marginTop="4dp"
-	    android:layout_marginRight="6dp"
+		android:maxWidth="42dp"
+		android:minWidth="32dp"
+	    android:layout_marginTop="2dp"
+	    android:layout_marginRight="8dp"
 	    android:id="@id/statusbar_clock"
 	    android:layout_alignParentTop="true"
-	    android:layout_alignParentRight="true"
-	    android:textColor="#FFFFFF"
+	   android:layout_alignParentRight="true"
+	    android:textColor="@android:color/white"
+		wp:index="10"
 	    wp:live="true" />
 
 	<com.tombarrasso.android.wp7ui.statusbar.BatteryView
 	    android:layout_width="24dp"
 	    android:layout_height="11dp"
-	    android:layout_marginTop="7dp"
-	    android:layout_marginRight="12dp"
+	    android:layout_marginTop="6dp"
+	    android:layout_marginRight="5dp"
 	    android:layout_alignParentTop="true"
 	    android:layout_toLeftOf="@id/statusbar_clock"
 	    android:id="@id/statusbar_battery"
 	    wp:live="true"
-	    wp:color="#FFFFFF" />
+		wp:index="9"
+	    wp:color="@android:color/white" />
+
+	<com.tombarrasso.android.wp7ui.statusbar.BatteryPercent
+	    android:layout_alignParentTop="true"
+	    android:layout_toLeftOf="@id/statusbar_battery"
+	    android:id="@id/statusbar_battery_percent"
+	    android:layout_width="wrap_content"
+	    android:layout_height="15dp"
+	    android:maxWidth="36dp"
+		android:minWidth="30dp"
+	    android:layout_marginLeft="0dp"
+	    android:layout_marginTop="2dp"
+		android:layout_marginRight="6dp"
+	    android:textSize="14dp"
+	    android:textColor="@android:color/white"
+		android:gravity="center"
+		wp:index="8"
+		wp:live="true" />
+
+	<com.tombarrasso.android.wp7ui.statusbar.LanguageView
+	    android:layout_alignParentTop="true"
+	    android:id="@id/statusbar_language"
+	    android:layout_toLeftOf="@id/statusbar_battery_percent"
+		android:layout_width="wrap_content"
+		android:maxWidth="30dp"
+		android:minWidth="24dp"
+	    android:layout_height="fill_parent"
+	    android:layout_marginTop="1dp"
+		android:layout_marginRight="-1dp"
+		android:singleLine="true"
+		android:lines="1"
+	    android:textSize="15dp"
+	    android:textColor="@android:color/white"
+		wp:index="7"
+		wp:live="true" />
+
+	<com.tombarrasso.android.wp7ui.statusbar.RingerView
+	    android:layout_width="14dp"
+	    android:layout_height="14dp"
+	    android:layout_marginTop="5dp"
+		android:layout_marginLeft="2dp"
+		android:layout_marginRight="6dp"
+	    android:layout_alignParentTop="true"
+		android:layout_toLeftOf="@id/statusbar_language"
+	    android:id="@id/statusbar_ringer"
+	    wp:live="true"
+		wp:index="6"
+	    wp:color="@android:color/white" />
 
 </com.tombarrasso.android.wp7ui.statusbar.StatusBarView>

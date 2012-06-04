@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:wp="http://schema.tombarrasso.com/wp7ui"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:id="@id/root">
+	
+	<!-- Possible Status Bar -->
+	<ViewStub android:id="@id/statusbarstub"
+		   android:inflatedId="@id/statusbarview"
+		   android:layout="@layout/statusbar"
+		   android:layout_width="fill_parent"
+		   android:layout_height="@dimen/status_bar_height" />
+	
+	<!-- Top ActionBar -->
+	<include layout="@layout/action_bar_advanced" />
+	
+	<!-- Horizontal line -->
+	<View
+		android:background="#666666"
+		android:layout_width="fill_parent"
+		android:layout_height="1dp"
+		android:layout_marginTop="4dp"
+		android:layout_marginLeft="12dp"
+		android:layout_marginRight="12dp"
+		android:layout_gravity="center_horizontal"
+		android:id="@id/divider" />
+		
+	<!-- PivotControl -->
+	<com.tombarrasso.android.wp7ui.widget.WPPivotControl
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:paddingTop="12dp"
+		android:paddingBottom="8dp"
+		wp:textTransform="uppercase"
+		android:id="@id/homePivot">
+	
+		<!-- Settings Pivot -->
+		<com.tombarrasso.android.wp7ui.widget.ScrollView
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:fillViewport="true">
+	
+			<LinearLayout
+				android:paddingTop="12dp"
+				android:paddingLeft="12dp"
+				android:paddingRight="12dp"
+				android:orientation="vertical"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent">
+				
+				<!-- App animations -->
+				<RelativeLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:paddingTop="8dp"
+					android:paddingBottom="8dp">
+	
+					<!-- Left Description -->
+					<com.tombarrasso.android.wp7ui.widget.WPTextView
+						android:text="@string/app_anims"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:textColor="@android:color/white"
+						android:textSize="22sp"
+						android:layout_marginRight="42dp"
+						android:layout_alignParentLeft="true" />
+	
+					<!-- Right Check Box -->
+					<com.tombarrasso.android.wp7ui.widget.WPCheckBox
+						android:id="@id/app_anims"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						wp:backgroundColor="#1F1F1F"
+						android:layout_alignParentRight="true" />
+				</RelativeLayout>
+				
+				<!-- Custom status bar -->
+				<RelativeLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:paddingTop="8dp"
+					android:paddingBottom="8dp">
+	
+					<!-- Left Description -->
+					<com.tombarrasso.android.wp7ui.widget.WPTextView
+						android:text="@string/status"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:textColor="@android:color/white"
+						android:textSize="22sp"
+						android:layout_marginRight="42dp"
+						android:layout_alignParentLeft="true" />
+	
+					<!-- Right Check Box -->
+					<com.tombarrasso.android.wp7ui.widget.WPCheckBox
+						android:id="@id/custom_status"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						wp:backgroundColor="#1F1F1F"
+						android:layout_alignParentRight="true" />
+				</RelativeLayout>
+				
+				<!-- Vibration -->
+				<RelativeLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:paddingTop="8dp"
+					android:paddingBottom="8dp">
+	
+					<!-- Left Description -->
+					<com.tombarrasso.android.wp7ui.widget.WPTextView
+						android:text="@string/vibrate"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:textColor="@android:color/white"
+						android:textSize="22sp"
+						android:layout_marginRight="42dp"
+						android:layout_alignParentLeft="true" />
+	
+					<!-- Right Check Box -->
+					<com.tombarrasso.android.wp7ui.widget.WPCheckBox
+						android:id="@id/vibrate"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						wp:backgroundColor="#1F1F1F"
+						android:layout_alignParentRight="true" />
+				</RelativeLayout>
+				
+				<!-- Screen -->
+				<RelativeLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:paddingTop="8dp"
+					android:paddingBottom="8dp">
+	
+					<!-- Left Description -->
+					<com.tombarrasso.android.wp7ui.widget.WPTextView
+						android:text="@string/keep_wake"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:textColor="@android:color/white"
+						android:textSize="22sp"
+						android:layout_marginRight="42dp"
+						android:layout_alignParentLeft="true" />
+	
+					<!-- Right Check Box -->
+					<com.tombarrasso.android.wp7ui.widget.WPCheckBox
+						android:id="@id/keep_wake"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						wp:backgroundColor="#1F1F1F"
+						android:layout_alignParentRight="true" />
+				</RelativeLayout>
+				
+				<!-- Reporting -->
+				<RelativeLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:paddingTop="8dp"
+					android:paddingBottom="8dp">
+	
+					<!-- Left Description -->
+					<com.tombarrasso.android.wp7ui.widget.WPTextView
+						android:text="@string/reporting"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:textColor="@android:color/white"
+						android:textSize="22sp"
+						android:layout_marginRight="42dp"
+						android:layout_alignParentLeft="true" />
+						
+					<!-- Question Mark -->
+					<com.tombarrasso.android.wp7ui.widget.WPTextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/question_mark"
+						android:textSize="24dp"
+						android:id="@id/reporting_more"
+						android:textStyle="bold"
+						android:layout_marginRight="8dp"
+						android:paddingRight="8dp"
+						android:layout_toLeftOf="@id/reporting"
+						android:layout_centerVertical="true"
+						android:gravity="center_vertical"
+						android:contentDescription="@string/reporting_desc" />
+	
+					<!-- Right Check Box -->
+					<com.tombarrasso.android.wp7ui.widget.WPCheckBox
+						android:id="@id/reporting"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						wp:backgroundColor="#1F1F1F"
+						android:layout_alignParentRight="true" />
+				</RelativeLayout>
+				
+				<!-- Change log -->
+				<com.tombarrasso.android.wp7ui.widget.WPButtonView
+					android:text="@string/changelog_title"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:textColor="@android:color/white"
+					android:layout_marginTop="18dp"
+					android:id="@id/changelog"
+					android:textSize="22sp" />
+					
+				<!-- Website -->
+				<com.tombarrasso.android.wp7ui.widget.UriButtonView
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:text="@string/website"
+					wp:uri="@string/siteuri"
+					android:textSize="22sp"
+					android:layout_marginTop="8dp"
+					android:contentDescription="@string/website_description" />
+				
+				<!-- Donate -->
+				<com.tombarrasso.android.wp7ui.widget.WPCommandButtonView
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="8dp"
+					android:layout_marginBottom="4dp"
+					android:textSize="9pt"
+					wp:primaryText="@string/donate"
+					wp:commandText="@string/donation_description"
+					android:contentDescription="@string/donate_description"
+					android:id="@id/donate" />
+				
+				<!-- PayPal Donate! -->	
+				<ImageView
+					android:layout_marginTop="12dp"
+					android:id="@id/paypal"
+					android:src="@drawable/btn_donate"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center"
+					android:scaleType="centerInside"
+					android:layout_marginBottom="12dp"
+					android:adjustViewBounds="true"
+					android:contentDescription="@string/paypal_description" />
+	
+			</LinearLayout>
+		</com.tombarrasso.android.wp7ui.widget.ScrollView>
+		
+		<!-- Theme Pivot -->
+		<com.tombarrasso.android.wp7ui.widget.ScrollView
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:fillViewport="true">
+	
+			<LinearLayout
+				android:paddingTop="12dp"
+				android:paddingRight="12dp"
+				android:paddingLeft="12dp"
+				android:orientation="vertical"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent">
+				
+				<!-- Main Theme Description -->
+				<com.tombarrasso.android.wp7ui.widget.WPTextView
+					android:textSize="15.0sp"
+					android:id="@id/text_theme_description"
+					android:paddingLeft="10.0dip"
+					android:paddingRight="10.0dip"
+					android:textColor="@android:color/black"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:bufferType="spannable"
+					android:lineSpacingExtra="2.0dip" />
+					
+				<!-- Light Warning -->
+				<com.tombarrasso.android.wp7ui.widget.WPTextView
+					android:textSize="15.0sp"
+					android:id="@id/light_battery_warning"
+					android:paddingLeft="10.0dip"
+					android:paddingRight="10.0dip"
+					android:layout_marginTop="10.0dip"
+					android:textColor="@android:color/black"
+					android:text="@string/light_battery_warning"
+					android:visibility="gone"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="20.0dip"
+					android:lineSpacingExtra="2.0dip" />
+					
+				<!-- Background -->
+				<com.tombarrasso.android.wp7ui.widget.WPTextView
+					android:textSize="15.0sp"
+					android:textColor="@color/grey"
+					android:id="@id/text_theme_background"
+					android:paddingLeft="10.0dip"
+					android:paddingRight="10.0dip"
+					android:layout_marginTop="20.0dip"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="5.0dip"
+					android:text="@string/background" />
+				
+				<!-- Light/ Dark -->
+				<LinearLayout
+					android:orientation="vertical"
+					android:id="@id/linearlayout_theme_background"
+					android:background="@color/light_grey"
+					android:padding="7.0dip"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="10.0dip"
+					android:layout_marginBottom="20.0dip"
+					android:layout_marginRight="20.0dip">
+					
+					<com.tombarrasso.android.wp7ui.widget.WPTextView
+						android:textSize="17.0sp"
+						android:textColor="@android:color/black"
+						android:id="@id/text_theme_selected"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:text="@string/dark" />
+						
+				</LinearLayout>
+				
+				<!-- Light/ Dark -->
+				<LinearLayout
+					android:orientation="vertical"
+					android:id="@id/linearlayout_theme_background_selected"
+					android:padding="7.0dip"
+					android:visibility="gone"
+					android:background="@drawable/box_down"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="10.0dip"
+					android:layout_marginBottom="20.0dip"
+					android:layout_marginRight="20.0dip">
+					
+					<com.tombarrasso.android.wp7ui.widget.WPTextView
+						android:textSize="17.0sp"
+						android:textColor="@android:color/black"
+						android:id="@id/text_theme_dark"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:text="@string/dark" />
+						
+					<com.tombarrasso.android.wp7ui.widget.WPTextView
+						android:textSize="17.0sp"
+						android:textColor="@android:color/black"
+						android:id="@id/text_theme_light"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="15.0dip"
+						android:text="@string/light" />
+						
+				</LinearLayout>
+				
+				<!-- Accent Color -->
+				<com.tombarrasso.android.wp7ui.widget.WPTextView
+					android:textSize="15.0sp"
+					android:textColor="@color/grey"
+					android:id="@id/text_theme_accent"
+					android:paddingLeft="10.0dip"
+					android:paddingRight="10.0dip"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="20.0dip"
+					android:layout_marginBottom="5.0dip"
+					android:text="@string/accentcolor" />
+					
+				<!-- Accent Color Picker -->
+				<LinearLayout
+					android:orientation="horizontal"
+					android:id="@id/linearlayout_theme_accent"
+					android:background="@drawable/box"
+					android:padding="7.0dip"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="10.0dip"
+					android:layout_marginRight="20.0dip">
+					
+					<View
+						android:id="@id/view_accent_selected"
+						android:layout_width="20.0dip"
+						android:layout_height="20.0dip"
+						android:background="@color/orange" />
+					
+					<com.tombarrasso.android.wp7ui.widget.WPTextView
+						android:textSize="17.0sp"
+						android:textColor="@android:color/black"
+						android:id="@id/text_accent_selected"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginLeft="7.0dip"
+						android:text="@string/orange" />
+						
+				</LinearLayout>
+				
+			</LinearLayout>
+		</com.tombarrasso.android.wp7ui.widget.ScrollView>
+	</com.tombarrasso.android.wp7ui.widget.WPPivotControl>
+</LinearLayout>

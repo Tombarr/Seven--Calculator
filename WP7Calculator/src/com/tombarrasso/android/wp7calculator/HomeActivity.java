@@ -3,7 +3,7 @@ package com.tombarrasso.android.wp7calculator;
 /*
  * HomeActivity.java
  *
- * Copyright (C) Thomas James Barrasso
+ * Copyright (C) 2012 Thomas James Barrasso
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ package com.tombarrasso.android.wp7calculator;
 // App Packages
 import java.util.List;
 import java.util.ArrayList;
+import java.nio.charset.Charset;
 
 // Arity Packages
 import org.javia.arity.Symbols;
@@ -31,16 +32,20 @@ import com.tombarrasso.android.wp7ui.extras.Changelog;
 import com.tombarrasso.android.wp7calculator.CalcTask.OnCalculationListener;
 import com.tombarrasso.android.wp7calculator.Constants.ButtonColors;
 import com.tombarrasso.android.wp7calculator.History;
-import com.tombarrasso.android.wp7ui.WPMenuItem;
+import com.tombarrasso.android.wp7ui.view.WPMenuItem;
 import com.tombarrasso.android.wp7ui.app.WPActivity;
 import com.tombarrasso.android.wp7ui.app.WPDialog;
+import com.tombarrasso.android.wp7ui.statusbar.StatusBarView;
 import com.tombarrasso.android.wp7ui.widget.WPRadioButton;
 import com.tombarrasso.android.wp7ui.widget.WPTextView;
+import com.tombarrasso.android.wp7ui.widget.ScrollView;
+import com.tombarrasso.android.wp7ui.widget.WPToast;
 import com.tombarrasso.android.wp7ui.widget.WPToggleSwitch;
 import com.tombarrasso.android.wp7ui.WPTheme;
 
 // Android Packages
 import android.app.Dialog;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -49,28 +54,94 @@ import android.content.SharedPreferences.Editor;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
+import android.view.ViewConfiguration;
+import android.view.View.OnLongClickListener;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.os.Handler;
+import android.os.Message;
+import android.os.Parcelable;
+import android.text.format.Time;
 import android.preference.PreferenceManager;
+import android.view.animation.TranslateAnimation;
+import android.view.animation.Animation;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.TypedValue;
+import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.Window;
+import android.view.animation.OvershootInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.Interpolator;
+import android.util.TypedValue;
+import android.view.Display;
+import android.view.Surface;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.RadioGroup;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Checkable;
+import android.widget.RelativeLayout;
 import android.view.LayoutInflater;
+import android.widget.ListView;
+import android.widget.ImageView;
+import android.widget.Toast;
+import android.widget.EditText;
+import android.widget.ViewAnimator;
+import android.widget.AdapterView;
+import android.provider.Settings;
+import android.provider.Settings.Secure;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.nfc.NfcAdapter.CreateNdefMessageCallback;
+import android.nfc.NfcAdapter.OnNdefPushCompleteCallback;
+import android.nfc.NfcEvent;
+import android.content.pm.PackageManager;
+import android.text.Html;
+import android.view.Menu;
+import android.net.Uri;
+import android.os.IBinder;
+import android.os.Process;
+import android.app.ActivityManager;
+import android.content.IntentFilter;
+import android.content.BroadcastReceiver;
+import android.content.res.Configuration;
+
+// Build Packages
+import com.tombarrasso.android.wp7bar.AndroidUtils;
+
+// Flip Packages
+import com.tekle.oss.android.animation.AnimationFactory;
+import com.tekle.oss.android.animation.AnimationFactory.FlipDirection;
+
+// Billing Packages
+import com.tombarrasso.android.wp7bar.billing.*;
+import com.tombarrasso.android.wp7bar.billing.BillingService.RequestPurchase;
+import com.tombarrasso.android.wp7bar.billing.BillingService.RestoreTransactions;
+import com.tombarrasso.android.wp7bar.billing.Consts.PurchaseState;
+import com.tombarrasso.android.wp7bar.billing.Consts.ResponseCode;
+
+// Miscwidgets Packages
+import org.miscwidgets.widget.Panel;
+
+// Animation Packages
+import com.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.animation.ValueAnimator;
+import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.ValueAnimator.AnimatorUpdateListener;
+import com.nineoldandroids.animation.TypeEvaluator;
+import com.nineoldandroids.animation.AnimatorListenerAdapter;
+import com.nineoldandroids.animation.AnimatorSet;
+import com.nineoldandroids.view.animation.AnimatorProxy;
 
 /**
  * This {@link Activity} contains the logic behind the calculator.
@@ -120,14 +191,25 @@ import android.view.LayoutInflater;
  *	<li>Show Vibration setting after change log</li>
  * 	<li>History</li>
  * </ul> 
+ * <b>Version 2.0</b>
+ * <ul>
+ *	<li>Added NFC/ Android Beam support!</li>
+ *	<li>Fixed decimal on solution bug.</li>
+ * </ul>
+ * <b>Version 2.1</b>
+ * <ul>
+ *	<li>New WP7-style menus.</li>
+ *	<li>Support for light/ dark themes.</li>
+ * </ul>
  *
  * @author		Thomas James Barrasso <contact @ tombarrasso.com>
- * @since		08-30-2011
- * @version		1.09
- * @category	Activity
+ * @since		06-03-2012
+ * @version		2.1
+ * @category	{@link Activity}
  */
 
-public class HomeActivity extends WPActivity implements OnClickListener, OnCalculationListener
+public final class HomeActivity extends WPActivity
+	implements OnClickListener, OnCalculationListener
 {
 	public static final String TAG = HomeActivity.class.getName(),
 							   PACKAGE = HomeActivity.class.getPackage().getName(),
@@ -138,31 +220,34 @@ public class HomeActivity extends WPActivity implements OnClickListener, OnCalcu
 							   EQUATION_KEY = "Equation_Value",
 							   STATUS_KEY = "Status_Show",
 							   ANIMATE_KEY = "Animation_Mode",
-							   ACCENT_KEY = "Accent_Color";
+							   ACCENT_KEY = "Accent_Color",
+							   WAKE_KEY = "App_Keep_Screen_On",
+							   THEME_KEY = "Theme_Dark";
 	
 	// UIViews.
-	private static AutoResizeTextView mResult;
-	private static WPTextView mEquation, mMemoryDisplay;
-	private static ViewGroup mCalcTable;
-	private static Checkable mVibToggle, mStatToggle, mAnimToggle;
+	private ListView mHistoryList;
+	private AutoResizeTextView mResult;
+	private WPTextView mEquation, mMemoryDisplay;
+	private ViewGroup mCalcTable;
+	private ViewAnimator mFlipContainer;
+	// private Checkable mVibToggle, mStatToggle, mAnimToggle, mKeepWakeToggle;
 	
-	// Menu items.
-	private static final int DIALOG_CHANGELOG = 1,
-							 DIALOG_VIBRATE = 2,
-							 DIALOG_HISTORY = 3;
-
-	private static final int MENU_ITEM_1 = 1, MENU_ITEM_2 = 2, MENU_ITEM_3 = 3;
-	private static final int[] ids = { MENU_ITEM_1, MENU_ITEM_2, MENU_ITEM_3 };
-	private static final int[] drawables =
-		{ R.drawable.theme, R.drawable.settings, R.drawable.history };
-	private static final int[] drawablesDown = { R.drawable.theme_inverted, R.drawable.settings_inverted, R.drawable.history_inverted };
+	// NFC stuff.
+	private NfcAdapter mNfcAdapter;
+    private static final int MESSAGE_SENT = 1;
+    
+    private static final int MENU_NORMAL = 0,
+    						 MENU_HISTORY = 1;
+	
+	// George Orwell would be proud.
+	private static final int DIALOG_CHANGELOG = 1984;;
 	
 	// Resources
 	private History.HistoryAdapter mHistoryAdapter;
 	private History mHistory;
 	private RadioGroup mGroup;
-	private static Resources mResources;
-	private static int mLen = 0, mParenCount = 0,
+	private Resources mResources;
+	private int mLen = 0, mParenCount = 0,
 					   mTrigMode = Constants.TrigMode.DEGREE;
 	
     // Data that is contained during
@@ -189,23 +274,90 @@ public class HomeActivity extends WPActivity implements OnClickListener, OnCalcu
 	private static final Entry mLastEntry = new Entry(),
 							   mMemory = new Entry();
 	
-	private Vibrator mVibrator;
 	private boolean mShouldVibrate = false,
 					mStatusBar = false,
-					mShouldAnimate = true;
+					mShouldAnimate = true,
+					mShouldKeepWake = false,
+					mThemeDark = true;
+	
+	/**
+	 * Recursively set the text of all {@link TextView}s.
+	 */
+	public static final void setTextColor(View mGroup, int color)
+	{
+		if (mGroup == null) return;
+
+		if (mGroup instanceof ViewGroup)
+		{
+			// Don't edit the theme chooser.
+			if (mGroup.getId() == R.id.linearlayout_theme_background ||
+				mGroup.getId() == R.id.linearlayout_theme_background_selected ||
+				mGroup.getId() == R.id.linearlayout_theme_accent) return;
+		
+			final ViewGroup mVGroup = (ViewGroup) mGroup;
+			for (int i = 0, e = mVGroup.getChildCount(); i < e; ++i)
+				setTextColor(mVGroup.getChildAt(i), color);
+		}
+		else if ((mGroup instanceof TextView) && !(mGroup instanceof EditText))
+		{
+			final TextView mTV = (TextView) mGroup;
+			final int mTextColor = mTV.getCurrentTextColor();
+			
+			// Only apply this to white/ black text.
+			if (mTextColor == Color.BLACK ||
+				mTextColor == Color.WHITE)
+				mTV.setTextColor(color);
+		}
+	}
+	
+	/**
+	 * Recursively set the {@link OnLongClickListener} of all Views.
+	 */
+	public static final void setLongClickListener(View mGroup)
+	{
+		if (mGroup == null) return;
+
+		if (mGroup instanceof ViewGroup)
+		{
+			final ViewGroup mVGroup = (ViewGroup) mGroup;
+			for (int i = 0, e = mVGroup.getChildCount(); i < e; ++i)
+				setLongClickListener(mVGroup.getChildAt(i));
+		}
+		else if (mGroup instanceof View)
+		{
+			final String mDesc = (String) mGroup.getContentDescription();
+			if (mDesc != null && mDesc.length() > 0)
+			{				
+				mGroup.setOnLongClickListener(mLongClickListener);
+			}
+		}
+	}
+	
+	private static final LongClickListener mLongClickListener = new LongClickListener();
+	
+	private static final class LongClickListener
+		implements OnLongClickListener
+	{
+		@Override
+		public boolean onLongClick(View v)
+		{
+			// Check if the View has a contentDescription.
+			final String mDesc = (String) v.getContentDescription();
+			if (mDesc != null && mDesc.length() > 0)
+				Toast.makeText(v.getContext().getApplicationContext(), mDesc, Toast.LENGTH_LONG).show();
+			
+			// Consume the event, YUM!
+			return true;
+		}
+	}
 	
 	@Override
 	protected void onPause()
 	{		
 		// Get Preferences and Editor.
-		final SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+		final SharedPreferences mPrefs = PreferenceManager
+			.getDefaultSharedPreferences(getApplicationContext());
 		final Editor mEditor = mPrefs.edit();
-		
-		// Store whether or not to vibrate.
-		mEditor.putBoolean(VIBRATE_KEY, mShouldVibrate);
-		mEditor.putBoolean(STATUS_KEY, mStatusBar);
-		mEditor.putBoolean(ANIMATE_KEY, mShouldAnimate);
-		mEditor.putInt(ACCENT_KEY, WPTheme.getThemeColor());
 
 		int mMemVal = 0;
 		try
@@ -217,10 +369,15 @@ public class HomeActivity extends WPActivity implements OnClickListener, OnCalcu
 		{
 			Log.w(TAG, "Could not save memory to preferences");
 		}
+		
 		mEditor.putInt(MEMORY_KEY, (mMemory.isSet) ? mMemVal : 0);
 		mEditor.putInt(TRIG_KEY, mTrigMode);
-		if (mResult != null) mEditor.putString(RESULT_KEY, mResult.getText().toString());
-		if (mEquation != null) mEditor.putString(EQUATION_KEY, mEquation.getText().toString());
+		
+		if (mResult != null && mResult.getText() != null)
+			if (mResult != null) mEditor.putString(RESULT_KEY, mResult.getText().toString());
+		if (mEquation != null && mEquation.getText() != null)
+			if (mEquation != null) mEditor.putString(EQUATION_KEY, mEquation.getText().toString());
+		
 		mEditor.commit();
 
 		// Write history contents to file.
@@ -235,42 +392,226 @@ public class HomeActivity extends WPActivity implements OnClickListener, OnCalcu
     {
 		getMemory();
     	super.onResume();
+    	
+    	// Check NFC for ICS.
+    	if (android.os.Build.VERSION.SDK_INT >= 14) {
+			// Check to see that the Activity started due to an Android Beam
+			if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+				processIntent(getIntent());
+			}
+		}
     }
+    
+    private NfcStuff mNfcStuff = null;
+    
+    // Internal class for NFC stuff.
+    private final class NfcStuff implements
+    	CreateNdefMessageCallback, OnNdefPushCompleteCallback
+    {
+    	/**
+		 * Creates a custom MIME type encapsulated in an NDEF record
+		 *
+		 * @param mimeType
+		 */
+		public NdefRecord createMimeRecord(String mimeType, byte[] payload) {
+			byte[] mimeBytes = mimeType.getBytes(Charset.forName("US-ASCII"));
+			NdefRecord mimeRecord = new NdefRecord(
+					NdefRecord.TNF_MIME_MEDIA, mimeBytes, new byte[0], payload);
+			return mimeRecord;
+		}
 		
+		/**
+		 * Implementation for the CreateNdefMessageCallback interface
+		 */
+		@Override
+		public NdefMessage createNdefMessage(NfcEvent event) {
+			final Time time = new Time();
+			time.setToNow();
+			final String text = mResult.getText().toString();
+			final NdefMessage msg = new NdefMessage(
+					new NdefRecord[] { createMimeRecord(
+							"application/com.example.android.beam", text.getBytes())
+			 /**
+			  * The Android Application Record (AAR) is commented out. When a device
+			  * receives a push with an AAR in it, the application specified in the AAR
+			  * is guaranteed to run. The AAR overrides the tag dispatch system.
+			  * You can add it back in to guarantee that this
+			  * activity starts when receiving a beamed message. For now, this code
+			  * uses the tag dispatch system.
+			  */
+			  //,NdefRecord.createApplicationRecord("com.example.android.beam")
+			});
+			
+			return msg;
+		}
+	
+		/**
+		 * Implementation for the OnNdefPushCompleteCallback interface
+		 */
+		@Override
+		public void onNdefPushComplete(NfcEvent arg0) {
+			// A handler is needed to send messages to the activity when this
+			// callback occurs, because it happens from a binder thread
+			mHandler.obtainMessage(MESSAGE_SENT).sendToTarget();
+		}
+	}
+    
+    @Override
+    public void onNewIntent(Intent intent) {
+        // onResume gets called after this to handle the intent
+        setIntent(intent);
+    }
+    
+    /**
+     * Parses the NDEF Message from the intent and prints to the TextView
+     */
+    private void processIntent(Intent intent) {
+        final Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
+                NfcAdapter.EXTRA_NDEF_MESSAGES);
+        // only one message sent during the beam
+        final NdefMessage msg = (NdefMessage) rawMsgs[0];
+        // record 0 contains the MIME type, record 1 is the AAR, if present
+        final String mResultTextNfc = new String(
+        	msg.getRecords()[0].getPayload());
+        	
+        // Update our last entry as a number.
+		mLastEntry.type = Constants.Type.SOLUTION;
+		mLastEntry.num = mResultTextNfc;
+		mLastEntry.isFloat = mLastEntry.num.contains(".");
+        mResult.setText(mResultTextNfc);
+    }
+    		
 	// App launch.
     @Override
     public void onCreate(Bundle savedInstanceState)
-    {	
-    	mResources = getResources();
+    {
+        // Check some basic parameters.
+		final boolean isEmulator = AndroidUtils.isEmulator();
+		final boolean isRelease = AndroidUtils.isRelease(getApplicationContext());
+		final boolean isRestricted = isRestricted();
+		
+		// Don't bother running if this is not signed properly or
+		// if we are running this on the Android Emulator. Also
+		// check if this Context is restricted (loaded from another
+		// application's process). If any of these things are true
+		// stop running immediately.
+		if (isEmulator || !isRelease || isRestricted) 
+		{
+			final ActivityManager mManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+			if (android.os.Build.VERSION.SDK_INT >= 8) {
+				mManager.killBackgroundProcesses(getPackageName());
+			} else {
+				mManager.restartPackage(getPackageName());
+			}
+			Process.killProcess(Process.myPid());
+			super.finishNow();
+			
+			return;
+		}
+	
+		mResources = getResources();
+    	
     	// This is for localization.
         WPTheme.setThemeColorNames(mResources.getStringArray(R.array.color_names));
+	
+		super.shouldRemoveStatusBarListeners(false);
         
         // Set this class as the listener for calculation events.
         // If this is not set, calculations will never display.
         CalcTask.setCalculationListener(this);
         
         super.onCreate(savedInstanceState);
+        
+        // Disable IME for this application
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM |
+        					 WindowManager.LayoutParams.FLAG_IGNORE_CHEEK_PRESSES);
+        
+        // Be hardware accelerated if possible.
+        if (android.os.Build.VERSION.SDK_INT >= 11) {
+			getWindow().addFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
+		}
 
 		// Get a few values from settings.
-		final SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+		final SharedPreferences mPrefs = PreferenceManager
+			.getDefaultSharedPreferences(getApplicationContext());
 		mStatusBar = mPrefs.getBoolean(STATUS_KEY, mStatusBar);
+		mShouldKeepWake = mPrefs.getBoolean(WAKE_KEY, mShouldKeepWake);
 		mShouldAnimate = mPrefs.getBoolean(ANIMATE_KEY, mShouldAnimate);
-		WPTheme.setThemeColor(mPrefs.getInt(ACCENT_KEY, WPTheme.defThemeColor));
-
-		// Load the status bar if set to do so.
-		if (mStatusBar) makeFullscreen();
-		    setContentView(R.layout.home);
+		mThemeDark = mPrefs.getBoolean(THEME_KEY, mThemeDark);
+		
+		WPTheme.setThemeDarkUnsynchronized(mThemeDark);
+		WPTheme.setAccentColorUnsynchronized(mPrefs.getInt(ACCENT_KEY, WPTheme.getAccentColor()));
+		
+		updateWindowFlags();
+		
+		final int mRotation = getRotation();
+		// Check which layout to use in landscape.
+		setContentView(((mRotation == Surface.ROTATION_270)
+			? R.layout.home_two : R.layout.home));
+		
+		// Since we are caching large views, we want
+        // to keep their cache between each animation.
+        try {
+			((ViewGroup) getWindow().getDecorView()).setPersistentDrawingCache(ViewGroup.PERSISTENT_ANIMATION_CACHE);
+			((ViewGroup) getWindow().getDecorView()).setDrawingCacheEnabled(true);
+		} catch (Throwable t) { /* This shouldn't happen. */ }
+		
+		// All long clicking for additional information.
+		setLongClickListener(getWindow().getDecorView());
+		
+		// Check NFC for ICS.
+		if (android.os.Build.VERSION.SDK_INT >= 14) {	
+			try {
+				mNfcStuff = new NfcStuff();
+			
+				// Check for available NFC Adapter
+				mNfcAdapter = NfcAdapter.getDefaultAdapter(getApplicationContext());
+				
+				// This means that the device has NFC.
+				if (mNfcAdapter != null)
+				{
+					// Register callback to set NDEF message
+					mNfcAdapter.setNdefPushMessageCallback(mNfcStuff, this);
+					// Register callback to listen for message-sent success
+					mNfcAdapter.setOnNdefPushCompleteCallback(mNfcStuff, this);
+				}
+			} catch (Throwable e) {
+				Log.w(TAG, "An error occured with NFC Beam, oh well!", e);
+			}
+		}
 
 		// Inflate the status bar if possible.
 		final View mStatusView = findViewById(R.id.statusbarstub);
 		if (mStatusBar && mStatusView != null && mStatusView instanceof ViewStub)
 			((ViewStub) mStatusView).inflate();
+			
+		updateThemeColor();
         
         // Fetch UI Views.
         mMemoryDisplay = (WPTextView) findViewById(R.id.memory);
         mEquation = (WPTextView) findViewById(R.id.equation);
         mResult = (AutoResizeTextView) findViewById(R.id.result);
         mCalcTable = (ViewGroup) findViewById(R.id.buttons);
+        mHistoryList = (ListView) findViewById(R.id.history_list);
+        mFlipContainer = (ViewAnimator) findViewById(R.id.flip_container);
+        
+        // Gingerbread overscroll glow removal.
+        if (android.os.Build.VERSION.SDK_INT >= 9) {
+        	mHistoryList.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        }
+        
+        // Create Fake Menu button for ICS.
+        if (android.os.Build.VERSION.SDK_INT >= 14) {
+        	if (!ViewConfiguration.get(
+        		getApplicationContext()).hasPermanentMenuKey()) {
+            	createFakeMenu();
+            }
+        }
+        
+        // Move the Result text slightly up to accommodate margin issues.
+        final int mUp = mResources.getDimensionPixelSize(R.dimen.vertical_translation);
+        final AnimatorProxy mUpProxy = AnimatorProxy.wrap(mResult);
+    	mUpProxy.setY(-mUp);
                 
         // Attaches an onClickListener to every CalcButton.
         if (mCalcTable != null) attachClickListeners(mCalcTable, this);
@@ -280,16 +621,16 @@ public class HomeActivity extends WPActivity implements OnClickListener, OnCalcu
         final RotationData mData = (RotationData) getLastNonConfigurationInstance();
         if (mData != null)
         {
-		// Create History either from saved data during rotation,
-		// or by initializing it from the saved data file.
-        	super.restoreFromState(mData.superstate);
-		mHistory = new History(this, mData.mHistory);
-        	if (mResult != null) mResult.setText(mData.mResultText);
-        	if (mEquation != null) mEquation.setText(mData.mEquationText);
+			// Create History either from saved data during rotation,
+			// or by initializing it from the saved data file.
+			super.restoreFromState(mData.superstate);
+			mHistory = new History(this, mData.mHistory);
+			if (mResult != null) mResult.setText(mData.mResultText);
+			if (mEquation != null) mEquation.setText(mData.mEquationText);
         }
         else
         {
-		mHistory = new History(this);
+			mHistory = new History(this);
 
 	        // Initialize last entry
 	        mLastEntry.num = string(R.string.zero);
@@ -302,59 +643,511 @@ public class HomeActivity extends WPActivity implements OnClickListener, OnCalcu
 
 		// Adapter for history.
 		mHistoryAdapter = mHistory.getAdapter(R.layout.history);
+		
+		// Set our adapter and OnItemClickListener.
+        if (mHistoryList != null) {
+			mHistoryList.setEmptyView(findViewById(R.id.no_history));
+			mHistoryList.setAdapter(mHistoryAdapter);
+			mHistoryList.setOnItemClickListener(mHistoryClickListener);
+		}
 	        
         // Setup menu with inverted drawables.
-        addMenuItems(ids, drawables, drawablesDown);
+        // Commented out because it was replaced.
+        // addMenuItems(ids, drawables, drawablesDown, captions);
+        
+        setupMenu();
         
         // Fly in if we are returning from a finished Activity.
 		final int mDuration = mResources.getInteger(R.integer.flyout_duration);
-		if (mDuration > 0 && mShouldAnimate)
-		{
-			final Flip3DAnimation mAnimIn = new Flip3DAnimation(120, 0, 0, getResources().getDisplayMetrics().heightPixels / 2),
-								  mAnimOut = new Flip3DAnimation(0, 120, 0, getResources().getDisplayMetrics().heightPixels / 2);
-			mAnimIn.setInterpolator(new AccelerateInterpolator());
-			mAnimOut.setInterpolator(new AccelerateInterpolator());
-			mAnimIn.setDuration(mDuration);
-			mAnimOut.setDuration(mDuration);
-			mAnimIn.setFillAfter(true);
-			mAnimOut.setFillAfter(true);
-			setActivityAnimation(mAnimIn, mAnimOut);
-		}
+		if (mDuration > 0 && mShouldAnimate) createActivityAnims();
 		
 		// Display Change Log.
 		final Changelog mChangelog = new Changelog(this);
 		if (mChangelog.firstRun())
 		{
 			// Attach listener to show vibration dialog.
-			Changelog.setOnChangelogDismissedListener(mChangelogListener);
-			Log.i(TAG, "Displaying change log...");
-			showDialog(DIALOG_CHANGELOG);
+			Log.i(TAG, "Displaying change log.");
+			showDialogSafely(DIALOG_CHANGELOG);
 		}
     }
     
-    // Go to theme selection activity when settings menu item is clicked.
-    @Override
-    public void onOptionsItemSelected(WPMenuItem item)
+    private boolean hasCreatedAnims = false;
+    
+    private final void createActivityAnims()
     {
-    	switch(item.getItemId())
+    	if (mResources == null) return;
+    	final int mDuration = mResources.getInteger(R.integer.flyout_duration);
+    	if (hasCreatedAnims || mDuration <= 0) return;
+    	
+    	final int mHalfHeight = (int) (getResources().getDisplayMetrics().heightPixels / 2);
+		final Flip3DAnimation mAnimIn = new Flip3DAnimation(120, 0, 0, mHalfHeight),
+							  mAnimOut = new Flip3DAnimation(0, 120, 0, mHalfHeight);
+		mAnimIn.setInterpolator(mAccelInt);
+		mAnimOut.setInterpolator(mAccelInt);
+		mAnimIn.setDuration(mDuration);
+		mAnimOut.setDuration(mDuration);
+		mAnimIn.setFillAfter(true);
+		mAnimOut.setFillAfter(true);
+		setActivityAnimation(mAnimIn, mAnimOut);
+		
+		hasCreatedAnims = true;
+    }
+    
+    private static final int mScreenFlags =
+    	(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | 
+		WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+		WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
+		WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+		WindowManager.LayoutParams.FLAG_TOUCHABLE_WHEN_WAKING);
+    
+    private final void updateWindowFlags()
+    {
+    	// Check if we should keep the screen on, turn it on,
+		// remove the lockscreen... whatever we have to do!
+		if (mShouldKeepWake && getWindow() != null) {
+			getWindow().addFlags(mScreenFlags);
+		} else {
+			getWindow().clearFlags(mScreenFlags);
+		}
+		
+		final View mStatusBarView = findViewById(R.id.statusbarview);
+		if (mStatusBarView != null) mStatusBarView.setVisibility(
+			((mStatusBar) ? View.VISIBLE : View.GONE));
+
+		// Load the status bar if set to do so.
+		if (mStatusBar) {
+			if (getWindow() != null) {
+				getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+				makeFullscreen();
+			}
+			
+			// Inflate the status bar if possible.
+			final View mStatusView = findViewById(R.id.statusbarstub);
+			if (mStatusView != null && mStatusView instanceof ViewStub)
+				((ViewStub) mStatusView).inflate();
+		} else {
+			if (getWindow() != null) {
+				getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+				getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
+									 WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+			}
+		}
+    }
+    
+    @Override
+    public void onLowMemory()
+    {
+    	super.onLowMemory();
+    	mShouldAnimate = false;
+    }
+    
+    // Update the theme color of this Activity.
+	private final void updateThemeColor()
+	{
+		final SharedPreferences mPrefs = PreferenceManager
+			.getDefaultSharedPreferences(getApplicationContext());
+		mThemeDark = mPrefs.getBoolean(HomeActivity.THEME_KEY, mThemeDark);
+		
+		final View mStatusBar = findViewById(R.id.statusbarview);
+		if (mStatusBar != null && (mStatusBar instanceof StatusBarView))
+		{
+			((StatusBarView) mStatusBar).setAllColors(((mThemeDark) ? Color.WHITE : Color.BLACK));
+		}
+		
+		// Make the Memory indicator a solid block behind it.
+		if (mMemoryDisplay != null)
+			mMemoryDisplay.setBackgroundColor(((mThemeDark) ? Color.BLACK : Color.WHITE));
+		
+		final View[] mRoots =  {
+			getWindow().getDecorView().getRootView(),
+			findViewById(R.id.root)
+		};
+		
+		// Update layout and colors.
+		if (mRoots != null)
+		{
+			if (mThemeDark)
+			{
+				for (final View mRoot : mRoots)
+					if (mRoot != null)
+						mRoot.setBackgroundColor(Color.BLACK);
+				HomeActivity.setTextColor(mRoots[0], Color.WHITE);
+			}
+			else
+			{
+				for (final View mRoot : mRoots)
+					if (mRoot != null)
+						mRoot.setBackgroundColor(Color.WHITE);
+				HomeActivity.setTextColor(mRoots[0], Color.BLACK);
+			}
+		}
+	}
+    
+    private final AccelerateInterpolator mAccelInt = new AccelerateInterpolator();
+    
+    private final Flip3DAnimation getStartAnimation()
+    {
+    	// Fly in if we are returning from a finished Activity.
+		final int mDuration = mResources.getInteger(R.integer.flyout_duration);
+		
+		if (mDuration <= 0) return null;
+		
+    	final Flip3DAnimation mAnimIn = new Flip3DAnimation(120, 0, 0, getResources().getDisplayMetrics().heightPixels / 2);
+		mAnimIn.setInterpolator(mAccelInt);
+		mAnimIn.setDuration(mDuration);
+		mAnimIn.setFillAfter(true);
+		return mAnimIn;
+    }
+    
+    // Handle all key presses.
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event)
+	{		
+		// Make sure we don't handle repeat clicks,
+		// ie. holding a button down.
+		if (event.getRepeatCount() == 0 &&
+				event.getAction() == KeyEvent.ACTION_DOWN)
+		{
+			switch(event.getKeyCode())
+			{
+				// Hide menus when back button is pressed.
+				case KeyEvent.KEYCODE_BACK:
+				{
+					// If the menu is opened, close it.
+					final Panel mMenu = (Panel) findViewById(R.id.wpmenu);
+					if (mMenu.isOpen()) {
+						mMenu.setOpen(false, true);
+						return true;
+					}
+					
+					// If we are in our history table.
+					if (mCalcTable.getVisibility() == View.GONE) {
+						flipHistory();
+						return true;
+					}
+				}
+			}
+		}
+		
+		return super.dispatchKeyEvent(event);
+	}
+    
+    // Collapse menu if open and back pressed.
+    @Override
+    public void onBackPressed()
+    {
+    	// If the menu is opened, close it.
+    	if (mMenu == null) mMenu = (Panel) findViewById(R.id.wpmenu);
+    	if (mMenu.isOpen()) {
+    		mMenu.setOpen(false, true);
+    		return;
+    	}
+    	
+    	// If we are in our history table.
+		if (mCalcTable.getVisibility() == View.GONE) {
+			flipHistory();
+			return;
+		}
+    
+    	super.onBackPressed();
+    }
+    
+    private Panel mMenu;
+    
+    // Toggle the WP menu when MENU button pressed.
+    @Override
+	public boolean onPrepareOptionsMenu(Menu menu) 
+	{
+		if (mMenu == null) mMenu = (Panel) findViewById(R.id.wpmenu);
+		mMenu.setOpen(!mMenu.isOpen(), true);
+		return super.onPrepareOptionsMenu(menu);
+	}
+	
+	/**
+	 * @return The orientation of the device, one of the
+	 * constants in {@link Surface}.
+	 */
+	public final int getRotation()
+	{
+		final WindowManager mWM = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+		final Display mDisplay = mWM.getDefaultDisplay();
+		
+		// Froyo and up use getRotation().
+		if (android.os.Build.VERSION.SDK_INT >= 8)
+		{
+			return mDisplay.getRotation();
+		}
+		
+		return mDisplay.getOrientation();
+	}
+	
+	/**
+	 * @return An {@link Intent} to share this application.
+	 */
+	private final Intent getShareIntent()
+	{
+		final Intent mIntent = new Intent(android.content.Intent.ACTION_SEND);  
+    	mIntent.setType("text/plain");  
+    	mIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.share_subject));  
+		mIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.share_text));  
+      
+   		return Intent.createChooser(mIntent, getString(R.string.share_title));  
+	}
+	
+	/**
+	 * Opacity of the WP7-style AppBar/ menu.
+	 */
+	private static final int MENU_OPACITY = (int) (0.75f * 255);
+    
+    // Setup the bottom WP7 menu.
+    private final void setupMenu()
+    {    
+    	final View mMoreDots = findViewById(R.id.menu_more),
+    			   mMenuContent = findViewById(R.id.panelContent),
+    			   mMenuHandle = findViewById(R.id.panelHandle);
+    	
+    	if (mMenu == null) mMenu = (Panel) findViewById(R.id.wpmenu);
+    	
+    	// Set menu background color.
+    	if (mMenu != null) {
+    		final int mMenuBackColor = getResources().getColor(
+    			((mThemeDark) ? R.color.menu : R.color.menu_light));
+    			
+    		// This lets the menu know what to keep track of.
+    		mMenu.setBackgroundColors(mMenuBackColor);
+    		// mMenuHandle.setBackgroundColor(mMenuBackColor);
+    		// mMenuContent.setBackgroundColor(mMenuBackColor);
+    	}
+    	
+    	// Set the dots to light.
+    	if (mMoreDots != null) {
+    		((ImageView) mMoreDots).setImageResource(((mThemeDark) ?
+    			R.drawable.points_white : R.drawable.points_black));
+    			
+    		// Check if we have rotated.
+    		final int mRotation = getRotation();
+    		if (mRotation == Surface.ROTATION_90 ||
+    			mRotation == Surface.ROTATION_270)
+    		{
+    			final AnimatorProxy mAnimProxy = AnimatorProxy.wrap(mMoreDots);
+    			mAnimProxy.setRotation(90);
+    		}
+    	}
+    	
+    	updateMenu(MENU_NORMAL);
+    }
+        
+    private final MenuClickWrapper mHistoryMenuListener =
+    	new MenuClickWrapper(new View.OnClickListener()
+    {
+    	@Override
+    	public void onClick(View mView)
     	{
-			case MENU_ITEM_1:
-			{
-				startActivity(new Intent(HomeActivity.this,
-					ThemeActivity.class));
-				break;
-			}
-			case MENU_ITEM_2:
-			{
-				showDialog(DIALOG_VIBRATE);
-				break;
-			}
-			case MENU_ITEM_3:
-			{
-				showDialog(DIALOG_HISTORY);
-				break;
+    		flipHistory();
+    	}
+    });
+    
+    private final void flipHistory()
+    {
+    	final View mHistList = (View) mHistoryList.getParent();
+    	
+    	if (mShouldAnimate) {
+			// Save some drawing cache for better performance.
+			((ViewGroup) mHistList).setPersistentDrawingCache(ViewGroup.PERSISTENT_ANIMATION_CACHE);
+			((ViewGroup) mHistList).setDrawingCacheEnabled(true);
+			mCalcTable.setPersistentDrawingCache(ViewGroup.PERSISTENT_ANIMATION_CACHE);
+			mCalcTable.setDrawingCacheEnabled(true);
+		}
+			
+		final boolean isCalcVisible = (mCalcTable.getVisibility() == View.VISIBLE);
+		
+		if (mShouldAnimate) {
+			AnimationFactory.flipTransition(mFlipContainer, FlipDirection.LEFT_RIGHT);
+		} else {
+			// Just toggle visibility if we shouldn't animate.
+			mCalcTable.setVisibility(((isCalcVisible) ? View.GONE : View.VISIBLE));
+			mHistList.setVisibility(((isCalcVisible) ? View.VISIBLE : View.GONE));
+		}
+		updateMenu(((isCalcVisible) ? MENU_HISTORY : MENU_NORMAL));
+    }
+    
+    private final void updateMenu(int menu)
+    {
+    	// Get all of our menu items.
+    	final TextView mSettings = (TextView) findViewById(R.id.settings_button),
+				   	   mHistory = (TextView) findViewById(R.id.history),
+				   	   mShare = (TextView) findViewById(R.id.share_button),
+				   	   mRate = (TextView) findViewById(R.id.rate_button);
+    
+    	switch(menu)
+    	{
+    		case MENU_NORMAL:
+    		{		
+				// Make items visible.   
+				mSettings.setVisibility(View.VISIBLE);
+				mShare.setVisibility(View.VISIBLE);
+				mRate.setVisibility(View.VISIBLE);
+				mHistory.setVisibility(View.VISIBLE);
+				
+				// Update text.
+				mSettings.setText(R.string.settings);
+				mShare.setText(R.string.share);
+						   
+    			// Set click listener for rate button.
+				mRate.setOnClickListener((OnClickListener) new MenuClickWrapper((OnClickListener)
+					new UrlClickListener(this, getString(R.string.rateuri))));
+					
+				// Set click listener for share button.
+				mShare.setOnClickListener((OnClickListener) new MenuClickWrapper((OnClickListener)
+					new LaunchIntentListener(getShareIntent(), this)));
+					
+				// Set click listener for settings button.
+				mSettings.setOnClickListener((OnClickListener) new MenuClickWrapper((OnClickListener)
+					new LaunchClickListener(AdvancedActivity.class, this)));
+					
+				mHistory.setOnClickListener(mHistoryMenuListener);
+					
+    			break;
+    		}
+    		case MENU_HISTORY:
+    		{
+    			// Make items visible/ hidden.   
+				mSettings.setVisibility(View.VISIBLE);
+				mShare.setVisibility(View.VISIBLE);
+				mRate.setVisibility(View.GONE);
+				mHistory.setVisibility(View.GONE);
+				
+				// Update text.
+				mSettings.setText(R.string.history_back);
+				mShare.setText(R.string.history_clear);
+				
+				// Update click listeners.
+				mSettings.setOnClickListener(mHistoryMenuListener);
+				mShare.setOnClickListener(mClearMenuListener);
+    		
+    			break;
+    		}
+    	}
+    }
+    
+    private final MenuClickWrapper mClearMenuListener =
+    	new MenuClickWrapper(new View.OnClickListener()
+    {
+    	@Override
+    	public void onClick(View mView)
+    	{
+    		mHistory.clear();
+    	}
+    });
+        
+    /**
+     * Wrapper class that closes the menu when pressed.
+     */
+    private final class MenuClickWrapper
+    	implements View.OnClickListener
+    {
+    	private final View.OnClickListener mListener;
+    
+    	public MenuClickWrapper(View.OnClickListener mListener)
+    	{
+    		this.mListener = mListener;
+    	}
+    
+    	@Override
+    	public void onClick(View mView)
+    	{
+    		if (mListener != null) mListener.onClick(mView);
+    		
+    		// If the menu is opened, close it.
+			if (mMenu == null) mMenu = (Panel)
+				HomeActivity.this.findViewById(R.id.wpmenu);
+			if (mMenu != null && mMenu.isOpen()) {
+				mMenu.setOpen(false, false);
 			}
     	}
+    };
+    
+    private static final int REQUEST_CODE = 0x7;
+    
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+    	super.onWindowFocusChanged(hasFocus);
+    	
+    	// if (hasFocus) startAnim();
+    	
+    	Log.v(TAG, "Window focus: " + Boolean.toString(hasFocus) + ".");
+    }
+    
+    private final void startAnim() {
+    	final Flip3DAnimation mAnim = getStartAnimation();
+			 
+		 if (mAnim == null) return;
+		 
+		 final View mView = getWindow().getDecorView().findViewById(Window.ID_ANDROID_CONTENT);
+		 if (mView != null) mView.startAnimation(mAnim);
+    }
+    
+    // Restart animation on failure.
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	super.onActivityResult(requestCode, resultCode, data);
+    
+		 if (resultCode == RESULT_CANCELED && mShouldAnimate) {
+			 startAnim();
+			 
+			 Log.v(TAG, "Activity canceled.");
+		}
+    }
+    
+    /**
+     * Show a dialog but avoid the slight possibility of
+     * an FC if we are exiting.
+     */
+    private final void showDialogSafely(int mDialog)
+    {
+    	if (!isFinishing()) showDialog(mDialog);
+    }
+
+    /** This handler receives a message from onNdefPushComplete */
+    private final Handler mHandler = new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg)
+        {
+            switch (msg.what)
+            {
+				case MESSAGE_SENT:
+				{
+					WPToast.makeText(getApplicationContext(),
+						getString(R.string.message_sent), WPToast.LENGTH_LONG).show();
+					break;
+				}
+            }
+        }
+    };
+    
+    // Click handler for menu button.
+    private final View.OnClickListener mMenuClickListener =
+    	new View.OnClickListener()
+    {
+    	@Override
+    	public void onClick(View mView)
+    	{
+    		switch(mView.getId()) {
+    			case R.id.overflow_menu: {
+    				toggleMenu();
+    				break;
+    			}
+    		}
+    	}
+    };
+    
+    /**
+     * Create the fake menu button and make it work!
+     */
+    private final void createFakeMenu()
+    {
+    	Log.v(TAG, "ICS w/o physical menu button.");
     }
     
     /**
@@ -365,87 +1158,72 @@ public class HomeActivity extends WPActivity implements OnClickListener, OnCalcu
     {
     	final WPDialog mDialog = new WPDialog(this);
 		if (mStatusBar)
-			mDialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-WindowManager.LayoutParams.FLAG_FULLSCREEN);
+			mDialog.getWindow().setFlags(
+				WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
     	
     	switch(id)
     	{
-    	case DIALOG_CHANGELOG:
-    	{
-    		// Get the dialog for the change log.
-    		final Changelog mChangeLog = new Changelog(this);
-    		return mChangeLog.getLogDialog();
-    	}
-    	case DIALOG_VIBRATE:
-    	{
-    		mDialog.setTitle(R.string.settings);
-			final LinearLayout mContainer = new LinearLayout(this);
-			final LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-			final ViewGroup mVibration = (ViewGroup) mInflater.inflate(R.layout.settings_item, null),
-					mStatus = (ViewGroup) mInflater.inflate(R.layout.settings_item, null),
-					mAnimate = (ViewGroup) mInflater.inflate(R.layout.settings_item, null);
-			mContainer.setOrientation(LinearLayout.VERTICAL);
-			mVibration.setId(R.id.settings_vibration);
-			mStatus.setId(R.id.settings_status);
-
-			// Get the checkable of various settings.
-			mVibToggle = (Checkable) mVibration.findViewById(R.id.setting_toggle);
-			mStatToggle = (Checkable) mStatus.findViewById(R.id.setting_toggle);
-			mAnimToggle = (Checkable) mAnimate.findViewById(R.id.setting_toggle);
-
-			// Set text of settings.
-			((TextView) mStatus.findViewById(R.id.setting_desc)).setText(R.string.status);
-			((TextView) mVibration.findViewById(R.id.setting_desc)).setText(R.string.vibrate);
-			((TextView) mAnimate.findViewById(R.id.setting_desc)).setText(R.string.animate);
-
-			mContainer.addView(mVibration);
-			mContainer.addView(mStatus);
-			mContainer.addView(mAnimate);
-			mDialog.setMessageView(mContainer);
-
-			// Set enabled/ disabled.
-			if (mShouldVibrate) mVibToggle.setChecked(mShouldVibrate);
-			if (mStatusBar) mStatToggle.setChecked(mStatusBar);
-			if (mShouldAnimate) mAnimToggle.setChecked(mShouldAnimate);
-
-				mDialog.setPositiveButton(R.string.change, mVibrateListener);
-				mDialog.setNegativeButton(R.string.cancel, mVibrateListener);
-				break;
+			case DIALOG_CHANGELOG:
+			{
+				// Get the dialog for the change log.
+				final Changelog mChangeLog = new Changelog(this);
+				return mChangeLog.getLogDialog();
 			}
-		case DIALOG_HISTORY:
-		{
-			mDialog.setTitle(R.string.history);
-			mDialog.setFullScreen(true);
-			final ListView mList = new ListView(this);
-			// Remove background color, cache color hint,
-			// scrolling edge, divider, etc.
-			mList.setBackgroundColor(Color.TRANSPARENT);
-			mList.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-			mList.setSelector(R.drawable.history_item);
-			mList.setDividerHeight(0);
-			mList.setCacheColorHint(Color.TRANSPARENT);
-			mList.setAdapter(mHistoryAdapter);
-			mList.setOnItemClickListener(mHistoryClickListener);
-			mList.setVerticalFadingEdgeEnabled(false);
-			mDialog.setMessageView(mList);
-			mDialog.setPositiveButton(R.string.history_close, mHistoryListener);
-			mDialog.setNegativeButton(R.string.history_clear, mHistoryListener);
-			break;
-		}
     	}
     	return mDialog;
+    }
+    
+    // Dismiss dialog click listener.
+	private final DialogInterface.OnClickListener mDismissListener =
+		new DialogInterface.OnClickListener()
+	{	
+		@Override
+		public void onClick(DialogInterface dialog, int which)
+		{
+			dialog.dismiss();
+		}
+	};
+    
+    /**
+     * Called when this activity becomes visible.
+     */
+    @Override
+    protected void onStart() {
+        
+        // Get a few values from settings.
+		final SharedPreferences mPrefs = PreferenceManager
+			.getDefaultSharedPreferences(getApplicationContext());
+			
+		if (mPrefs != null) {
+			mStatusBar = mPrefs.getBoolean(STATUS_KEY, mStatusBar);
+			mShouldKeepWake = mPrefs.getBoolean(WAKE_KEY, mShouldKeepWake);
+			mShouldAnimate = mPrefs.getBoolean(ANIMATE_KEY, mShouldAnimate);
+			mThemeDark = mPrefs.getBoolean(THEME_KEY, mThemeDark);
+			
+			updateWindowFlags();
+		}
+		
+		if (mShouldAnimate) createActivityAnims();
+		
+		// Stop animations if necessary.
+		setAnimate(mShouldAnimate);
+		
+		updateThemeColor();
+		setupMenu();
+		
+		super.onStart();
     }
 
     // Handle a history item being clicked.
     private final ListView.OnItemClickListener mHistoryClickListener =
-    new ListView.OnItemClickListener()
+   		new ListView.OnItemClickListener()
     {
 	   	@Override
 	   	public void onItemClick(AdapterView<?> adapter, View view, int position, long arg)
 		{
 			// Restore screen from history.
-		  		final History.HistoryEntry mEntry = mHistoryAdapter.getItem(position);
+		  	final History.HistoryEntry mEntry = mHistoryAdapter.getItem(position);
 			mEquation.setText(mEntry.mEquation);
 			mResult.setText(mEntry.mResult);
 			mLastEntry.type = Constants.Type.SOLUTION;
@@ -453,31 +1231,8 @@ WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 			// Determine if the number contains a period.
 			mLastEntry.isFloat = mLastEntry.num.contains(".");
-			dismissDialog(DIALOG_HISTORY);
+			flipHistory();
 	  	 }
-    };
-    
-    /**
-     * Click handler for the "yes" or "no" vibration buttons.
-     */
-    private final DialogInterface.OnClickListener mVibrateListener =
-    	new DialogInterface.OnClickListener()
-    {
-    	@Override
-    	public void onClick(DialogInterface dialog, int which)
-    	{
-			// If the change button was pressed, then
-			// change settings and restart app.
-    		if (which == WPDialog.POSITIVE_BUTTON)
-			{
-				mStatusBar = mStatToggle.isChecked();
-				mShouldVibrate = mVibToggle.isChecked();
-				mShouldAnimate = mAnimToggle.isChecked();
-				restart();
-			}
-
-    		dismissDialog(DIALOG_VIBRATE);
-    	}
     };
 
 	/**
@@ -487,33 +1242,15 @@ WindowManager.LayoutParams.FLAG_FULLSCREEN);
      * method at the appropriate time when all data
      * has been saved.
      */
-    public void restart()
+    public final void restart()
     {
     	final Intent mIntent = getPackageManager().getLaunchIntentForPackage(getPackageName());
 		mIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		
+		super.finishNow();
 		startActivity(mIntent);
     }
-
-    /**
-     * Click handler for dismissing the history dialog.
-     */
-    private DialogInterface.OnClickListener mHistoryListener =
-    	new DialogInterface.OnClickListener()
-    {
-    	@Override
-    	public void onClick(DialogInterface dialog, int which)
-    	{
-			// If the negative button was clicked...
-			if (which != WPDialog.POSITIVE_BUTTON)
-			{
-				// Clear the history.
-				mHistory.clear();
-			}
-	
-			// Dismiss the dialog either way.
-			dismissDialog(DIALOG_HISTORY);
-		}
-    };
     
     /**
      * Attaches an {@link OnClickListener} to every {@link View} of
@@ -733,6 +1470,20 @@ WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
     }
     
+    /*@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		
+		// Use better API for Honeycomb+
+		if (android.os.Build.VERSION.SDK_INT >= 11) {
+			recreate();
+			return;
+		}
+		
+		startActivity(getIntent());
+		super.finishNow();
+	}*/
+
     @Override
     public Object onRetainNonConfigurationInstance()
     {
@@ -744,7 +1495,7 @@ WindowManager.LayoutParams.FLAG_FULLSCREEN);
     	if (mEquation != null)
     		mData.mEquationText = mEquation.getText().toString();
     	
-	mData.mHistory = mHistory.getHistoryList();
+		mData.mHistory = mHistory.getHistoryList();
     	mData.superstate = (State) super.onRetainNonConfigurationInstance();
     	return mData;
     }
@@ -910,15 +1661,6 @@ WindowManager.LayoutParams.FLAG_FULLSCREEN);
 			mLastEntry.type = Constants.Type.NUMBER;
 		}
     }
-
-    public Changelog.OnChangelogDismissedListener mChangelogListener =
-        new Changelog.OnChangelogDismissedListener()
-    {
-        public void onChangelogDismissed()
-        {
-	    showDialog(DIALOG_VIBRATE);
-        }
-    };
     
     // Handle a percent operation.
     public void percent()
@@ -951,7 +1693,8 @@ WindowManager.LayoutParams.FLAG_FULLSCREEN);
 			mLastEntry.type = Constants.Type.NUMBER;
 			mLastEntry.isFloat = true;
 		}
-		else if (mLastEntry.type == Constants.Type.NUMBER)
+		else if (mLastEntry.type == Constants.Type.NUMBER ||
+				 mLastEntry.type == Constants.Type.SOLUTION)
 		{
     		// Only add a period if there is not one already.
     		// Also make sure that there is room for another period.
@@ -959,6 +1702,7 @@ WindowManager.LayoutParams.FLAG_FULLSCREEN);
     		{
     			if (mResult != null) mResult.setText(mResult.getText() + string(R.string.period));
     			mLastEntry.isFloat = true;
+    			mLastEntry.type = Constants.Type.NUMBER;
     		}
 		}
     }
@@ -1654,4 +2398,143 @@ WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
         return super.onKeyDown(keyCode, event);
     }
+    
+    // Listener for when the button that takes the
+	// user to the Activity to hide/ show icons is clicked.
+	public static final class LaunchClickListener implements View.OnClickListener
+	{
+		private final Class mClass;
+		private final Context mContext;
+
+		public LaunchClickListener(Class mClass, Context mContext)
+		{
+			this.mClass = mClass;
+			this.mContext = mContext;
+		}
+
+		@Override
+		public void onClick(View mView)
+		{
+			// Launch the Activity.
+			if (mContext instanceof Activity) {
+				((Activity) mContext).startActivityForResult(new Intent(mContext, mClass), REQUEST_CODE);
+			} else {
+				mContext.startActivity(new Intent(mContext, mClass));
+			}
+			
+			// Disable default Activity animations.
+			try {
+				if (mContext instanceof Activity) {
+					((Activity) mContext).overridePendingTransition(0, 0);
+				}
+			} catch (Throwable t) { }
+		}
+	};
+	
+	// Listener for when the button that takes the
+	// user to the Activity to hide/ show icons is clicked.
+	public static final class UrlClickListener implements View.OnClickListener
+	{
+		private final String url;
+		private final Context mContext;
+
+		public UrlClickListener(Context mContext, String url)
+		{
+			this.url = url;
+			this.mContext = mContext;
+		}
+
+		@Override
+		public void onClick(View mView)
+		{
+			try
+			{
+				final Intent intent = new Intent(Intent.ACTION_VIEW);
+				final Uri mUri = Uri.parse(url);
+				intent.setData(mUri);
+				
+				// Launch the Activity.
+				if (mContext instanceof Activity) {
+					((Activity) mContext).startActivityForResult(intent, REQUEST_CODE);
+				} else {
+					mContext.startActivity(intent);
+				}
+			}
+			catch (Throwable e)
+			{
+				Log.e(TAG, "Error loading webpage.", e);
+			}
+			
+			// Disable default Activity animations.
+			try {
+				if (mContext instanceof Activity) {
+					((Activity) mContext).overridePendingTransition(0, 0);
+				}
+			} catch (Throwable t) { }
+		}
+	};
+	
+	// Listener for when the button that takes the
+	// user to the Activity to hide/ show icons is clicked.
+	public static final class LaunchComponentListener implements View.OnClickListener
+	{
+		private final String mAction;
+		private final Context mContext;
+
+		public LaunchComponentListener(String mAction, Context mContext)
+		{
+			this.mAction = mAction;
+			this.mContext = mContext;
+		}
+
+		@Override
+		public void onClick(View mView)
+		{
+			// Disable default Activity animations.
+			try {
+				// Launch the Activity.
+				if (mContext instanceof Activity) {
+					((Activity) mContext).startActivityForResult(new Intent(mAction), REQUEST_CODE);
+				} else {
+					mContext.startActivity(new Intent(mAction));
+				}
+			
+				if (mContext instanceof Activity) {
+					((Activity) mContext).overridePendingTransition(0, 0);
+				}
+			} catch (Throwable t) { }
+		}
+	};
+	
+	// Listener for when the button that takes the
+	// user to the Activity to hide/ show icons is clicked.
+	public static final class LaunchIntentListener implements View.OnClickListener
+	{
+		private final Intent mIntent;
+		private final Context mContext;
+
+		public LaunchIntentListener(Intent mIntent, Context mContext)
+		{
+			this.mIntent = mIntent;
+			this.mContext = mContext;
+		}
+
+		@Override
+		public void onClick(View mView)
+		{
+			// Disable default Activity animations.
+			try {
+				// Launch the Activity.
+				if (mContext instanceof Activity) {
+					((Activity) mContext).startActivityForResult(mIntent, REQUEST_CODE);
+				} else {
+					mContext.startActivity(mIntent);
+				}
+			
+				if (mContext instanceof Activity) {
+					((Activity) mContext).overridePendingTransition(0, 0);
+				}
+			} catch (Throwable t) { }
+		}
+	};
 }

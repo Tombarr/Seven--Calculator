@@ -3,7 +3,7 @@ package com.tombarrasso.android.wp7calculator;
 /*
  * Memory.java
  *
- * Copyright (C) Thomas James Barrasso
+ * Copyright (C) 2012 Thomas James Barrasso
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,9 +47,9 @@ import com.tombarrasso.android.wp7ui.WPTheme;
  * </ul>
  * 
  * @author		Thomas James Barrasso
- * @since		2011
+ * @since		06-01-2012
  * @version		1.02
- * @category		Helper
+ * @category	Helper
  */
 
 public final class Memory

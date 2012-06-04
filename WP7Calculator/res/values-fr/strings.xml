@@ -1,110 +1,131 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<!-- App Name -->
-    <string name="app_name">Calculatrice</string>
-    <string name="author">Thomas James Barrasso</string>
-    <string name="version">Gamma 1 (2)</string>
-    
-    <!-- Other -->
-    <string name="confirm">valider</string>
-    <string name="settings">paramètres</string>
-    <string name="prefs">Préférences</string>
-    <string name="accent">COULEURS D\'ACCENTUATION</string>
-    <string name="m">M</string>
-    <string name="accents">Sélection d\'une couleur d\'accentuation</string>
-   
-   <!-- Vibration Option -->
-   <string name="vibrate">Activer la vibration lors de l\'appui d\'un bouton ?</string>
-   <string name="status">Activer la barre de statut personnalisée ?</string>
-   <string name="animate">Activer l\'animation Fly-out?</string>
-   <string name="vibration_activation">Secouer le téléphone pour (dés)activer la vibration (requière un accéléromètre).</string>
-   <string name="yes">oui</string>
-   <string name="no">non</string>
-
-   <!-- History -->
-   <string name="history">Historique</string>
-   <string name="history_close">fermer</string>
-   <string name="history_clear">effacer</string>
-    
-    <!-- Change log -->
-    <string name="changelog_title_full">Changelog</string>
-    <string name="changelog_title">Nouveautés</string>
-    <string name="changelog_ok">OK</string>
-    
-    <!-- Theme strings -->
-    <string name="default_theme">Défaut</string>
-    <string name="theme">Sélection de thème</string>
-    <string name="change">changer</string>
-    <string name="cancel">annuler</string>
-    
-    <!-- Color Names -->
-    <string-array name="color_names">
-        <item>magenta</item>
-        <item>violet</item>
-        <item>bleu-vert</item>
-        <item>lime</item>
-        <item>brun</item>
-        <item>rose</item>
-        <item>orange</item>
-        <item>bleu</item>
-        <item>rouge</item>
-        <item>vert</item>
-    </string-array>
-    
-    <!-- Calculator -->
-    
-    <!-- 0 - 9 -->
-    <string name="zero">0</string>
-    <string name="one">1</string>
-    <string name="two">2</string>
-    <string name="three">3</string>
-    <string name="four">4</string>
-    <string name="five">5</string>
-    <string name="six">6</string>
-    <string name="seven">7</string>
-    <string name="eight">8</string>
-    <string name="nine">9</string>
-    
-    <!-- Top Row -->
-    <string name="clear">C</string>
-    <string name="memclear">MC</string>
-    <string name="memrecall">MR</string>
-    <string name="memplus">M&#043;</string>
-    
-    <!-- Second Row -->
-    <string name="plusminus">&#177;</string>
-    <string name="percent">&#037;</string>
-    <string name="period">&#046;</string>
-    
-    <!-- Operators -->
-    <string name="divide">&#247;</string>
-    <string name="multiply">&#215;</string>
-    <string name="minus">&#045;</string>
-    <string name="plus">&#043;</string>
-    <string name="equals">&#061;</string>
-    
-    <!-- Landscape Buttons -->
-    <string name="paren_open">(</string>
-    <string name="paren_close">)</string>
-    <string name="pi">Pi</string>
-    <string name="degree">Deg</string>
-    <string name="radian">Rad</string>
-    <string name="grad">Grad</string>
-    <string name="sqrt">racine</string>
-    
-    <!-- Trig -->
-    <string name="sin">sin</string>
-    <string name="cos">cos</string>
-    <string name="tan">tan</string>
-    
-    <!-- Logs -->
-    <string name="ln">ln</string>
-    <string name="log">log</string>
-    <string name="exponential_ten">10^x</string>
-    
-    <!-- Final Row -->
-    <string name="power">^</string>
-    <string name="factorial">n!</string>
-    <string name="squared">x^2</string>
-    <string name="exponential">x^y</string>
+	<string name="app_name">Calculatrice</string>
+	
+	<!-- Other -->
+	<string name="confirm">Confirmer</string>
+	<string name="advanced_settings">Paramètres</string>
+	<string name="settings">Paramètres</string>
+	<string name="share">Partager</string>
+	<string name="prefs">Préférences</string>
+	<string name="accent">ACCENTS</string>
+	<string name="m">M</string>
+	<string name="accents">Choisir une couleur secondaire</string>
+	
+	<!-- Vibration Option -->
+	<string name="vibrate">Activer vibre au toucher?</string>
+	<string name="status">Activer barre d\'état personnalisée ?</string>
+	<string name="animate">Activer animations déroulant ?</string>
+	<string name="vibration_activation">Secouer le téléphone pour activer/ désactiver les vibrations (accéléromètre requis).</string>
+	<string name="yes">oui</string>
+	<string name="no">non</string>
+	<string name="keep_wake">Laisser l\'écran allumé</string>
+	
+	<!-- Theme -->
+	<string name="background">Fond</string>
+	<string name="accent_color">Couleur secondaire</string>
+	<string name="dark">sombre</string>
+	<string name="light">clair</string>
+	<string name="theme">thème</string>
+	<string name="theme_norm">Thème</string>
+	<string name="light_battery_warning">Parce que votre écran est optimisé pour les couleurs foncées,
+	le choix du fond clair va utiliser plus la batterie de votre téléphone.</string>
+	<string name="theme_description">Changer le fond de votre téléphone et la %1$s 
+	selon vos envies du jour, de la semaine ou du mois.</string>
+	
+	<!-- Accessibility -->
+	<string name="settings_description">Configurare questa applicazione e il suo tema.</string>
+    <string name="share_description">Condividi questa applicazione con i tuoi amici.</string>
+    <string name="rate_description">Mostrate il vostro sostegno e il tasso di questa applicazione.</string>
+	<string name="donation_description">Merci pour votre soutien. Si vous souhaitez continuer à 
+	contribuer à cette application et ou à The Seven+ Project en générale svp envisagez de faire un don!</string>
+	<string name="donate_description">Contribuer d\'avantage à The Seven+ Calculatrice et ou à 
+	The Seven+ Project grâce à un don dans l\'application, merci!</string>
+	<string name="website_description">Visiter notre site web pour voir nos autres applications, 
+	membres, et bien plus encore! http://sevenplusandroid.org</string>
+	<string name="home">Vai alla schermata principale di The Seven+ Calculatrice.</string>
+    <string name="paypal_description">Donare qualsiasi importo Il Progetto Seven+ via PayPal, 
+    la cassaforte, servizio online di trasferimento denaro.</string>
+    <string name="history_description">Visualizzare la cronologia dei calcoli recenti.</string>
+	
+	<!-- Anonymous Reporting -->
+    <string name="reporting">Rapports anonymes</string>
+    <string name="reporting_desc">Les rapports anonymes fournissent des rapports de crash automatiquement.</string>
+    <string name="reporting_description">Les rapports anonymes fournissent des rapports de crash automatiquement.
+    En aucun cas ils recueillent des informations personnelles identifiables.
+    Des journaux pertinaux sur les crashs ainsi que des informations du système
+    (à savoir modèle, firmware, bande de base, kermel, etc&#8230;) sont collectées pour
+    nous permettrent de comprendre pourquoi un crash s\'est produit et aussi 
+    pour corriger nos bugs et améliorer nos applications. A tout moment vous pouvez
+    désactiver le rapport sans aucune conséquence.</string>
+	
+	<!-- Toast shown when text is copied to the clipboard. -->
+	<string name="text_copied_toast">Texte copié.</string>
+	
+	<!-- Share -->
+    <string name="share_subject">The Seven+ Calculatrice est génial!</string>
+    <string name="share_text">The Seven+ Calculatrice est le meilleur sans WP7-style calculatrice Google Play!</string>
+    <string name="share_title">Partager The Seven+ Calculatrice</string>
+	
+	<!-- NFC Beam -->
+	<string name="message_sent">Résultat envoyé!</string>
+	
+	<!-- URLs -->
+	<string name="website">Visiter notre site web</string>
+	<string name="rate">Noter cette application</string>
+	
+	<!-- Billing Stuff -->
+	<string name="billing_not_supported_title">Impossible de faire des achats</string>
+	<string name="billing_not_supported_message">Le service de facturation
+	 de Google Play n\'est pas disponible pour le moment. Svp essayez un peu plus tard.</string>
+	<string name="cannot_connect_title">Impossible de se connecter à Google Play</string>
+	<string name="cannot_connect_message">Impossible de se connecter à Google Play .
+	 Votre version de Google Play peut ne pas être à jour. Svp mettre à jour ou réessayez plus tard.</string>
+	<string name="learn_more">En savoir plus</string>
+	<string name="buy">Acheter</string>
+	<string name="donate">Don</string>
+	<string name="dismiss">Rejeter</string>
+	<string name="thanks">Merci</string>
+	<string name="donation_complete_title">Donation complète</string>
+	<string name="donation_complete">Merci pour votre don , votre
+	soutien nous permet de faire de meilleurs produits!</string>
+	<string name="donation_cancelled_title">Don annulé</string>
+	<string name="donation_cancelled">Merci quand même pour votre soutien. Pensez à  
+	nous pour un don futur quand vous le pourrez.</string>
+	
+	<!-- History -->
+	<string name="history">Historique</string>
+	<string name="history_close">Fermer</string>
+	<string name="history_clear">Effacer</string>
+	<string name="history_back">Retour</string>
+	<string name="no_history">L\'historique est vide.</string>
+	
+	<!-- Change log -->
+	<string name="changelog_title_full">Journal des modifications</string>
+	<string name="changelog_title">Quoi de neuf</string>
+	<string name="changelog_ok">OK</string>
+	
+	<!-- Theme strings -->
+	<string name="default_theme">Défaut</string>
+	<string name="theme">choisir un thème</string>
+	<string name="change">modifier</string>
+	<string name="cancel">annuler</string>
+	
+	<!-- French Racine -->
+	<string name="sqrt">racine</string>
+	
+	<!-- Color Names -->
+	<string-array name="color_names">
+		<item>fuchsia</item>
+		<item>violet</item>
+		<item>bleu vert</item>
+		<item>citron vert</item>
+		<item>brun</item>
+		<item>rose</item>
+		<item>orange</item>
+		<item>bleu</item>
+		<item>rouge</item>
+		<item>vert</item>
+	</string-array>
 </resources>

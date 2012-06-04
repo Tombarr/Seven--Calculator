@@ -3,7 +3,7 @@ package com.tombarrasso.android.wp7calculator;
 /*
  * CalcImageButton.java
  *
- * Copyright (C) Thomas James Barrasso
+ * Copyright 2012 (C) Thomas James Barrasso
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,6 +35,7 @@ import android.widget.ImageView;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.content.SharedPreferences;
+import android.view.HapticFeedbackConstants;
 
 /**
  * Button used to display an image button.
@@ -46,20 +47,20 @@ import android.content.SharedPreferences;
  * </ul>
  *
  * @author		Thomas James Barrasso <contact @ tombarrasso.com>
- * @since		2011
+ * @since		2012
  * @version		1.01
- * @category	View
+ * @category	{@link View}
  */
 
-public class CalcImageButton extends ImageView implements OnTouchListener
+public final class CalcImageButton extends ImageView implements OnTouchListener
 {
 	public static final String TAG = CalcImageButton.class.getSimpleName();
 	private int COLOR = ButtonColors.COLOR_LIGHT;
 	private int mUpId, mDownId;
 	private int mFunction = Constants.Tags.CLEAR;
+	private final SharedPreferences mPrefs;
 	private boolean mShouldListen = true,
 					mShouldVibrate = false;
-	private static Vibrator mVibrator;
 	private final int mVibrationDuration;
 	
 	// ====================
@@ -70,6 +71,7 @@ public class CalcImageButton extends ImageView implements OnTouchListener
 	{
 		super(context);
 		mVibrationDuration = context.getResources().getInteger(R.integer.vibration_duration);
+		mPrefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
 		init();
 	}
 	
@@ -77,6 +79,7 @@ public class CalcImageButton extends ImageView implements OnTouchListener
 	{
 		super(context, attrs);
 		mVibrationDuration = context.getResources().getInteger(R.integer.vibration_duration);
+		mPrefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
 		setAttrs(attrs);
 		init();
 	}
@@ -85,6 +88,7 @@ public class CalcImageButton extends ImageView implements OnTouchListener
 	{
 		super(context, attrs, defStyle);
 		mVibrationDuration = context.getResources().getInteger(R.integer.vibration_duration);
+		mPrefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
 		setAttrs(attrs);
 		init();
 	}
@@ -120,12 +124,9 @@ public class CalcImageButton extends ImageView implements OnTouchListener
 	
 	private void init()
 	{
-		// Get vibrator instance.
-		if (mVibrator == null)
-			mVibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
-
+		setHapticFeedbackEnabled(true);
+		
 		// Get a few values from settings.
-		final SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 		mShouldVibrate = mPrefs.getBoolean(HomeActivity.VIBRATE_KEY, mShouldVibrate);
 
 		// Set styles.
@@ -142,24 +143,30 @@ public class CalcImageButton extends ImageView implements OnTouchListener
 	 */
 	public void setColor(int color)
 	{
+		final boolean isDark = WPTheme.isThemeDark();
+		
 		switch (color)
 		{
-		case ButtonColors.COLOR_ACCENT:
-			COLOR = ButtonColors.COLOR_ACCENT;
-			setBackgroundColor(WPTheme.getThemeColor());
-			break;
-		case ButtonColors.COLOR_LIGHT:
-			COLOR = ButtonColors.COLOR_LIGHT;
-			setBackgroundColor(WPTheme.calcLight);
-			break;
-		case ButtonColors.COLOR_DARK:
-			COLOR = ButtonColors.COLOR_DARK;
-			setBackgroundColor(WPTheme.defMenuBackground);
-			break;
-		default:
-			COLOR = color;
-			setBackgroundColor(COLOR);
-			break;
+			case ButtonColors.COLOR_ACCENT:
+				COLOR = ButtonColors.COLOR_ACCENT;
+				setBackgroundColor(WPTheme.getThemeColor());
+				break;
+			case ButtonColors.COLOR_LIGHT:
+				COLOR = ButtonColors.COLOR_LIGHT;
+				setBackgroundColor(((isDark) ? WPTheme.calcLight : Constants.LIGHT_BUTTON_COLOR_DARK));
+				break;
+			case ButtonColors.COLOR_DARK:
+				COLOR = ButtonColors.COLOR_DARK;
+				setBackgroundColor(((isDark) ? WPTheme.defMenuBackground : Constants.LIGHT_BUTTON_COLOR_LIGHT));
+				break;
+			case ButtonColors.COLOR_TRIG:
+				COLOR = ButtonColors.COLOR_TRIG;
+				setBackgroundColor(((isDark) ? WPTheme.calcTrigMode : Constants.LIGHT_BUTTON_COLOR_TRIG));
+				break;
+			default:
+				COLOR = color;
+				setBackgroundColor(COLOR);
+				break;
 		}
 	}
 	
@@ -185,7 +192,7 @@ public class CalcImageButton extends ImageView implements OnTouchListener
 	private void setSrcUp(int id)
 	{
 		mUpId = id;
-		setImageResource(mUpId);
+		setImageResource(((WPTheme.isThemeDark()) ? mUpId : mDownId));
 	}
 
 	/**
@@ -203,16 +210,24 @@ public class CalcImageButton extends ImageView implements OnTouchListener
 	public void onWindowFocusChanged(boolean hasWindowFocus)
 	{
 		super.onWindowFocusChanged(hasWindowFocus);
-		if (COLOR == ButtonColors.COLOR_ACCENT)
-			setBackgroundColor(WPTheme.getThemeColor());
+		updateValues();
 	}
 	
 	@Override
 	protected void onWindowVisibilityChanged(int visibility)
 	{
 		super.onWindowVisibilityChanged(visibility);
-		if (COLOR == ButtonColors.COLOR_ACCENT)
-			setBackgroundColor(WPTheme.getThemeColor());;
+		updateValues();
+	}
+	
+	private final void updateValues()
+	{			
+		setColor(getColor());
+			
+		mShouldVibrate = mPrefs.getBoolean(HomeActivity.VIBRATE_KEY, mShouldVibrate);
+		
+		setColor(COLOR);
+        setImageResource(((WPTheme.isThemeDark()) ? mUpId : mDownId));
 	}
 
 	/**
@@ -226,13 +241,14 @@ public class CalcImageButton extends ImageView implements OnTouchListener
         {
             case MotionEvent.ACTION_DOWN:
             {
-            	setBackgroundColor(Color.WHITE);
-            	setImageResource(mDownId);
+            	setBackgroundColor(((WPTheme.isThemeDark()) ? Color.WHITE : Color.BLACK));
+            	setImageResource(((WPTheme.isThemeDark()) ? mDownId : mUpId));
 
 				// Vibrate for the given time if set to do so.
-				if (mShouldVibrate && mVibrator != null &&
-					mVibrationDuration > 0)
-						mVibrator.vibrate(mVibrationDuration);
+				if (mShouldVibrate)
+						performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY,
+							HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING |
+							HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
 
             	break;
             }
@@ -240,14 +256,14 @@ public class CalcImageButton extends ImageView implements OnTouchListener
             case MotionEvent.ACTION_CANCEL:
             {
             	setColor(COLOR);
-            	setImageResource(mUpId);
+            	setImageResource(((WPTheme.isThemeDark()) ? mUpId : mDownId));
                 break;
             }
 
             case MotionEvent.ACTION_UP:
             {
             	setColor(COLOR);
-            	setImageResource(mUpId);
+            	setImageResource(((WPTheme.isThemeDark()) ? mUpId : mDownId));
                 break;
             }
         }
@@ -280,7 +296,8 @@ public class CalcImageButton extends ImageView implements OnTouchListener
 	{
 		if (gainFocus)
 		{
-        	setBackgroundColor(Color.WHITE);
+        	setBackgroundColor(((WPTheme.isThemeDark()) ? Color.WHITE : Color.BLACK));
+            setImageResource(((WPTheme.isThemeDark()) ? mDownId : mUpId));
 		}
 		else
 		{

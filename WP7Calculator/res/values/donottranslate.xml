@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	
+	<!-- URIs -->
+	<string name="siteuri">http://sevenplusandroid.org</string>
+	<string name="rateuri">https://play.google.com/store/apps/details?id=com.tombarrasso.android.wp7calculator</string>
+	<string name="paypal_uri" formatted="false">https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=contact@tombarrasso.com&amp;lc=US&amp;item_name=Thomas%20Barrasso&amp;item_number=calculator&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted</string>
+	
+	<!-- The following are reserved skus defined by Market for testing. -->
+    <string name="android_test_canceled">android.test.canceled</string>
+    <string name="android_test_purchased">android.test.purchased</string>
+    <string name="android_test_item_unavailable">android.test.item unavailable</string>
+    <string name="android_test_refunded">android.test.refunded</string>
+    
+    <string name="help_url" formatted="false">http://market.android.com/support/bin/answer.py?answer=1050566&amp;hl=%lang%&amp;dl=%region%</string>
+	
+</resources>

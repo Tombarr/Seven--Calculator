@@ -7,4 +7,23 @@
 	 presses a button (if this setting is enabled).
 	 If <= 0 no vibration will occur. -->
     <integer name="vibration_duration">40</integer>
+    <!-- How long the menu should take to be animated. -->
+    <integer name="menu_duration">325</integer>
+    
+    <dimen name="action_bar_text">26sp</dimen>
+    
+    <!-- Translation of @id/result -->
+    <dimen name="vertical_translation">16sp</dimen>
+    
+    <!-- Dimension for sqrt button. -->
+    <dimen name="sqrt_size">22dp</dimen>
+    
+    <!-- Status Bar Height. -->
+    <dimen name="status_bar_height">25dp</dimen>
+    
+    <!-- Menu -->
+    <dimen name="menu_height">24dp</dimen>
+    <dimen name="menu_padding">30dp</dimen>
+    <dimen name="menu_text">24sp</dimen>
+    <dimen name="menu_spacing">12dp</dimen>
 </resources>

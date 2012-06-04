@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- App Name -->
+    <string name="app_name">Kalkulačka </string>
+    <string name="author">Thomas James Barrasso</string>
+    
+    <!-- Other -->
+    <string name="confirm">potvrdit</string>
+    <string name="settings">nastavení</string>
+    <string name="prefs">Možnosti</string>
+    <string name="accent">BARVY</string>
+    <string name="m">M</string>
+    <string name="accents">Vybrat barvu zvýraznění</string>
+   
+   <!-- Vibration Option -->
+   <string name="vibrate">Povolit vibrace při stisku tlačítka?</string>
+   <string name="status">Povolit vlastní nástrojovou lištu?</string>
+   <string name="animate">Povolit plovoucí animace?</string>
+   <string name="vibration_activation">Vhodným zatřesením přístroje povolte/ vypněte vibrace (vyžadován akcelometr)</string>
+   <string name="yes">ano</string>
+   <string name="no">ne</string>
+
+   <!-- History -->
+   <string name="history">Historie</string>
+   <string name="history_close">zavřít</string>
+   <string name="history_clear">smazat</string>
+    
+    <!-- Change log -->
+    <string name="changelog_title_full">Výpis změn</string>
+    <string name="changelog_title">Co je nového</string>
+    <string name="changelog_ok">OK</string>
+    
+    <!-- Theme strings -->
+    <string name="default_theme">Výchozí</string>
+    <string name="theme">vybrat téma</string>
+    <string name="change">změnit </string>
+    <string name="cancel">storno</string>
+    
+    <!-- Color Names -->
+    <string-array name="color_names">
+        <item>purpurová</item>
+        <item>fialová</item>
+        <item>tyrkysová</item>
+        <item>limetka</item>
+        <item>hnědá</item>
+        <item>růžová</item>
+        <item>oranžová</item>
+        <item>modrá</item>
+        <item>červená</item>
+        <item>zelená</item>
+    </string-array>
+    
+</resources>

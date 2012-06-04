@@ -1,0 +1,769 @@
+package org.miscwidgets.widget;
+
+// R
+import com.tombarrasso.android.wp7calculator.R;
+
+// Android Packages
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.text.method.KeyListener;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.view.GestureDetector.OnGestureListener;
+import android.view.animation.Animation;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.TranslateAnimation;
+import android.view.animation.Animation.AnimationListener;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.ImageView;
+
+/**
+ * Modified {@link Panel} to support WP7-style menus. If no icons are
+ * present the handle goes to full transparency until touched/ opened.
+ * All other options (content) remain hidden until this point.<br /><br />
+ * TODO: improve touch performance and handling.
+ *
+ * @author		Thomas James Barrasso <contact @ tombarrasso.com>
+ * @since		06-03-2012
+ * @version		2.1
+ * @category	{@link ViewGroup}
+ */
+public final class Panel extends LinearLayout {
+
+    private static final String TAG = Panel.class.getSimpleName();
+
+	/**
+     * Callback invoked when the panel is opened/closed.
+     */
+    public static interface OnPanelListener {
+        /**
+         * Invoked when the panel becomes fully closed.
+         */
+        public void onPanelClosed(Panel panel);
+        /**
+         * Invoked when the panel becomes fully opened.
+         */
+        public void onPanelOpened(Panel panel);
+    }
+    
+    private boolean mIsShrinking;
+	private int mPosition;
+	private int mDuration;
+	private boolean mLinearFlying;
+	private boolean hasImages;
+	private int mHandleId;
+	private int mContentId;
+	private int mBackgroundColor;
+	private View mHandle;
+	private View mContent;
+	private Drawable mOpenedHandle;
+	private Drawable mClosedHandle;
+	private float mTrackX;
+	private float mTrackY;
+	private float mVelocity;
+	
+	private OnPanelListener panelListener;
+
+	public static final int TOP = 0;
+	public static final int BOTTOM = 1;
+	public static final int LEFT = 2;
+	public static final int RIGHT = 3;
+	
+	private enum State {
+		ABOUT_TO_ANIMATE,
+		ANIMATING,
+		READY,
+		TRACKING,
+		FLYING,
+	};
+	private State mState;
+	private Interpolator mInterpolator;
+	private GestureDetector mGestureDetector;
+	private int mContentHeight;
+	private int mContentWidth;
+	private int mOrientation;
+	private float mWeight;
+	private PanelOnGestureListener mGestureListener;
+	private boolean mBringToFront;
+	
+	public Panel(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Panel);
+		mDuration = a.getInteger(R.styleable.Panel_animationDuration, 750);		// duration defaults to 750 ms
+		mPosition = a.getInteger(R.styleable.Panel_position, BOTTOM);			// position defaults to BOTTOM
+		mLinearFlying = a.getBoolean(R.styleable.Panel_linearFlying, false);	// linearFlying defaults to false
+		mWeight = a.getFraction(R.styleable.Panel_weight, 0, 1, 0.0f);			// weight defaults to 0.0
+		if (mWeight < 0 || mWeight > 1) {
+			mWeight = 0.0f;
+			Log.w(TAG, a.getPositionDescription() + ": weight must be > 0 and <= 1");
+		}
+		mOpenedHandle = a.getDrawable(R.styleable.Panel_openedHandle);
+		mClosedHandle = a.getDrawable(R.styleable.Panel_closedHandle);
+
+		RuntimeException e = null;
+		mHandleId = a.getResourceId(R.styleable.Panel_handle, 0);
+		if (mHandleId == 0) {
+			e = new IllegalArgumentException(a.getPositionDescription() + 
+					": The handle attribute is required and must refer to a valid child.");
+		}
+		mContentId = a.getResourceId(R.styleable.Panel_content, 0);
+		if (mContentId == 0) {
+			e = new IllegalArgumentException(a.getPositionDescription() + 
+					": The content attribute is required and must refer to a valid child.");
+		}
+		a.recycle();
+		
+		if (e != null) {
+			throw e;
+		}
+		mOrientation = (mPosition == TOP || mPosition == BOTTOM)? VERTICAL : HORIZONTAL;
+		setOrientation(mOrientation);
+		mState = State.READY;
+		mGestureListener = new PanelOnGestureListener();
+		mGestureDetector = new GestureDetector(mGestureListener);
+		mGestureDetector.setIsLongpressEnabled(false);
+		
+		// i DON'T really know why i need this...
+		setBaselineAligned(false);
+	}
+
+    /**
+     * Sets the listener that receives a notification when the panel becomes open/close.
+     *
+     * @param onPanelListener The listener to be notified when the panel is opened/closed.
+     */
+    public void setOnPanelListener(OnPanelListener onPanelListener) {
+        panelListener = onPanelListener;
+    }
+    
+    /**
+     * Gets Panel's mHandle
+     * 
+     * @return Panel's mHandle
+     */
+    public View getHandle() {
+		return mHandle;
+	}
+    
+    /**
+     * Gets Panel's mContent
+     * 
+     * @return Panel's mContent 
+     */
+    public View getContent() {
+		return mContent;
+	}
+
+    
+    /**
+     * Sets the acceleration curve for panel's animation.
+     * 
+     * @param i The interpolator which defines the acceleration curve 
+     */
+    public void setInterpolator(Interpolator i) {
+    	mInterpolator = i; 
+    }
+    
+    /**
+     * @return The background color. If opaque is true the default color
+     * is returned. If false, it is returned as a solid (non-transparent) color.
+     */
+    private final int getBackgroundColor(boolean opaque) {
+    	if (mContent != null && mHandle != null) {
+    		try {
+    			final ColorDrawable mContentBack = (ColorDrawable) mContent.getBackground(),
+    								mHandleBack = (ColorDrawable) mHandle.getBackground();
+    								
+    			final int mContentAlpha = Color.alpha(mContentBack.getColor()),
+    					  mHandleAlpha = Color.alpha(mHandleBack.getColor());
+    				
+    			if (mContentBack.getColor() == mHandleBack.getColor()) {
+					if (opaque) {
+						if (mAlpha != 255) {
+							return Color.argb(mAlpha, Color.red(mContentBack.getColor()),
+							Color.green(mContentBack.getColor()), Color.blue(mContentBack.getColor()));
+						}
+						return mContentBack.getColor();
+					} else {
+						return Color.rgb(Color.red(mContentBack.getColor()),
+							Color.green(mContentBack.getColor()), Color.blue(mContentBack.getColor()));
+					}
+				}
+    		} catch (Throwable t) {
+    			// Log.e(TAG, "An error occurred processing background colors.", t);
+    		}
+    	}
+    	
+    	return Integer.MAX_VALUE;
+    }
+    
+    /**
+     * @return The background color. If opaque is true the default color
+     * is returned. If false, it is returned as a solid (non-transparent) color.
+     */
+    private final int getBackgroundColor() {
+    	if (mContent != null && mHandle != null) {
+    		try {
+    			final ColorDrawable mContentBack = (ColorDrawable) mContent.getBackground(),
+    								mHandleBack = (ColorDrawable) mHandle.getBackground();
+    				
+    			if (mContentBack.getColor() == mHandleBack.getColor()) {
+					return mContentBack.getColor();
+				}
+    		} catch (Throwable t) {
+    			// Log.e(TAG, "An error occurred processing background colors.", t);
+    		}
+    	}
+    	
+    	return Integer.MAX_VALUE;
+    }
+    
+    /**
+     * Set the background colors for this {@link Panel}.
+     */
+    public final void setBackgroundColors(int color) {
+    	if (mContent != null && mHandle != null) {
+    		try {
+    			mContent.setBackgroundColor(color);
+    			mHandle.setBackgroundColor(((isOpen()) ? color : Color.TRANSPARENT));
+    			mBackgroundColor = color;
+    		} catch (Throwable t) {
+    			// Log.e(TAG, "An error occurred setting background colors.", t);
+    		}
+    	}
+    }
+    
+    private int mAlpha = 255;
+    
+    /**
+     * @return The alpha transparency of the background colors.
+     */
+    private final int getBackgroundAlpha() {
+    	if (mContent != null && mHandle != null) {
+    		try {
+    			final ColorDrawable mContentBack = (ColorDrawable) mContent.getBackground(),
+    								mHandleBack = (ColorDrawable) mHandle.getBackground();
+    								
+    			final int mContentAlpha = Color.alpha(mContentBack.getColor()),
+    					  mHandleAlpha = Color.alpha(mHandleBack.getColor());
+    					  
+    			if (mContentAlpha != 255 && mHandleAlpha != 255
+    				&& mHandleAlpha == mContentAlpha)
+    			{
+					return mContentAlpha;	
+				}
+    		} catch (Throwable t) {
+    			// Log.e(TAG, "An error occurred processing background colors.", t);
+    		}
+    	}
+    	
+    	return Integer.MAX_VALUE;
+    }
+    
+    /**
+     * @return True if the background color has transparency.
+     */
+    private final boolean hasTransparency() {
+    	final int mAlpha = getBackgroundAlpha();
+    	return (mAlpha >= 0 && mAlpha < 255);
+    }
+    
+	/**
+	 * Set the opened state of Panel.
+     * 
+     * @param open True if Panel is to be opened, false if Panel is to be closed.
+	 * @param animate True if use animation, false otherwise.
+	 *
+	 * @return True if operation was performed, false otherwise.
+	 * 
+	 */
+	public boolean setOpen(boolean open, boolean animate) {
+		if (mState == State.READY && isOpen() ^ open) {
+			mIsShrinking = !open;
+			
+			if (hasTransparency()) setBackgroundColors(getBackgroundColor(open));
+			
+			if (animate) {
+				mState = State.ABOUT_TO_ANIMATE;
+				if (!mIsShrinking) {
+					// this could make flicker so we test mState in dispatchDraw()
+					// to see if is equal to ABOUT_TO_ANIMATE
+					mContent.setVisibility(VISIBLE);
+				}
+				post(startAnimation);
+			} else {
+				mContent.setVisibility(open ? VISIBLE : GONE);
+				postProcess();
+			}
+			return true;
+		}
+		return false;
+	}
+
+    /**
+     * Returns the opened status for Panel.
+     * 
+     * @return True if Panel is opened, false otherwise.
+     */
+	public boolean isOpen() {
+		return mContent.getVisibility() == VISIBLE;
+	}
+	
+	/**
+	 * @return True if mView has one or more {@link ImageView}
+	 * as children somewhere within the layout.
+	 */
+	public static final boolean hasImages(ViewGroup mView)
+	{
+		if (mView == null) return false;
+	
+		for (int i = 0, e = mView.getChildCount(); i < e; ++i)
+		{
+			final View mChild = mView.getChildAt(i);
+			if (mChild instanceof ViewGroup)
+			{
+				if (hasImages((ViewGroup) mChild))
+				{
+					return true;
+				}
+			}
+			// If we have an ImageView and it isn't the menu
+			// dots, then make sure to say so.
+			else if ((mChild instanceof ImageView) &&
+				(mChild.getId() != R.id.menu_more))
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	@Override
+	protected void onFinishInflate() {
+		super.onFinishInflate();
+		mHandle = findViewById(mHandleId);
+		if (mHandle == null) {
+			String name = getResources().getResourceEntryName(mHandleId);
+            throw new RuntimeException("Your Panel must have a child View whose id attribute is 'R.id." + name + "'");
+		}
+		mHandle.setOnTouchListener(touchListener);
+		mHandle.setOnClickListener(clickListener);
+		
+		mContent = findViewById(mContentId);
+		if (mContent == null) {
+			String name = getResources().getResourceEntryName(mHandleId);
+            throw new RuntimeException("Your Panel must have a child View whose id attribute is 'R.id." + name + "'");
+		}
+
+		// reposition children
+		removeView(mHandle);
+		removeView(mContent);
+		if (mPosition == TOP || mPosition == LEFT) {
+			addView(mContent);
+			addView(mHandle);
+		} else {
+			addView(mHandle);
+			addView(mContent);
+		}
+
+		if (mClosedHandle != null) {
+			mHandle.setBackgroundDrawable(mClosedHandle);
+		}
+		mContent.setClickable(true);
+		mContent.setVisibility(GONE);
+		if (mWeight > 0) {
+			ViewGroup.LayoutParams params = mContent.getLayoutParams();
+			if (mOrientation == VERTICAL) {
+				params.height = ViewGroup.LayoutParams.FILL_PARENT;
+			} else {
+				params.width = ViewGroup.LayoutParams.FILL_PARENT;
+			}
+			mContent.setLayoutParams(params);
+		}
+		
+		mAlpha = getBackgroundAlpha();
+	}
+
+	@Override
+	protected void onAttachedToWindow() {
+		super.onAttachedToWindow();
+		ViewParent parent = getParent();
+		if (parent != null && parent instanceof FrameLayout) {
+			mBringToFront = true;
+		}
+		
+		// Here we grab the background of the handle and if the
+		// handle does not have any images/ icons and we are able
+		// to successfully obtain the background color, we'll make
+		// it transparent but restore the color when the user is
+		// interacting with the panel/ menu.
+		
+		// Check if we have images and the handle is a container.
+		if (mHandle instanceof ViewGroup)
+			hasImages = hasImages((ViewGroup) mHandle);
+		
+		if (!hasImages) {
+			if (mBackgroundColor == 0) {
+				mBackgroundColor = getBackgroundColor();
+			}
+			if (mBackgroundColor == Integer.MAX_VALUE) {
+				mBackgroundColor = 0;
+			} else {
+				mHandle.setBackgroundColor(Color.TRANSPARENT);
+			}
+		}
+		
+		Log.v(TAG, "Image icons: " + Boolean.toString(hasImages) +
+			", background: " + Integer.toString(mBackgroundColor) + ".");
+		
+		if (!hasImages && mBackgroundColor != 0) {
+			mHandle.setBackgroundColor(Color.TRANSPARENT);
+		}
+	}
+
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		if (mWeight > 0 && mContent.getVisibility() == VISIBLE) {
+			View parent = (View) getParent();
+			if (parent != null) {
+				if (mOrientation == VERTICAL) {
+					heightMeasureSpec = MeasureSpec.makeMeasureSpec((int) (parent.getHeight() * mWeight), MeasureSpec.EXACTLY);
+				} else {
+					widthMeasureSpec = MeasureSpec.makeMeasureSpec((int) (parent.getWidth() * mWeight), MeasureSpec.EXACTLY);
+				}
+			}
+		}
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+	}
+	
+	@Override
+	protected void onLayout(boolean changed, int l, int t, int r, int b) {
+		super.onLayout(changed, l, t, r, b);
+		mContentWidth = mContent.getWidth();
+		mContentHeight = mContent.getHeight();
+	}
+
+	@Override
+	protected void dispatchDraw(Canvas canvas) {
+//		String name = getResources().getResourceEntryName(getId());
+//		Log.d(TAG, name + " ispatchDraw " + mState);
+		// this is why 'mState' was added:
+		// avoid flicker before animation start
+		if (mState == State.ABOUT_TO_ANIMATE && !mIsShrinking) {
+			int delta = mOrientation == VERTICAL? mContentHeight : mContentWidth;
+			if (mPosition == LEFT || mPosition == TOP) {
+				delta = -delta;
+			}
+			if (mOrientation == VERTICAL) {
+				canvas.translate(0, delta);
+			} else {
+				canvas.translate(delta, 0);
+			}
+		}
+		if (mState == State.TRACKING || mState == State.FLYING) {
+			canvas.translate(mTrackX, mTrackY);
+		}
+		super.dispatchDraw(canvas);
+	}
+	
+	private float ensureRange(float v, int min, int max) {
+		v = Math.max(v, min);
+		v = Math.min(v, max);
+		return v;
+	}
+
+	private final OnTouchListener touchListener = new OnTouchListener()
+	{
+		int initX;
+		int initY;
+		boolean setInitialPosition;
+		
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			if (mState == State.ANIMATING) {
+				// we are animating
+				return false;
+			}
+//			Log.d(TAG, "state: " + mState + " x: " + event.getX() + " y: " + event.getY());
+			int action = event.getAction();
+			if (action == MotionEvent.ACTION_DOWN) {
+				if (mBringToFront) {
+					bringToFront();
+				}
+				initX = 0;
+				initY = 0;
+				if (mContent.getVisibility() == GONE) {
+					// since we may not know content dimensions we use factors here
+					if (mOrientation == VERTICAL) {
+						initY = mPosition == TOP? -1 : 1;
+					} else {
+						initX = mPosition == LEFT? -1 : 1;
+					}
+				}
+				
+				// Fully transparent?
+				if (mBackgroundColor != 0) mHandle.setBackgroundColor(mBackgroundColor);
+				
+				// We were touched, always go darker!
+				if (hasTransparency()) setBackgroundColors(getBackgroundColor(false));
+				
+				setInitialPosition = true;
+			} else {
+				if (setInitialPosition) {
+					// now we know content dimensions, so we multiply factors...
+					initX *= mContentWidth;
+					initY *= mContentHeight;
+					// ... and set initial panel's position
+					mGestureListener.setScroll(initX, initY);
+					setInitialPosition = false;
+					// for offsetLocation we have to invert values
+					initX = -initX;
+					initY = -initY;
+				}
+				// offset every ACTION_MOVE & ACTION_UP event 
+				event.offsetLocation(initX, initY);
+			}
+			if (!mGestureDetector.onTouchEvent(event)) {
+				if (action == MotionEvent.ACTION_UP) {
+					// tup up after scrolling
+					post(startAnimation);
+				}
+			}
+			return false;
+		}
+	};
+	
+	private final OnClickListener clickListener = new OnClickListener()
+	{
+		@Override
+		public void onClick(View v) {
+			if (mBringToFront) {
+				bringToFront();
+			}
+			if (initChange()) {
+				post(startAnimation);
+			}
+		}
+	};
+
+	public boolean initChange() {
+		if (mState != State.READY) {
+			// we are animating or just about to animate
+			return false;
+		}
+		mState = State.ABOUT_TO_ANIMATE;
+		mIsShrinking = mContent.getVisibility() == VISIBLE;
+		if (!mIsShrinking) {
+			// this could make flicker so we test mState in dispatchDraw()
+			// to see if is equal to ABOUT_TO_ANIMATE
+			mContent.setVisibility(VISIBLE);
+		}
+		return true;
+	}
+
+	private final Runnable startAnimation = new Runnable() {
+		@Override
+		public void run() {
+			// this is why we post this Runnable couple of lines above:
+			// now its save to use mContent.getHeight() && mContent.getWidth()
+			TranslateAnimation animation;
+			int fromXDelta = 0, toXDelta = 0, fromYDelta = 0, toYDelta = 0;
+			if (mState == State.FLYING) {
+				mIsShrinking = (mPosition == TOP || mPosition == LEFT) ^ (mVelocity > 0);
+			}
+			int calculatedDuration;
+			if (mOrientation == VERTICAL) {
+				int height = mContentHeight;
+				if (!mIsShrinking) {
+					fromYDelta = mPosition == TOP? -height : height;
+				} else {
+					toYDelta = mPosition == TOP? -height : height;
+				}
+				if (mState == State.TRACKING) {
+					if (Math.abs(mTrackY - fromYDelta) < Math.abs(mTrackY - toYDelta)) {
+						mIsShrinking = !mIsShrinking;
+						toYDelta = fromYDelta;
+					}
+					fromYDelta = (int) mTrackY;
+				} else
+				if (mState == State.FLYING) {
+					fromYDelta = (int) mTrackY;
+				}
+				// for FLYING events we calculate animation duration based on flying velocity
+				// also for very high velocity make sure duration >= 20 ms
+				if (mState == State.FLYING && mLinearFlying) {
+					calculatedDuration = (int) (1000 * Math.abs((toYDelta - fromYDelta) / mVelocity));
+					calculatedDuration = Math.max(calculatedDuration, 20);
+				} else {
+					calculatedDuration = mDuration * Math.abs(toYDelta - fromYDelta) / mContentHeight;
+				}
+			} else {
+				int width = mContentWidth;
+				if (!mIsShrinking) {
+					fromXDelta = mPosition == LEFT? -width : width;
+				} else {
+					toXDelta = mPosition == LEFT? -width : width;
+				}
+				if (mState == State.TRACKING) {
+					if (Math.abs(mTrackX - fromXDelta) < Math.abs(mTrackX - toXDelta)) {
+						mIsShrinking = !mIsShrinking;
+						toXDelta = fromXDelta;
+					}
+					fromXDelta = (int) mTrackX;
+				} else
+				if (mState == State.FLYING) {
+					fromXDelta = (int) mTrackX;
+				}
+				// for FLYING events we calculate animation duration based on flying velocity
+				// also for very high velocity make sure duration >= 20 ms
+				if (mState == State.FLYING && mLinearFlying) {
+					calculatedDuration = (int) (1000 * Math.abs((toXDelta - fromXDelta) / mVelocity));
+					calculatedDuration = Math.max(calculatedDuration, 20);
+				} else {
+					calculatedDuration = mDuration * Math.abs(toXDelta - fromXDelta) / mContentWidth;
+				}
+			}
+			
+			mTrackX = mTrackY = 0;
+			if (calculatedDuration == 0) {
+				mState = State.READY;
+				if (mIsShrinking) {
+					mContent.setVisibility(GONE);
+				}
+				postProcess();
+				return;
+			}
+			
+			animation = new TranslateAnimation(fromXDelta, toXDelta, fromYDelta, toYDelta);
+			animation.setDuration(calculatedDuration);
+			animation.setAnimationListener(animationListener);
+			if (mState == State.FLYING && mLinearFlying) {
+				animation.setInterpolator(mAccelInt);
+			} else
+			if (mInterpolator != null) {
+				animation.setInterpolator(mInterpolator);
+			}
+			startAnimation(animation);
+		}
+	};
+	
+	private final AccelerateInterpolator mAccelInt = new AccelerateInterpolator();
+
+	private final AnimationListener animationListener = new AnimationListener() {
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			mState = State.READY;
+			if (mIsShrinking) {
+				mContent.setVisibility(GONE);
+			}
+			postProcess();
+		}
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+		}
+		@Override
+		public void onAnimationStart(Animation animation) {
+			mState = State.ANIMATING;
+		}
+	};
+
+	private void postProcess() {
+		if (mIsShrinking && mClosedHandle != null) {
+			mHandle.setBackgroundDrawable(mClosedHandle);
+		} else
+		if (!mIsShrinking && mOpenedHandle != null) {
+			mHandle.setBackgroundDrawable(mOpenedHandle);
+		}
+		
+		if (mBackgroundColor != 0) {
+			mHandle.setBackgroundColor(((mIsShrinking) ? Color.TRANSPARENT : mBackgroundColor));
+		} else if (hasTransparency()) {
+			setBackgroundColors(getBackgroundColor(!mIsShrinking));
+		}
+		
+		// invoke listener if any
+		if (panelListener != null) {
+			if (mIsShrinking) {
+				panelListener.onPanelClosed(Panel.this);
+			} else {
+				panelListener.onPanelOpened(Panel.this);
+			}
+		}
+	}
+	
+	private final class PanelOnGestureListener implements OnGestureListener {
+		float scrollY;
+		float scrollX;
+		public void setScroll(int initScrollX, int initScrollY) {
+			scrollX = initScrollX;
+			scrollY = initScrollY;
+		}
+		@Override
+		public boolean onDown(MotionEvent e) {
+			scrollX = scrollY = 0;
+			initChange();
+			return true;
+		}
+		@Override
+		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+			mState = State.FLYING;
+			mVelocity = mOrientation == VERTICAL? velocityY : velocityX;
+			post(startAnimation);
+			return true;
+		}
+		@Override
+		public void onLongPress(MotionEvent e) {
+			// not used
+		}
+		@Override
+		public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+			mState = State.TRACKING;
+			float tmpY = 0, tmpX = 0;
+			if (mOrientation == VERTICAL) {
+				scrollY -= distanceY;
+				if (mPosition == TOP) {
+					tmpY = ensureRange(scrollY, -mContentHeight, 0);
+				} else  {
+					tmpY = ensureRange(scrollY, 0, mContentHeight);
+				}
+			} else {
+				scrollX -= distanceX;
+				if (mPosition == LEFT) {
+					tmpX = ensureRange(scrollX, -mContentWidth, 0);
+				} else {
+					tmpX = ensureRange(scrollX, 0, mContentWidth);
+				}
+			}
+			if (tmpX != mTrackX || tmpY != mTrackY) {
+				mTrackX = tmpX;
+				mTrackY = tmpY;
+				invalidate();
+			}
+			return true;
+		}
+		@Override
+		public void onShowPress(MotionEvent e) {
+			// not used
+		}
+		@Override
+		public boolean onSingleTapUp(MotionEvent e) {
+			// not used
+			return false;
+		}
+	}
+}

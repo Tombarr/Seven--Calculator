@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:wp="http://schema.tombarrasso.com/wp7ui"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:paddingLeft="12dp"
+	android:paddingRight="12dp"
+	android:paddingTop="16dp"
+	android:id="@id/fauxActionBar">
+	
+	<ImageView
+		android:layout_alignParentLeft="true"
+		android:src="@drawable/icon"
+		android:layout_marginRight="8dp"
+		android:layout_height="28dp"
+		android:layout_width="28dp"
+		android:id="@id/icon"
+		android:contentDescription="@string/home" />
+	
+	<!-- Left Description -->
+	<com.tombarrasso.android.wp7ui.widget.WPTextView
+		android:text="@string/advanced_settings"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:textColor="@android:color/white"
+		android:textSize="@dimen/action_bar_text"
+		android:layout_marginLeft="36dp"
+		android:layout_marginRight="42dp"
+		android:layout_toLeftOf="@id/icon" />
+		
+</RelativeLayout>

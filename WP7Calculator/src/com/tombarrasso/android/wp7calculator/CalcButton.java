@@ -3,7 +3,7 @@ package com.tombarrasso.android.wp7calculator;
 /*
  * CalcButton.java
  *
- * Copyright (C) Thomas James Barrasso
+ * Copyright 2012 (C) Thomas James Barrasso
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,6 +35,7 @@ import android.view.View.OnTouchListener;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.content.SharedPreferences;
+import android.view.HapticFeedbackConstants;
 
 /**
  * Button used in the calculator for numbers/ symbols.
@@ -49,14 +50,18 @@ import android.content.SharedPreferences;
  * <ul>
  *	<li>Vibrate onDown instead of onClick.</li>
  * </ul>
+ * <b>Version 1.03</b>
+ * <ul>
+ *	<li>Vibrate now done using Haptic Feedback features.</li>
+ * </ul>
  * 
  * @author		Thomas James Barrasso <contact @ tombarrasso.com>
- * @since		2011
- * @version		1.02
- * @category	View
+ * @since		2012
+ * @version		1.03
+ * @category	{@link View}
  */
 
-public class CalcButton extends WPTextView implements OnTouchListener
+public final class CalcButton extends WPTextView implements OnTouchListener
 {
 	public static final String TAG = CalcButton.class.getSimpleName();
 	public static final int BOLD 	= 1,
@@ -65,10 +70,10 @@ public class CalcButton extends WPTextView implements OnTouchListener
 							REGULAR = 0,
 							LIGHT 	= 2;
 	private int COLOR, mColor, mColorDown;
+	private final SharedPreferences mPrefs;
 	private int mFunction = Constants.Tags.CLEAR;
 	private boolean mShouldListen = true,
 					mShouldVibrate = false;
-	private static Vibrator mVibrator;
 	private final int mVibrationDuration;
 	
 	// ====================
@@ -79,6 +84,7 @@ public class CalcButton extends WPTextView implements OnTouchListener
 	{
 		super(context);
 		mVibrationDuration = context.getResources().getInteger(R.integer.vibration_duration);
+		mPrefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
 		init();
 	}
 	
@@ -86,6 +92,7 @@ public class CalcButton extends WPTextView implements OnTouchListener
 	{
 		super(context, attrs);
 		mVibrationDuration = context.getResources().getInteger(R.integer.vibration_duration);
+		mPrefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
 		setAttrs(attrs);
 		init();
 	}
@@ -94,6 +101,7 @@ public class CalcButton extends WPTextView implements OnTouchListener
 	{
 		super(context, attrs, defStyle);
 		mVibrationDuration = context.getResources().getInteger(R.integer.vibration_duration);
+		mPrefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
 		setAttrs(attrs);
 		init();
 	}
@@ -107,9 +115,10 @@ public class CalcButton extends WPTextView implements OnTouchListener
 		{
 			setFunction(attr.getInt(R.styleable.Calc_function, mFunction));
 			setColor(attr.getColor(R.styleable.Calc_color, ButtonColors.COLOR_DARK));
-			setTextColorDown(attr.getColor(R.styleable.Calc_textColorDown, Color.BLACK));
+			setTextColorDown(attr.getColor(R.styleable.Calc_textColorDown,
+				((WPTheme.isThemeDark()) ? Color.BLACK : Color.WHITE)));
 			setFont(attr.getInt(R.styleable.Calc_font, REGULAR));
-			mColor = attr.getColor(R.styleable.Calc_textColor, Color.WHITE);
+			mColor = attr.getColor(R.styleable.Calc_textColor, ((WPTheme.isThemeDark()) ? Color.WHITE : Color.BLACK));
 			setTextColor(mColor);
 			
 			// If none of the attributes were used do not
@@ -131,12 +140,9 @@ public class CalcButton extends WPTextView implements OnTouchListener
 	
 	private void init()
 	{
-		// Get vibrator instance.
-		if (mVibrator == null)
-			mVibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
-
+		setHapticFeedbackEnabled(true);
+		
 		// Get a few values from settings.
-		final SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 		mShouldVibrate = mPrefs.getBoolean(HomeActivity.VIBRATE_KEY, mShouldVibrate);
 
 		// Set styles.
@@ -153,28 +159,30 @@ public class CalcButton extends WPTextView implements OnTouchListener
 	 */
 	public void setColor(int color)
 	{
+		final boolean isDark = WPTheme.isThemeDark();
+		
 		switch (color)
 		{
-		case ButtonColors.COLOR_ACCENT:
-			COLOR = ButtonColors.COLOR_ACCENT;
-			setBackgroundColor(WPTheme.getThemeColor());
-			break;
-		case ButtonColors.COLOR_LIGHT:
-			COLOR = ButtonColors.COLOR_LIGHT;
-			setBackgroundColor(WPTheme.calcLight);
-			break;
-		case ButtonColors.COLOR_DARK:
-			COLOR = ButtonColors.COLOR_DARK;
-			setBackgroundColor(WPTheme.defMenuBackground);
-			break;
-		case ButtonColors.COLOR_TRIG:
-			COLOR = ButtonColors.COLOR_TRIG;
-			setBackgroundColor(WPTheme.calcTrigMode);
-			break;
-		default:
-			COLOR = color;
-			setBackgroundColor(COLOR);
-			break;
+			case ButtonColors.COLOR_ACCENT:
+				COLOR = ButtonColors.COLOR_ACCENT;
+				setBackgroundColor(WPTheme.getThemeColor());
+				break;
+			case ButtonColors.COLOR_LIGHT:
+				COLOR = ButtonColors.COLOR_LIGHT;
+				setBackgroundColor(((isDark) ? WPTheme.calcLight : Constants.LIGHT_BUTTON_COLOR_DARK));
+				break;
+			case ButtonColors.COLOR_DARK:
+				COLOR = ButtonColors.COLOR_DARK;
+				setBackgroundColor(((isDark) ? WPTheme.defMenuBackground : Constants.LIGHT_BUTTON_COLOR_LIGHT));
+				break;
+			case ButtonColors.COLOR_TRIG:
+				COLOR = ButtonColors.COLOR_TRIG;
+				setBackgroundColor(((isDark) ? WPTheme.calcTrigMode : Constants.LIGHT_BUTTON_COLOR_TRIG));
+				break;
+			default:
+				COLOR = color;
+				setBackgroundColor(COLOR);
+				break;
 		}
 		
 		setTextColor(mColor);
@@ -215,16 +223,25 @@ public class CalcButton extends WPTextView implements OnTouchListener
 	public void onWindowFocusChanged(boolean hasWindowFocus)
 	{
 		super.onWindowFocusChanged(hasWindowFocus);
-		if (COLOR == ButtonColors.COLOR_ACCENT)
-			setBackgroundColor(WPTheme.getThemeColor());
+		updateValues();
 	}
 	
 	@Override
 	protected void onWindowVisibilityChanged(int visibility)
 	{
 		super.onWindowVisibilityChanged(visibility);
-		if (COLOR == ButtonColors.COLOR_ACCENT)
-			setBackgroundColor(WPTheme.getThemeColor());;
+		updateValues();
+	}
+	
+	private final void updateValues()
+	{			
+		setColor(getColor());
+		
+		setTextColorDown(((WPTheme.isThemeDark()) ? Color.BLACK : Color.WHITE));
+		mColor = ((WPTheme.isThemeDark()) ? Color.WHITE : Color.BLACK);
+		setTextColor(mColor);
+			
+		mShouldVibrate = mPrefs.getBoolean(HomeActivity.VIBRATE_KEY, mShouldVibrate);
 	}
 
 	/**
@@ -239,12 +256,13 @@ public class CalcButton extends WPTextView implements OnTouchListener
             case MotionEvent.ACTION_DOWN:
             {
             	setTextColor(mColorDown);
-            	setBackgroundColor(Color.WHITE);
+            	setBackgroundColor(((WPTheme.isThemeDark()) ? Color.WHITE : Color.BLACK));
 		
 				// Vibrate for the given time if set to do so.
-				if (mShouldVibrate && mVibrator != null &&
-					mVibrationDuration > 0)
-						mVibrator.vibrate(mVibrationDuration);
+				if (mShouldVibrate)
+					performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY,
+						HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING |
+						HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
 
             	break;
             }
@@ -290,8 +308,8 @@ public class CalcButton extends WPTextView implements OnTouchListener
 	{
 		if (gainFocus)
 		{
-			setTextColor(Color.BLACK);
-        	setBackgroundColor(Color.WHITE);
+			setTextColor(((WPTheme.isThemeDark()) ? Color.BLACK : Color.WHITE));
+        	setBackgroundColor(((WPTheme.isThemeDark()) ? Color.WHITE : Color.BLACK));
 		}
 		else
 		{

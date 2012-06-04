@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>    
+    <!-- Dimension for sqrt button. -->
+    <dimen name="sqrt_size">18dp</dimen>
+</resources>

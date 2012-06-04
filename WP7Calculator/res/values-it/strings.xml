@@ -1,109 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- App Name -->
+	<!-- App Name -->
     <string name="app_name">Calcolatrice</string>
-    <string name="author">Thomas James Barrasso</string>
-    <string name="version">gamma uno (2)</string>
     
     <!-- Other -->
-    <string name="confirm">confermare</string>
-    <string name="settings">impostazioni</string>
-    <string name="accent">ACCENTI</string>
+    <string name="confirm">Conferma</string>
+    <string name="settings">Impostazioni</string>
+    <string name="share">Condividi</string>
+    <string name="advanced_settings">Impostazioni</string>
+    <string name="prefs">Preferenze</string>
+    <string name="accent">COLORE IN PRIMO PIANO</string>
     <string name="m">M</string>
-    <string name="accents">Scegliere un Colore Accento</string>
+    <string name="accents">Scegli un colore</string>
     
-    <!-- Opzione Vibration -->
-    <string name="vibrate">vibrazioni Attiva premere il pulsante?</string>
-    <string name="status">Abilita barra di stato personalizzato?</string>
-    <string name="animate">Abilita animazioni comparsa?</string>
-    <string name="vibration_activation">Lascia la tua dispositivo una buona scossa per attivare / disattivare le vibrazioni (accelerometro richiesto).</string>
-    <string name="yes">sì</string>
-    <string name="no">non</string>
+    <!-- Share -->
+    <string name="share_subject">Seven+ Calcolatrice è eccezionale!</string>
+    <string name="share_text">Seven+ Calcolatrice è la migliore calcolatrice in stile WP7 su Google Play!</string>
+    <string name="share_title">Condividi il Seven+ Calcolatrice</string>
+    
+    <!-- square root -->
+    <string name="sqrt">radq</string>
+    
+    <!-- Theme -->
+    <string name="background">Sfondo</string>
+    <string name="accentcolor">Colore in primo piano</string>
+    <string name="dark">scuro</string>
+	<string name="light">chiaro</string>
+    <string name="theme">tema</string>
+    <string name="theme_norm">Tema</string>
+    <string name="orange">arancio</string>
+    <string name="light_battery_warning">Dato che lo schermo è ottimizzato per i colori scuri, la scelta del
+    sfondo chiaro userà più la batteria del vostro telefono.</string>
+    <string name="theme_description">Cambia lo sfondo del tuo telefono e il %1$s in modo 
+    che si intonino col tuo umore di oggi, della settimana o di tutto il mese.</string>
+   
+   <!-- Vibration Option -->
+   <string name="vibrate">Attivare la vibrazione alla pressione?</string>
+   <string name="status">Attivare la barra di stato personalizzata?</string>
+   <string name="animate">Attivare l\'animazione volo?</string>
+   <string name="vibration_activation">Scuoti il tuo dispositivo per attivare/ disattivare la vibrazione (accelerometro necessario).</string>
+   <string name="yes">sì</string>
+   <string name="no">no</string>
+   <string name="donation_description">Grazie per il tuo supporto. Se desideri contribuire ulteriormente a questa 
+   applicazione o in generale al Seven+ Project per favore considera una donazione!</string>
+   
+   <!-- Anonymous Reporting -->
+    <string name="reporting">Rapporto anonimo</string>
+    
+    <!-- Question Mark/ Dialog -->
+	<string name="app_anims">Animazioni nell\'app</string>
+   
+   <!-- Vibration Option -->
+   <string name="keep_wake">Mantieni lo schermo acceso</string>
+   
+   <!-- Toast shown when text is copied to the clipboard. -->
+	<string name="text_copied_toast">Testo copiato.</string>
 
-    <!-- Storia -->
-    <string name="history">Storia</string>
-    <string name="history_close">chiudere</string>
-    <string name="history_clear">chiaro</string>
+	<!-- NFC Beam -->
+	<string name="message_sent">Risultato inviato!</string>
+	
+	<!-- URLs -->
+	<string name="website">Visita il nostro sito</string>
+	<string name="rate">Valuta questa app</string>
     
-    <!-- Change Log -->
-    <string name="changelog_title_full">delle news</string>
+    <!-- Billing Stuff -->
+	<string name="billing_not_supported_title">Impossibile acquistare</string>
+    <string name="billing_not_supported_message">Il servizio di pagamento del Market non è disponibile in questo momento. Per favore prova più tardi</string>
+    <string name="cannot_connect_title">Impossibile connettersi a Google Play</string>
+    <string name="cannot_connect_message">Questa app non riesce a connettersi a Google Play. La tua versione di Play potrebbe essere datata. Per favore aggiornala o riprova più tardi</string>
+     <string name="learn_more">Maggiori informazioni</string>
+    <string name="buy">Compra</string>
+    <string name="donate">Dona</string>
+    <string name="dismiss">Annulla</string>
+    <string name="thanks">Grazie</string>
+    <string name="donation_complete_title">Donazione completata</string>
+    <string name="donation_complete">Grazie per la tua donazione, il tuo supporto ci permette di fare prodotti migliori!</string>
+    <string name="donation_cancelled_title">Donazione annullata</string>
+    <string name="donation_cancelled">Grazie lo stesso per il tuo supporto. Per favore considera una futura donazione se e quando sarà possibile</string>
+
+   <!-- History -->
+   <string name="history">Registro</string>
+   <string name="history_close">Chiudi</string>
+   <string name="history_clear">Pulisci</string>
+    
+    <!-- Change log -->
+    <string name="changelog_title_full">Change Log</string>
     <string name="changelog_title">Novità</string>
     <string name="changelog_ok">OK</string>
     
-    <!-- Stringhe tema -->
-    <string name="default_theme">predefinito</string>
-    <string name="theme">scegliere un tema</string>
-    <string name="change">cambiare</string>
-    <string name="cancel">annullare</string>
+    <!-- Theme strings -->
+    <string name="theme">scegli un tema</string>
+    <string name="change">cambia</string>
+    <string name="cancel">cancella</string>
     
     <!-- Color Names -->
     <string-array name="color_names">
         <item>magenta</item>
-        <item>porpora</item>
-        <item>alzavola</item>
-        <item>calce</item>
+        <item>viola</item>
+        <item>foglia tè</item>
+        <item>lime</item>
         <item>marrone</item>
         <item>rosa</item>
-        <item>arancione</item>
-        <item>blue</item>
+        <item>arancio</item>
+        <item>blu</item>
         <item>rosso</item>
         <item>verde</item>
     </string-array>
-    
-    <!-- Calculator -->
-    
-    <!-- 0 - 9 -->
-    <string name="zero">0</string>
-    <string name="one">1</string>
-    <string name="two">2</string>
-    <string name="three">3</string>
-    <string name="four">4</string>
-    <string name="five">5</string>
-    <string name="six">6</string>
-    <string name="seven">7</string>
-    <string name="eight">8</string>
-    <string name="nine">9</string>
-    
-    <!-- Top Row -->
-    <string name="clear">C</string>
-    <string name="memclear">MC</string>
-    <string name="memrecall">MR</string>
-    <string name="memplus">M&#043;</string>
-    
-    <!-- Second Row -->
-    <string name="plusminus">&#177;</string>
-    <string name="percent">&#037;</string>
-    <string name="period">&#046;</string>
-    
-    <!-- Operators -->
-    <string name="divide">&#247;</string>
-    <string name="multiply">&#215;</string>
-    <string name="minus">&#045;</string>
-    <string name="plus">&#043;</string>
-    <string name="equals">&#061;</string>
-    
-    <!-- Landscape Buttons -->
-    <string name="paren_open">(</string>
-    <string name="paren_close">)</string>
-    <string name="pi">Pi</string>
-    <string name="degree">Deg</string>
-    <string name="radian">Rad</string>
-    <string name="grad">Grad</string>
-    <string name="sqrt">radq</string>
-    
-    <!-- Trig -->
-    <string name="sin">sin</string>
-    <string name="cos">cos</string>
-    <string name="tan">tan</string>
-    
-    <!-- Logs -->
-    <string name="ln">ln</string>
-    <string name="log">log</string>
-    <string name="exponential_ten">10^x</string>
-    
-    <!-- Final Row -->
-    <string name="power">^</string>
-    <string name="factorial">n!</string>
-    <string name="squared">x^2</string>
-    <string name="exponential">x^y</string>
+
 </resources>

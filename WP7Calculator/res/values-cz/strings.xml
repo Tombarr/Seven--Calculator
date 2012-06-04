@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- App Name -->
+    <string name="app_name">Calculator</string>
+    <string name="author">Thomas James Barrasso</string>
+    
+    <!-- Other -->
+    <string name="confirm">confirm</string>
+    <string name="settings">settings</string>
+    <string name="prefs">Preferences</string>
+    <string name="accent">ACCENTS</string>
+    <string name="m">M</string>
+    <string name="accents">Choose an Accent Color</string>
+   
+   <!-- Vibration Option -->
+   <string name="vibrate">Enable vibration on button press?</string>
+   <string name="status">Enable custom status bar?</string>
+   <string name="animate">Enable flyout animations?</string>
+   <string name="vibration_activation">Give your device a good shake to enable/ disable vibration (accelerometer required).</string>
+   <string name="yes">yes</string>
+   <string name="no">no</string>
+
+   <!-- History -->
+   <string name="history">History</string>
+   <string name="history_close">close</string>
+   <string name="history_clear">clear</string>
+    
+    <!-- Change log -->
+    <string name="changelog_title_full">Change Log</string>
+    <string name="changelog_title">What\'s New</string>
+    <string name="changelog_ok">OK</string>
+    
+    <!-- Theme strings -->
+    <string name="default_theme">Default</string>
+    <string name="theme">choose a theme</string>
+    <string name="change">change</string>
+    <string name="cancel">cancel</string>
+    
+    <!-- Color Names -->
+    <string-array name="color_names">
+        <item>magenta</item>
+        <item>purple</item>
+        <item>teal</item>
+        <item>lime</item>
+        <item>brown</item>
+        <item>pink</item>
+        <item>orange</item>
+        <item>blue</item>
+        <item>red</item>
+        <item>green</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- App Name -->
+    <string name="app_name">Calculator</string>
+    
+    <!-- Other -->
+    <string name="confirm">Onayla</string>
+    <string name="settings">Ayarlar</string>
+    <string name="prefs">Özellikler</string>
+    <string name="accent">Kaplama</string>
+    <string name="accents">Bir Kaplama Rengi Seçin</string>
+   
+   <!-- Vibration Option -->
+   <string name="vibrate">Tuş basımlarında titret.</string>
+   <string name="status">Özelleştirilmiş durum çubuğunu kullan.</string>
+   <string name="animate">Uçuş animasyonunu etkinleştir.</string>
+   <string name="yes">evet</string>
+   <string name="no">hayır</string>
+   
+   <!-- Toast shown when text is copied to the clipboard. -->
+	<string name="text_copied_toast">Kopyalandı.</string>
+
+	<!-- NFC Beam -->
+	<string name="message_sent">Sonuç gönderildi!</string>
+	
+	<!-- URLs -->
+	<string name="website">Web sitemizi ziyaret edin</string>
+	<string name="rate">Uygulamayı puanlayın</string>
+	<string name="rate">paylaşmak</string>
+    
+    <!-- Billing Stuff -->
+	<string name="billing_not_supported_title">Alım yapılamadı</string>
+    <string name="billing_not_supported_message">Market satın alma servisi şu an devre dışı. Lütfen daha sonra tekrar deneyin.</string>
+    <string name="cannot_connect_title">Market\'e bağlanılamıyor</string>
+    <string name="cannot_connect_message">Uygulama Market\'e bağlanamadı. Market yazılımınızın versiyonunu eski olabilir. Lütfen sürüm gencelleyip tekrar deneyin.</string>
+     <string name="learn_more">Daha fazla bilgi</string>
+    <string name="buy">Satın al</string>
+    <string name="donate">Bağış yap</string>
+    <string name="dismiss">Bırak</string>
+    <string name="thanks">Teşekkürler</string>
+    <string name="donation_complete_title">Bağış tamamlandı</string>
+    <string name="donation_complete">Bağışınız için teşekkürler, sizin destekleriniz daha iyi ürünler çıkartmamıza olanak sağlıyor!</string>
+    <string name="donation_cancelled_title">Bağış iptal edildi</string>
+    <string name="donation_cancelled">Yine de desteğiniz için teşekkürler. Daha sonra mümkün olduğunda bağış yapmayı lütfen tekrar değerlendirin.</string>
+
+   <!-- History -->
+   <string name="history">Geçmiş</string>
+   <string name="history_close">kapat</string>
+   <string name="history_clear">temizle</string>
+    
+    <!-- Change log -->
+    <string name="changelog_title_full">Değişim Listesi</string>
+    <string name="changelog_title">Neler Yeni</string>
+    <string name="changelog_ok">TAMAM</string>
+    
+    <!-- Theme strings -->
+    <string name="default_theme">Varsayılan</string>
+    <string name="theme">bir tema seçin</string>
+    <string name="change">değiştir</string>
+    <string name="cancel">iptal</string>
+    <string name="orange">portakal rengi</string>
+    
+    <!-- Color Names -->
+    <string-array name="color_names">
+        <item>eflatun</item>
+        <item>mor</item>
+        <item>deniz mavisi</item>
+        <item>limon yeşili</item>
+        <item>kahve rengi</item>
+        <item>pembe</item>
+        <item>portakal rengi</item>
+        <item>mavi</item>
+        <item>kırmızı</item>
+        <item>yeşil</item>
+    </string-array>
+</resources>

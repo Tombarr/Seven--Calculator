@@ -3,28 +3,113 @@
 	<!-- App Name -->
     <string name="app_name">Calculator</string>
     <string name="author">Thomas James Barrasso</string>
-    <string name="version">gamma two</string>
+    <string name="version">dandelion</string>
     
     <!-- Other -->
-    <string name="confirm">confirm</string>
-    <string name="settings">settings</string>
+    <string name="confirm">Confirm</string>
+    <string name="settings">Settings</string>
+    <string name="options">More options</string>
+    <string name="share">Share</string>
+    <string name="rate">Rate</string>
     <string name="prefs">Preferences</string>
     <string name="accent">ACCENTS</string>
     <string name="m">M</string>
     <string name="accents">Choose an Accent Color</string>
+    
+    <!-- Accessibility -->
+    <string name="settings_description">Configure this application and its theme.</string>
+    <string name="share_description">Share this application with your friends.</string>
+    <string name="rate_description">Show your support and rate this application.</string>
+    <string name="home">Go to the main screen of The Seven+ Calculator.</string>
+    <string name="paypal_description">Donate any amount to The Seven+ Project via PayPal,
+    the safe, online money transfer service.</string>
+    <string name="donation_description">Thank you for your support. If you wish to further contribute to this 
+	application or The Seven+ Project in general please consider donating!</string>
+	<string name="donate_description">Support The Seven+ Calculator or The Seven+ Project
+	through an in-app donation, thank you!</string>
+	<string name="website_description">Visit our website to see our other applications, 
+	members, and much more! http://sevenplusandroid.org</string>
+	<string name="history_description">View a history of your recent calculations.</string>
+	
+	 <!-- Anonymous Reporting -->
+    <string name="reporting">Anonymous reporting</string>
+    <string name="reporting_desc">Anonymous reporting submits crashes and bug reports
+    allowing us to improve our application.</string>
+    <string name="reporting_description">Anonymous reporting submits crash reports automatically.
+    In no way is personally-identifiable information collected. Logs pertaining to the crash along
+    with system information (i.e. model, firmware, baseband, kernel, etc.) are collected to allow
+    us to understand why a crash occurred and to improve our applications and fix bugs. At any time you
+    are welcome to disable reporting with no consequences.</string>
+    
+    <!-- Share -->
+    <string name="share_subject">The Seven+ Calculator is awesome!</string>
+    <string name="share_text">The Seven+ Calculator is the best free WP7-style calculator on Google Play!</string>
+    <string name="share_title">Share The Seven+ Calculator</string>
+    
+    <!-- Theme -->
+    <string name="background">Background</string>
+    <string name="accentcolor">Accent color</string>
+    <string name="dark">dark</string>
+	<string name="light">light</string>
+    <string name="theme">theme</string>
+    <string name="theme_norm">Theme</string>
+    <string name="orange">orange</string>
+    <string name="light_battery_warning">Because your screen is optimized for dark colors, choosing the
+    light background will use up more of your phone\'s battery.</string>
+    <string name="theme_description">Change your phone\'s background and %1$s to match
+	your mood today, this week, or all month.</string>
+	
+	<!-- Question Mark/ Dialog -->
+	<string name="question_mark"><b>\?</b></string>
+	<string name="app_anims">App animations</string>
+	<string name="advanced_settings">Settings</string>
    
    <!-- Vibration Option -->
-   <string name="vibrate">Enable vibration on button press?</string>
-   <string name="status">Enable custom status bar?</string>
-   <string name="animate">Enable flyout animations?</string>
-   <string name="vibration_activation">Give your device a good shake to enable/ disable vibration (accelerometer required).</string>
+   <string name="vibrate">Vibrations</string>
+   <string name="status">Custom status bar</string>
    <string name="yes">yes</string>
    <string name="no">no</string>
+   <string name="keep_wake">Keep screen on</string>
+   
+   <!-- Toast shown when text is copied to the clipboard. -->
+	<string name="text_copied_toast">Text copied.</string>
+
+	<!-- NFC Beam -->
+	<string name="message_sent">Result sent!</string>
+	
+	<!-- URLs -->
+	<string name="website">Visit our website</string>
+    
+    <!-- Billing Stuff -->
+	<string name="billing_not_supported_title">Can\'t make purchases</string>
+    <string name="billing_not_supported_message">The Market billing
+     service is not available at this time. Please try again at a later time.</string>
+    <string name="cannot_connect_title">Can\'t connect to Market</string>
+    <string name="cannot_connect_message">This app cannot connect to Market.
+     Your version of Market may be out of date. Please update or try again later.</string>
+     <string name="learn_more">Learn more</string>
+    <string name="buy">Buy</string>
+    <string name="donate">Donate</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="thanks">Thanks</string>
+    <string name="donation_complete_title">Donation complete</string>
+    <string name="donation_complete">Thank you for your donation, your
+    support allows us to make better products!</string>
+    <string name="donation_cancelled_title">Donation cancelled</string>
+    <string name="donation_cancelled">Thank you anyway for your support. Do consider 
+    a future donation if and when it is possible.</string>
 
    <!-- History -->
    <string name="history">History</string>
-   <string name="history_close">close</string>
-   <string name="history_clear">clear</string>
+   <string name="history_close">Close</string>
+   <string name="history_back">Back</string>
+   <string name="history_clear">Clear</string>
+   <string name="no_history">History is empty.</string>
+   
+   <!-- Restart -->
+   <string name="restart">Restart</string>
+   <string name="restart_description">Some settings require a restart before they can take effect.
+   Would you like to restart now?</string>
     
     <!-- Change log -->
     <string name="changelog_title_full">Change Log</string>
@@ -33,9 +118,8 @@
     
     <!-- Theme strings -->
     <string name="default_theme">Default</string>
-    <string name="theme">choose a theme</string>
-    <string name="change">change</string>
-    <string name="cancel">cancel</string>
+    <string name="change">Change</string>
+    <string name="cancel">Cancel</string>
     
     <!-- Color Names -->
     <string-array name="color_names">
@@ -51,60 +135,4 @@
         <item>green</item>
     </string-array>
     
-    <!-- Calculator -->
-    
-    <!-- 0 - 9 -->
-    <string name="zero">0</string>
-    <string name="one">1</string>
-    <string name="two">2</string>
-    <string name="three">3</string>
-    <string name="four">4</string>
-    <string name="five">5</string>
-    <string name="six">6</string>
-    <string name="seven">7</string>
-    <string name="eight">8</string>
-    <string name="nine">9</string>
-    
-    <!-- Top Row -->
-    <string name="clear">C</string>
-    <string name="memclear">MC</string>
-    <string name="memrecall">MR</string>
-    <string name="memplus">M&#043;</string>
-    
-    <!-- Second Row -->
-    <string name="plusminus">&#177;</string>
-    <string name="percent">&#037;</string>
-    <string name="period">&#046;</string>
-    
-    <!-- Operators -->
-    <string name="divide">&#247;</string>
-    <string name="multiply">&#215;</string>
-    <string name="minus">&#045;</string>
-    <string name="plus">&#043;</string>
-    <string name="equals">&#061;</string>
-    
-    <!-- Landscape Buttons -->
-    <string name="paren_open">(</string>
-    <string name="paren_close">)</string>
-    <string name="pi">Pi</string>
-    <string name="degree">Deg</string>
-    <string name="radian">Rad</string>
-    <string name="grad">Grad</string>
-    <string name="sqrt">sqrt</string>
-    
-    <!-- Trig -->
-    <string name="sin">sin</string>
-    <string name="cos">cos</string>
-    <string name="tan">tan</string>
-    
-    <!-- Logs -->
-    <string name="ln">ln</string>
-    <string name="log">log</string>
-    <string name="exponential_ten">10^x</string>
-    
-    <!-- Final Row -->
-    <string name="power">^</string>
-    <string name="factorial">n!</string>
-    <string name="squared">x^2</string>
-    <string name="exponential">x^y</string>
 </resources>

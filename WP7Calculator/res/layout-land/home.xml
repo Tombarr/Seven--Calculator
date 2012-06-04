@@ -1,711 +1,882 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LinearLayout
+<RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:calc="http://schemas.android.com/apk/res/com.tombarrasso.android.wp7calculator"
-	xmlns:wp="http://schemas.tombarrasso.com/wp7ui"
-	android:orientation="vertical"
+	xmlns:wp="http://schema.tombarrasso.com/wp7ui"
 	android:paddingLeft="6dp"
-	android:paddingRight="6dp"
-	android:paddingBottom="6dp"
 	android:background="@android:color/black"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:id="@id/root">
 	
-	<ViewStub android:id="@id/statusbarstub"
-               android:inflatedId="@id/statusbarview"
-               android:layout="@layout/statusbar"
-               android:layout_width="fill_parent"
-               android:layout_height="wrap_content" />
-	
-	<RelativeLayout
+	<FrameLayout
 		android:layout_width="fill_parent"
-		android:layout_height="18dp">
-	
-		<!-- Equation -->
-		<com.tombarrasso.android.wp7ui.widget.WPTextView
-			android:layout_width="wrap_content"
-			android:layout_height="18dp"
-			android:textSize="18dp"
-			android:layout_alignParentRight="true"
-			android:id="@id/equation"
-			android:singleLine="true"
-			android:textColor="@android:color/white" />
-			
-		<!-- Memory -->
-		<com.tombarrasso.android.wp7ui.widget.WPTextView
-			android:layout_width="wrap_content"
-			android:layout_height="18dp"
-			android:textSize="18dp"
-			android:layout_alignParentLeft="true"
-			android:id="@id/memory"
-			android:background="@android:color/black"
-			android:paddingRight="14dp"
-			android:paddingLeft="4dp"
-			android:singleLine="true"
-			android:text="@string/m"
-			android:visibility="gone"
-			android:textColor="@android:color/white" />
-			
-	</RelativeLayout>
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true"
+		android:layout_height="wrap_content"
+		android:maxHeight="@dimen/status_bar_height"
+		android:paddingRight="@dimen/menu_padding"
+		android:id="@id/statusbarcontainer">
 		
+		<!-- Possible Status Bar -->        
+		<ViewStub
+		   android:id="@id/statusbarstub"
+		   android:inflatedId="@id/statusbarview"
+		   android:layout="@layout/statusbar"
+		   android:layout_width="fill_parent"
+		   android:layout_height="@dimen/status_bar_height"
+		   android:maxHeight="@dimen/status_bar_height" />
+		   	
+	</FrameLayout>
+		   	
+	<!-- Equation -->
+	<com.tombarrasso.android.wp7ui.widget.WPTextView
+		android:layout_width="wrap_content"
+		android:layout_height="22sp"
+		android:textSize="18sp"
+		android:layout_alignParentRight="true"
+		android:layout_below="@id/statusbarcontainer"
+		android:paddingBottom="4sp"
+		android:id="@id/equation"
+		android:singleLine="true"
+		android:textColor="@android:color/white"
+		android:paddingRight="@dimen/menu_padding" />
+		
+	<!-- Memory -->
+	<com.tombarrasso.android.wp7ui.widget.WPTextView
+		android:layout_width="wrap_content"
+		android:layout_height="22sp"
+		android:textSize="18sp"
+		android:layout_alignParentLeft="true"
+		android:layout_below="@id/statusbarcontainer"
+		android:id="@id/memory"
+		android:paddingLeft="4sp"
+		android:paddingBottom="4sp"
+		android:singleLine="true"
+		android:lines="1"
+		android:text="@string/m"
+		android:visibility="gone"
+		android:textColor="@android:color/white"
+		android:paddingRight="14dp" />
+			
 	<!-- Result -->
 	<com.tombarrasso.android.wp7calculator.AutoResizeTextView
+		android:layout_height="56sp"
 		android:layout_width="fill_parent"
-		android:layout_height="46dp"
-		android:textSize="46dp"
-		android:gravity="center_vertical|right"
-		android:layout_marginBottom="4dp"
+		android:textSize="52sp"
+		android:gravity="top|right"
 		android:id="@id/result"
 		android:text="@string/zero"
+		android:layout_below="@id/equation"
 		android:singleLine="true"
+		android:lines="1"
+		android:includeFontPadding="false"
+		android:scrollHorizontally="true"
 		android:ellipsize="none"
-		android:textColor="@android:color/white" />
-		
-	<!-- 
-		@id/buttons is the container ViewGroup for all
-		CalcButtons and CalcImageButtons. It does not matter
-		what type of layout @id/buttons is, nor does it
-		matter how deep you nest the buttons, you must
-		simply provide a function for your button via the
-		calc:function XML attribute. You are free to style the
-		buttons as you please, inline or otherwise.
-	-->
-	<TableLayout
+		android:textColor="@android:color/white"
+		android:layout_alignParentLeft="true"
+		android:clickable="true"
+		android:longClickable="true"
+		android:paddingRight="@dimen/menu_padding" />
+	
+	<!-- Flip Animation Container -->
+	<ViewFlipper
+		android:id="@id/flip_container" 
 		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:weightSum="5"
-		android:id="@id/buttons">
+		android:layout_height="fill_parent" 
+		android:gravity="center"
+		android:layout_gravity="center"
+		android:addStatesFromChildren="true"
+		android:layout_marginTop="2dp"
+		android:layout_centerInParent="true"
+		android:layout_below="@id/result"
+		android:paddingRight="@dimen/menu_padding">
 	
-		<!-- (, ), Pi, C, D, +-, /, % -->
-		<TableRow
-			android:layout_weight="1">
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/paren_open"
-				android:layout_marginRight="2dp"
-				android:layout_marginBottom="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:font="medium"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="paren_open"
-				calc:color="light" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/paren_close"
-				android:layout_marginLeft="2dp"
-				android:layout_marginRight="2dp"
-				android:layout_marginBottom="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:font="medium"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="paren_close"
-				calc:color="light" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/pi"
-				android:layout_marginLeft="2dp"
-				android:layout_marginRight="2dp"
-				android:layout_marginBottom="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="pi"
-				calc:color="light" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/clear"
-				android:layout_marginLeft="2dp"
-				android:layout_marginRight="2dp"
-				android:layout_marginBottom="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="clear"
-				calc:color="light" />
+		<!-- 
+			@id/buttons is the container ViewGroup for all
+			CalcButtons and CalcImageButtons. It does not matter
+			what type of layout @id/buttons is, nor does it
+			matter how deep you nest the buttons, you must
+			simply provide a function for your button via the
+			calc:function XML attribute. You are free to style the
+			buttons as you please, inline or otherwise.
+		-->
+		<TableLayout
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:weightSum="5"
+			android:paddingBottom="6dp"
+			android:layout_alignParentTop="true"
+			android:id="@id/buttons">
 		
-			<com.tombarrasso.android.wp7calculator.CalcImageButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				calc:srcdown="@drawable/deleteblack"
-				calc:src="@drawable/deletewhite"
-				android:scaleType="center"
-				android:layout_marginLeft="2dp"
-				android:layout_marginRight="2dp"
-				android:layout_marginBottom="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				android:adjustViewBounds="true"
-				android:cropToPadding="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="delete"
-				calc:color="light" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/plusminus"
-				android:layout_marginLeft="2dp"
-				android:layout_marginRight="2dp"
-				android:layout_marginBottom="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="plusminus"
-				calc:color="light" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/divide"
-				android:layout_marginLeft="2dp"
-				android:layout_marginRight="2dp"
-				android:layout_marginBottom="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="divide"
-				calc:color="light" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/percent"
-				android:layout_marginLeft="2dp"
-				android:layout_marginBottom="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="percent"
-				calc:color="light" />
-
-		</TableRow>
-		<!-- Deg, Rad, Grad, 7, 8, 9, x, sqrt -->
-		<TableRow
-			android:layout_weight="1">
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/degree"
-				android:layout_marginTop="2dp"
-				android:layout_marginRight="2dp"
-				android:layout_marginBottom="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="degree"
-				calc:color="light" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/radian"
-				android:layout_margin="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="radian"
-				calc:color="light" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/grad"
-				android:layout_margin="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="gradian"
-				calc:color="light" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/seven"
-				android:layout_margin="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="seven"
-				calc:color="dark" />
-		
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/eight"
-				android:layout_margin="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="eight"
-				calc:color="dark" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/nine"
-				android:layout_margin="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="nine"
-				calc:color="dark" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/multiply"
-				android:layout_margin="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="multiply"
-				calc:color="light" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/sqrt"
-				android:layout_marginLeft="2dp"
-				android:layout_marginBottom="2dp"
-				android:layout_marginTop="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="sqrt"
-				calc:color="light" />
-
-			
-		</TableRow>
-		<!-- sin, cos, tan, 4, 5, 6, -, MC -->
-		<TableRow
-			android:layout_weight="1">
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/sin"
-				android:layout_marginTop="2dp"
-				android:layout_marginRight="2dp"
-				android:layout_marginBottom="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="sin"
-				calc:color="light" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/cos"
-				android:layout_margin="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="cos"
-				calc:color="light" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/tan"
-				android:layout_margin="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="tan"
-				calc:color="light" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/four"
-				android:layout_margin="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="four"
-				calc:color="dark" />
-		
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/five"
-				android:layout_margin="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="five"
-				calc:color="dark" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/six"
-				android:layout_margin="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="six"
-				calc:color="dark" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/minus"
-				android:layout_margin="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:font="bold"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="minus"
-				calc:color="light" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/memclear"
-				android:layout_marginLeft="2dp"
-				android:layout_marginBottom="2dp"
-				android:layout_marginTop="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="memclear"
-				calc:color="light" />
-			
-		</TableRow>
-		<!-- ln, log, 10^x, 1, 2, 3, +, MR -->
-		<TableRow
-			android:layout_weight="1">
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/ln"
-				android:layout_marginTop="2dp"
-				android:layout_marginRight="2dp"
-				android:layout_marginBottom="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="ln"
-				calc:color="light" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/log"
-				android:layout_margin="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="log"
-				calc:color="light" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/exponential_ten"
-				android:layout_margin="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="exponential_ten"
-				calc:color="light" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/one"
-				android:layout_margin="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="one"
-				calc:color="dark" />
-		
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/two"
-				android:layout_margin="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="two"
-				calc:color="dark" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/three"
-				android:layout_margin="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="three"
-				calc:color="dark" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/plus"
-				android:layout_margin="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="plus"
-				calc:color="light" />
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="1"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/memrecall"
-				android:layout_marginLeft="2dp"
-				android:layout_marginBottom="2dp"
-				android:layout_marginTop="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="memrecall"
-				calc:color="light" />
-			
-		</TableRow>
-		<!-- n!, x^2, x^y, 0, ., =, M+ -->
-		<TableRow
-			android:layout_weight="1">
-			
-			<LinearLayout
-				android:layout_weight="3"
-				android:weightSum="3"
-				android:layout_width="0dp"
-				android:layout_height="fill_parent"
-				android:layout_marginTop="2dp"
-				android:layout_marginRight="2dp">
-			
+			<!-- (, ), Pi, C, D, +-, /, % -->
+			<TableRow
+				android:layout_weight="1">
+	
 				<com.tombarrasso.android.wp7calculator.CalcButton
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
-					android:text="@string/factorial"
+					android:text="@string/paren_open"
 					android:layout_marginRight="2dp"
-					android:textSize="22dp"
+					android:layout_marginBottom="2dp"
+					android:textSize="22sp"
 					android:gravity="center"
 					android:singleLine="true"
+					calc:font="medium"
 					calc:textColor="@android:color/white"
 					calc:textColorDown="@android:color/black"
-					calc:function="factorial"
+					calc:function="paren_open"
 					calc:color="light" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
-					android:text="@string/squared"
+					android:text="@string/paren_close"
 					android:layout_marginLeft="2dp"
 					android:layout_marginRight="2dp"
-					android:textSize="22dp"
+					android:layout_marginBottom="2dp"
+					android:textSize="22sp"
 					android:gravity="center"
 					android:singleLine="true"
+					calc:font="medium"
 					calc:textColor="@android:color/white"
 					calc:textColorDown="@android:color/black"
-					calc:function="squared"
+					calc:function="paren_close"
 					calc:color="light" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
-					android:text="@string/exponential"
-					android:textSize="22dp"
-					android:gravity="center"
-					android:singleLine="true"
-					calc:textColor="@android:color/white"
-					calc:textColorDown="@android:color/black"
+					android:text="@string/pi"
 					android:layout_marginLeft="2dp"
-					calc:function="exponential"
+					android:layout_marginRight="2dp"
+					android:layout_marginBottom="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="pi"
 					calc:color="light" />
-					
-			</LinearLayout>
-
-			<com.tombarrasso.android.wp7calculator.CalcButton
-				android:layout_weight="2"
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:text="@string/zero"
-				android:layout_marginLeft="2dp"
-				android:layout_marginRight="2dp"
-				android:layout_marginTop="2dp"
-				android:textSize="22dp"
-				android:gravity="center"
-				android:singleLine="true"
-				calc:textColor="@android:color/white"
-				calc:textColorDown="@android:color/black"
-				calc:function="zero"
-				calc:color="dark" />
-
-			<LinearLayout
-				android:layout_weight="3"
-				android:weightSum="3"
-				android:layout_width="0dp"
-				android:layout_height="fill_parent"
-				android:layout_marginTop="2dp"
-				android:layout_marginLeft="2dp">
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
-					android:text="@string/period"
+					android:text="@string/clear"
+					android:layout_marginLeft="2dp"
 					android:layout_marginRight="2dp"
-					android:textSize="22dp"
+					android:layout_marginBottom="2dp"
+					android:textSize="22sp"
 					android:gravity="center"
 					android:singleLine="true"
-					calc:font="bold"
 					calc:textColor="@android:color/white"
 					calc:textColorDown="@android:color/black"
-					calc:function="period"
+					calc:function="clear"
+					calc:color="light" />
+			
+				<com.tombarrasso.android.wp7calculator.CalcImageButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					calc:srcdown="@drawable/deleteblack"
+					calc:src="@drawable/deletewhite"
+					android:scaleType="center"
+					android:layout_marginLeft="2dp"
+					android:layout_marginRight="2dp"
+					android:layout_marginBottom="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					android:adjustViewBounds="true"
+					android:cropToPadding="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="delete"
+					calc:color="light" />
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/plusminus"
+					android:layout_marginLeft="2dp"
+					android:layout_marginRight="2dp"
+					android:layout_marginBottom="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="plusminus"
+					calc:color="light" />
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/divide"
+					android:layout_marginLeft="2dp"
+					android:layout_marginRight="2dp"
+					android:layout_marginBottom="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="divide"
+					calc:color="light" />
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/percent"
+					android:layout_marginLeft="2dp"
+					android:layout_marginBottom="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="percent"
+					calc:color="light" />
+	
+			</TableRow>
+			<!-- Deg, Rad, Grad, 7, 8, 9, x, sqrt -->
+			<TableRow
+				android:layout_weight="1">
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/degree"
+					android:layout_marginTop="2dp"
+					android:layout_marginRight="2dp"
+					android:layout_marginBottom="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="degree"
+					calc:color="light" />
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/radian"
+					android:layout_margin="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="radian"
+					calc:color="light" />
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/grad"
+					android:layout_margin="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="gradian"
+					calc:color="light" />
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/seven"
+					android:layout_margin="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="seven"
+					calc:color="dark" />
+			
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/eight"
+					android:layout_margin="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="eight"
 					calc:color="dark" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
-					android:text="@string/equals"
-					android:layout_marginLeft="2dp"
-					android:layout_marginRight="2dp"
-					android:textSize="22dp"
+					android:text="@string/nine"
+					android:layout_margin="2dp"
+					android:textSize="22sp"
 					android:gravity="center"
 					android:singleLine="true"
-					calc:font="bold"
 					calc:textColor="@android:color/white"
 					calc:textColorDown="@android:color/black"
-					calc:function="equals"
-					calc:color="accent" />
+					calc:function="nine"
+					calc:color="dark" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
-					android:text="@string/memplus"
-					android:layout_marginLeft="2dp"
-					android:textSize="22dp"
+					android:text="@string/multiply"
+					android:layout_margin="2dp"
+					android:textSize="22sp"
 					android:gravity="center"
 					android:singleLine="true"
 					calc:textColor="@android:color/white"
 					calc:textColorDown="@android:color/black"
-					calc:function="memplus"
+					calc:function="multiply"
 					calc:color="light" />
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/sqrt"
+					android:layout_marginLeft="2dp"
+					android:layout_marginBottom="2dp"
+					android:layout_marginTop="2dp"
+					android:textSize="@dimen/sqrt_size"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="sqrt"
+					calc:color="light" />
+	
+				
+			</TableRow>
+			<!-- sin, cos, tan, 4, 5, 6, -, MC -->
+			<TableRow
+				android:layout_weight="1">
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/sin"
+					android:layout_marginTop="2dp"
+					android:layout_marginRight="2dp"
+					android:layout_marginBottom="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="sin"
+					calc:color="light" />
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/cos"
+					android:layout_margin="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="cos"
+					calc:color="light" />
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/tan"
+					android:layout_margin="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="tan"
+					calc:color="light" />
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/four"
+					android:layout_margin="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="four"
+					calc:color="dark" />
+			
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/five"
+					android:layout_margin="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="five"
+					calc:color="dark" />
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/six"
+					android:layout_margin="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="six"
+					calc:color="dark" />
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/minus"
+					android:layout_margin="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:font="bold"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="minus"
+					calc:color="light" />
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/memclear"
+					android:layout_marginLeft="2dp"
+					android:layout_marginBottom="2dp"
+					android:layout_marginTop="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="memclear"
+					calc:color="light" />
+				
+			</TableRow>
+			<!-- ln, log, 10^x, 1, 2, 3, +, MR -->
+			<TableRow
+				android:layout_weight="1">
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/ln"
+					android:layout_marginTop="2dp"
+					android:layout_marginRight="2dp"
+					android:layout_marginBottom="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="ln"
+					calc:color="light" />
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/log"
+					android:layout_margin="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="log"
+					calc:color="light" />
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/exponential_ten"
+					android:layout_margin="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="exponential_ten"
+					calc:color="light" />
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/one"
+					android:layout_margin="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="one"
+					calc:color="dark" />
+			
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/two"
+					android:layout_margin="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="two"
+					calc:color="dark" />
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/three"
+					android:layout_margin="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="three"
+					calc:color="dark" />
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/plus"
+					android:layout_margin="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="plus"
+					calc:color="light" />
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="1"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/memrecall"
+					android:layout_marginLeft="2dp"
+					android:layout_marginBottom="2dp"
+					android:layout_marginTop="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="memrecall"
+					calc:color="light" />
+				
+			</TableRow>
+			<!-- n!, x^2, x^y, 0, ., =, M+ -->
+			<TableRow
+				android:layout_weight="1">
+				
+				<LinearLayout
+					android:layout_weight="3"
+					android:weightSum="3"
+					android:layout_width="0dp"
+					android:layout_height="fill_parent"
+					android:layout_marginTop="2dp"
+					android:layout_marginRight="2dp">
+				
+					<com.tombarrasso.android.wp7calculator.CalcButton
+						android:layout_weight="1"
+						android:layout_width="0dip"
+						android:layout_height="fill_parent"
+						android:text="@string/factorial"
+						android:layout_marginRight="2dp"
+						android:textSize="22sp"
+						android:gravity="center"
+						android:singleLine="true"
+						calc:textColor="@android:color/white"
+						calc:textColorDown="@android:color/black"
+						calc:function="factorial"
+						calc:color="light" />
+		
+					<com.tombarrasso.android.wp7calculator.CalcButton
+						android:layout_weight="1"
+						android:layout_width="0dip"
+						android:layout_height="fill_parent"
+						android:text="@string/squared"
+						android:layout_marginLeft="2dp"
+						android:layout_marginRight="2dp"
+						android:textSize="22sp"
+						android:gravity="center"
+						android:singleLine="true"
+						calc:textColor="@android:color/white"
+						calc:textColorDown="@android:color/black"
+						calc:function="squared"
+						calc:color="light" />
+		
+					<com.tombarrasso.android.wp7calculator.CalcButton
+						android:layout_weight="1"
+						android:layout_width="0dip"
+						android:layout_height="fill_parent"
+						android:text="@string/exponential"
+						android:textSize="22sp"
+						android:gravity="center"
+						android:singleLine="true"
+						calc:textColor="@android:color/white"
+						calc:textColorDown="@android:color/black"
+						android:layout_marginLeft="2dp"
+						calc:function="exponential"
+						calc:color="light" />
+						
+				</LinearLayout>
+	
+				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:layout_weight="2"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:text="@string/zero"
+					android:layout_marginLeft="2dp"
+					android:layout_marginRight="2dp"
+					android:layout_marginTop="2dp"
+					android:textSize="22sp"
+					android:gravity="center"
+					android:singleLine="true"
+					calc:textColor="@android:color/white"
+					calc:textColorDown="@android:color/black"
+					calc:function="zero"
+					calc:color="dark" />
+	
+				<LinearLayout
+					android:layout_weight="3"
+					android:weightSum="3"
+					android:layout_width="0dp"
+					android:layout_height="fill_parent"
+					android:layout_marginTop="2dp"
+					android:layout_marginLeft="2dp">
+		
+					<com.tombarrasso.android.wp7calculator.CalcButton
+						android:layout_weight="1"
+						android:layout_width="0dip"
+						android:layout_height="fill_parent"
+						android:text="@string/period"
+						android:layout_marginRight="2dp"
+						android:textSize="22sp"
+						android:gravity="center"
+						android:singleLine="true"
+						calc:font="bold"
+						calc:textColor="@android:color/white"
+						calc:textColorDown="@android:color/black"
+						calc:function="period"
+						calc:color="dark" />
+		
+					<com.tombarrasso.android.wp7calculator.CalcButton
+						android:layout_weight="1"
+						android:layout_width="0dip"
+						android:layout_height="fill_parent"
+						android:text="@string/equals"
+						android:layout_marginLeft="2dp"
+						android:layout_marginRight="2dp"
+						android:textSize="22sp"
+						android:gravity="center"
+						android:singleLine="true"
+						calc:font="bold"
+						calc:textColor="@android:color/white"
+						calc:textColorDown="@android:color/black"
+						calc:function="equals"
+						calc:color="accent" />
+		
+					<com.tombarrasso.android.wp7calculator.CalcButton
+						android:layout_weight="1"
+						android:layout_width="0dip"
+						android:layout_height="fill_parent"
+						android:text="@string/memplus"
+						android:layout_marginLeft="2dp"
+						android:textSize="22sp"
+						android:gravity="center"
+						android:singleLine="true"
+						calc:textColor="@android:color/white"
+						calc:textColorDown="@android:color/black"
+						calc:function="memplus"
+						calc:color="light" />
+						
+				</LinearLayout>
+			</TableRow>
+		</TableLayout>
+		
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:layout_alignParentTop="true"
+			android:paddingLeft="8dp"
+			android:paddingRight="8dp"
+			android:paddingBottom="6dp"
+			android:visibility="gone"
+			android:orientation="vertical">
+		
+			<!-- History ListView -->
+			<ListView
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:id="@id/history_list"
+				android:cacheColorHint="@android:color/transparent" 
+				android:divider="@android:color/transparent"
+				android:background="@android:color/transparent"
+				android:dividerHeight="0dp"
+				android:requiresFadingEdge="none"
+				android:fadingEdgeLength="0dp"
+				android:visibility="gone"
+				android:listSelector="@drawable/history_item" />
+				
+			<!-- No History -->
+			<com.tombarrasso.android.wp7ui.widget.WPTextView
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:text="@string/no_history"
+				android:id="@id/no_history"
+				android:textSize="@dimen/menu_text"
+				android:visibility="gone"
+				android:textColor="@android:color/white"
+				android:gravity="center_horizontal|center_vertical" />
+				
+		</LinearLayout>			
+	</ViewFlipper>
+
+	<!-- Bottom Menu -->
+	<org.miscwidgets.widget.Panel
+		android:layout_width="wrap_content" 
+		android:layout_height="fill_parent" 
+		android:layout_alignParentRight="true"
+		android:layout_alignParentTop="true"
+		android:id="@id/wpmenu"
+		calc:position="right"
+		calc:linearFlying="true"
+		calc:animationDuration="@integer/menu_duration"
+		calc:handle="@id/panelHandle"
+		calc:content="@id/panelContent"
+		android:descendantFocusability="blocksDescendants">
+		
+		<!-- Icons -->
+		<RelativeLayout
+			android:id="@id/panelHandle" 
+			android:layout_height="fill_parent"
+			android:layout_width="@dimen/menu_height"
+			android:background="@color/menu">
+			
+			<!-- Top Dots -->
+			<ImageView
+				android:scaleType="center"
+				android:layout_width="wrap_content"
+				android:layout_height="34dp"
+				android:src="@drawable/points_white"
+				android:adjustViewBounds="true"
+				android:id="@id/menu_more"
+				android:layout_alignParentTop="true"
+				android:layout_alignParentLeft="true"
+				android:layout_marginRight="7.0dip"
+				android:layout_marginTop="7.0dip"
+				android:contentDescription="@string/options" />
+			
+		</RelativeLayout>
 					
+		<!-- Extra Menu Items -->
+		<com.tombarrasso.android.wp7ui.widget.ScrollView
+			android:layout_height="fill_parent"
+			android:layout_width="wrap_content"
+			android:background="@color/menu"
+			android:id="@id/panelContent">
+				
+			<LinearLayout
+				android:layout_height="fill_parent"
+				android:layout_width="wrap_content"
+				android:orientation="vertical"
+				android:paddingBottom="8dp"
+				android:paddingTop="@dimen/menu_spacing"
+				android:paddingLeft="8dp"
+				android:paddingRight="18dp"
+				android:id="@id/menu_buttons">
+				
+				<!-- Setting -->
+				<com.tombarrasso.android.wp7ui.widget.WPTextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/settings"
+					android:textSize="@dimen/menu_text"
+					android:id="@id/settings_button"
+					android:textColor="@android:color/white"
+					android:contentDescription="@string/settings_description" />
+				
+				<!-- History -->
+				<com.tombarrasso.android.wp7ui.widget.WPTextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/history"
+					android:textSize="@dimen/menu_text"
+					android:id="@id/history"
+					android:textColor="@android:color/white"
+					android:layout_marginTop="@dimen/menu_spacing"
+					android:contentDescription="@string/history_description" />
+		
+				<!-- Share -->
+				<com.tombarrasso.android.wp7ui.widget.WPTextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/share"
+					android:textSize="@dimen/menu_text"
+					android:id="@id/share_button"
+					android:textColor="@android:color/white"
+					android:layout_marginTop="@dimen/menu_spacing"
+					android:contentDescription="@string/share_description" />
+					
+				<!-- Rate -->
+				<com.tombarrasso.android.wp7ui.widget.WPTextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/rate"
+					android:textSize="@dimen/menu_text"
+					android:id="@id/rate_button"
+					android:textColor="@android:color/white"
+					android:layout_marginTop="@dimen/menu_spacing"
+					android:contentDescription="@string/rate_description" />
+						
 			</LinearLayout>
-		</TableRow>
-	</TableLayout>
-</LinearLayout>
+		</com.tombarrasso.android.wp7ui.widget.ScrollView>
+	</org.miscwidgets.widget.Panel>
+</RelativeLayout>

@@ -3,7 +3,7 @@ package com.tombarrasso.android.wp7calculator;
 /*
  * History.java
  *
- * Copyright (C) Thomas James Barrasso
+ * Copyright (C) 2012 Thomas James Barrasso
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,6 +33,10 @@ import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.view.LayoutInflater;
+import android.graphics.Color;
+
+// App Packages
+import com.tombarrasso.android.wp7ui.WPTheme;
 
 /**
  * Maintain a history of all entries, being composed
@@ -42,12 +46,12 @@ import android.view.LayoutInflater;
  * whereby the data set will be notified of changes.
  *
  * @author		Thomas James Barrasso
- * @since		07-26-2011
+ * @since		06-01-2012
  * @version		1.0
  * @category	Persistance
  */
 
-public class History
+public final class History
 {
 	private static final String ENTRY_SEPARATOR = "\n",
 				    PART_SEPARATOR = ",",
@@ -221,7 +225,7 @@ public class History
 		{
 			final boolean mConvertNull = (convertView == null);
 			final ViewGroup mView = (ViewGroup) ((mConvertNull) ? mInflater.inflate(mResId, null) : convertView);
-			
+						
 			final HistoryEntry mEntry = getItem(position);
 			final HistoryHolder mHolder;
 
@@ -230,6 +234,12 @@ public class History
 				mHolder = new HistoryHolder();
 				mHolder.mEquation = (TextView) mView.findViewById(R.id.equation);
 				mHolder.mResult = (TextView) mView.findViewById(R.id.result);
+				
+				// Update text color.
+				final int mTextColor = ((WPTheme.isThemeDark()) ? Color.WHITE : Color.BLACK);
+				mHolder.mEquation.setTextColor(mTextColor);
+				mHolder.mResult.setTextColor(mTextColor);
+				
 				mView.setTag(mHolder);
 			}
 			else
@@ -237,6 +247,7 @@ public class History
 				mHolder = (HistoryHolder) mView.getTag();
 			}
 
+			// Update text content.
 			mHolder.mEquation.setText(mEntry.mEquation);
 			mHolder.mResult.setText(mEntry.mResult);
 

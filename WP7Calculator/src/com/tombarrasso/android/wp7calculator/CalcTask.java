@@ -3,7 +3,7 @@ package com.tombarrasso.android.wp7calculator;
 /*
  * CalcTask.java
  *
- * Copyright (C) Thomas James Barrasso
+ * Copyright (C) 2012 Thomas James Barrasso
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,12 +32,12 @@ import org.javia.arity.SyntaxException;
  * when a computation has finished or errored.
  * 
  * @author		Thomas Barrasso
- * @version		1.0
- * @since		7-12-2011
- * @category	Task
+ * @version		1.1
+ * @since		06-03-2012
+ * @category	{@link AsyncTask}
  */
 
-public class CalcTask extends AsyncTask<String, Void, Double>
+public final class CalcTask extends AsyncTask<String, Void, Double>
 {
 	public static final String TAG = CalcTask.class.getSimpleName();
 	
@@ -70,8 +70,18 @@ public class CalcTask extends AsyncTask<String, Void, Double>
 		}
 		catch (SyntaxException e)
 		{
-			Log.w(TAG, "Could not define gradian trig functions.");
-			e.printStackTrace();
+			Log.e(TAG, "Could not define gradian trig functions.", e);
+		}
+		
+		try
+		{
+			// Define French sqrt (racine) and Italian sqrt (radq).
+			MathFactory.define(MathFactory.compileWithName("racine(x) = sqrt(x)"));
+			MathFactory.define(MathFactory.compileWithName("radq(x) = sqrt(x)"));
+		}
+		catch (SyntaxException e)
+		{
+			Log.e(TAG, "Could not define translated functions.", e);
 		}
 	};
 

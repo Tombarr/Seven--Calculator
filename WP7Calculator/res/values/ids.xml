@@ -5,8 +5,70 @@
     <item type="id" name="equation" />
     <item type="id" name="memory" />
     <item type="id" name="result" />
+    
+    <item type="id" name="setting_desc" />
+    <item type="id" name="setting_toggle" />
+    <item type="id" name="settings_status" />
+    <item type="id" name="settings_vibration" />
+    <item type="id" name="settings_wake" />
+    <item type="id" name="changelog" />
+    <item type="id" name="themeview" />
+    <item type="id" name="overflow_menu" />
+    <item type="id" name="donate" />
+    <item type="id" name="paypal" />
+    <item type="id" name="icon" />
+    <item type="id" name="reporting" />
+    <item type="id" name="reporting_more" />
+    <item type="id" name="app_anims" />
+    <item type="id" name="divider" />
+    <item type="id" name="homePivot" />
+    <item type="id" name="fauxActionBar" />
+    <item type="id" name="custom_status" />
+    <item type="id" name="vibrate" />
+    <item type="id" name="keep_wake" />
+    <item type="id" name="history" />
+    <item type="id" name="flip_container" />
+    <item type="id" name="history_list" />
+    <item type="id" name="no_history" />
+    
+    <!-- WP Menu -->
+	<item type="id" name="wpmenu" />
+	<item type="id" name="menu_more" />
+	<item type="id" name="panelHandle" />
+	<item type="id" name="panelContent" />
+	<item type="id" name="theme_button" />
+	<item type="id" name="credits_button" />
+	<item type="id" name="settings_button" />
+	<item type="id" name="theme_button_text" />
+	<item type="id" name="credits_button_text" />
+	<item type="id" name="settings_button_text" />
+	<item type="id" name="rate_button" />
+	<item type="id" name="share_button" />
+	<item type="id" name="settings_button" />
+	<item type="id" name="menu_buttons" />
+	
+	<!-- Accent Theme -->
+	<item type="id" name="text_theme_dark" />
+	<item type="id" name="text_theme_light" />
+	<item type="id" name="text_theme_accent" />
+	<item type="id" name="text_theme_selected" />
+	<item type="id" name="text_accent_selected" />
+	<item type="id" name="view_accent_selected" />
+	<item type="id" name="light_battery_warning" />
+	<item type="id" name="text_theme_background" />
+	<item type="id" name="text_theme_description" />
+	<item type="id" name="linearlayout_theme_accent" />
+	<item type="id" name="linearlayout_theme_background" />
+	<item type="id" name="linearlayout_theme_background_selected" />
+    
+    <item type="id" name="anchor_left" />
+	<item type="id" name="anchor_right" />
+	<item type="id" name="anchor_middle" />
+    
+    <!-- Status Bar -->
     <item type="id" name="statusbarview" />
     <item type="id" name="statusbarstub" />
+    <item type="id" name="statusbarcontainer" />
     <item type="id" name="statusbar_signal" />
     <item type="id" name="statusbar_data" />
     <item type="id" name="statusbar_wifi" />
@@ -14,9 +76,8 @@
     <item type="id" name="statusbar_bluetooth" />
     <item type="id" name="statusbar_clock" />
     <item type="id" name="statusbar_battery" />
-    <item type="id" name="setting_desc" />
-    <item type="id" name="setting_toggle" />
-    <item type="id" name="settings_status" />
-    <item type="id" name="settings_vibration" />
-    <item type="id" name="themeview" />
+	<item type="id" name="statusbar_battery_percent" />
+	<item type="id" name="statusbar_language" />
+	<item type="id" name="statusbar_carrier" />
+	<item type="id" name="statusbar_ringer" />
 </resources>

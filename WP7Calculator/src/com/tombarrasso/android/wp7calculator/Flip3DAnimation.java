@@ -19,22 +19,25 @@ package com.tombarrasso.android.wp7calculator;
  */
 
 // Android Packages
-import android.graphics.Camera;
+// import android.graphics.Camera;
 import android.graphics.Matrix;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
+
+// Tikuwarez Packages
+import tikuwarez.graphics.L7Camera;
 
 /**
  * Animation used to flip image in 3D.
  */
 
-public class Flip3DAnimation extends Animation
+public final class Flip3DAnimation extends Animation
 {
     private final float mFromDegrees;
     private final float mToDegrees;
     private final float mCenterX;
     private final float mCenterY;
-    private Camera mCamera;
+    private L7Camera mCamera;
 
     public Flip3DAnimation(final float fromDegrees, final float toDegrees, final float centerX, final float centerY)
     {
@@ -49,7 +52,10 @@ public class Flip3DAnimation extends Animation
     public void initialize(final int width, final int height, final int parentWidth, final int parentHeight)
     {
         super.initialize(width, height, parentWidth, parentHeight);
-        mCamera = new Camera();
+        mCamera = new L7Camera();
+        
+        // Lets go Silverlight plane!
+        mCamera.setLocation(0, 0, -56);
     }
 
     @Override
@@ -60,7 +66,7 @@ public class Flip3DAnimation extends Animation
 
         final float centerX = mCenterX;
         final float centerY = mCenterY;
-        final Camera camera = mCamera;
+        final L7Camera camera = mCamera;
 
         final Matrix matrix = t.getMatrix();
 

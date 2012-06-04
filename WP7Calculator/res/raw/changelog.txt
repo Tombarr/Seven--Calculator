@@ -19,10 +19,53 @@
     </style>
   </head>
   <body>
+$ 2.7
+  % dandelion
+  _ 2012-06-09
+  ! Added a new light theme!
+  	* Added a "Keep screen on" option.
+  	* Added new WP7-style menus (tap or pull to expand).
+  	* History now flips to be revealed.
+  	* Anonymous in-app bug reporting (uses INTERNET permission; with the option to be disabled).
+    * Improved 3D flyout &amp; flip animations (more WP7-like).
+    * Refreshed app icon (thanks to <a href="http://www.gmacf33.co.uk/">Graham Macphee</a>).
+    * Updated &amp; improved translations.
+    * Miscellaneous bug fixes.
+$ 2.6
+  % forsythia (3)
+  _ 2012-04-17
+    * Added Brazilian Portuguese by Cleber Soares. 
+	* Reduced overall APK size.
+$ 2.5
+  % forsythia (2)
+  _ 2012-04-17
+    * Added Data Synchronization (Android 2.2 Froyo and up).
+	* Fixed a bug with using decimals on computation results.
+$ 2.4
+  % forsythia
+  _ 2012-04-12
+    * Improved translations in accent color preference screen.
+$ 2.3
+  % mahalo
+  _ 2012-04-06
+    * Improved Italian translation courtesy Lahiri Cristofori.
+$ 2.2
+  % mahalo
+  _ 2012-03-09
+    * Internal enhancements and better support for <a href="https://play.google.com/store/apps/details?id=com.tombarrasso.android.wp7bar">StatusBar+</a>.
+    * Added Turkish translation courtesy ManoMachine.
+$ 2.1
+  % mahalo
+  _ 2012-03-05
+    * Added cut-copy-paste support!
+  	* Overscrolling in the accent color screen.
+  	* Updated status bar with more indicators and better support for 4G.
+  	* Added NFC and Android Beam support.
+  	* Android 4.0 Ice Cream Sandwich compatibility.
+  	* Added Czech translations courtesy HoLi.
 $ 2.1
   % gamma two
   _ 2011-09-30
-	* If you like this application please consider <a href="https://market.android.com/details?id=com.tombarrasso.android.wp7calculatordonate">supporting</a>.
 	* Fixed bug where color preference was not saving (please remember to update your Market comment/ rating).
 	* This application is now open source!
 $ 2.0
@@ -64,7 +107,6 @@ $ 1.4
     * Updated a few translations.
     * Fixed FC when using uninstalled theme.
     * Added a few more features to the theme engine.
-    * Want to disable the fly-in animation? Check out the <a href="https://market.android.com/details?id=com.tombarrasso.android.wp7calculator.theme.nofly">NoFly</a> theme.
 $ 1.3
   % beta three (2)
   _ 2011-08-02
