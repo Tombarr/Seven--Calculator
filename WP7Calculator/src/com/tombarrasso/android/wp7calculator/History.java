@@ -46,8 +46,8 @@ import com.tombarrasso.android.wp7ui.WPTheme;
  * whereby the data set will be notified of changes.
  *
  * @author		Thomas James Barrasso
- * @since		06-01-2012
- * @version		1.0
+ * @since		06-05-2012
+ * @version		1.1
  * @category	Persistance
  */
 
@@ -176,7 +176,7 @@ public final class History
 		
 		if (mHistoryString != null && !mHistoryString.equals(""))
 		{
-			Log.i(TAG, mHistoryString);
+			// STOP: Log.i(TAG, mHistoryString);
 			final String[] mEntries = mHistoryString.split(ENTRY_SEPARATOR);
 			if (mEntries == null) return mHistory;
 			for (int i = 0, e = mEntries.length; i < e; ++i)

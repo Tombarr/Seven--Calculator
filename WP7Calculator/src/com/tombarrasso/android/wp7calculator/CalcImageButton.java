@@ -302,6 +302,7 @@ public final class CalcImageButton extends ImageView implements OnTouchListener
 		else
 		{
 			setColor(COLOR);
+			setImageResource(((WPTheme.isThemeDark()) ? mUpId : mDownId));
 		}
 	}
 }

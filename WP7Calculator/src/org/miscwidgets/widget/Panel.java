@@ -428,9 +428,6 @@ public final class Panel extends LinearLayout {
 			}
 		}
 		
-		Log.v(TAG, "Image icons: " + Boolean.toString(hasImages) +
-			", background: " + Integer.toString(mBackgroundColor) + ".");
-		
 		if (!hasImages && mBackgroundColor != 0) {
 			mHandle.setBackgroundColor(Color.TRANSPARENT);
 		}

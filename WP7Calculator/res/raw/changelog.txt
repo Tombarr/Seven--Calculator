@@ -25,6 +25,7 @@ $ 2.7
   ! Added a new light theme!
   	* Added a "Keep screen on" option.
   	* Added new WP7-style menus (tap or pull to expand).
+  	* Added trackball and navigation button support.
   	* History now flips to be revealed.
   	* Anonymous in-app bug reporting (uses INTERNET permission; with the option to be disabled).
     * Improved 3D flyout &amp; flip animations (more WP7-like).

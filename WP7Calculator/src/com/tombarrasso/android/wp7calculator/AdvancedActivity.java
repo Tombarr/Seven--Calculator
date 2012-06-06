@@ -105,6 +105,7 @@ import com.tombarrasso.android.wp7ui.widget.WPPivotControl;
 
 // Billing Packages
 import com.tombarrasso.android.wp7bar.billing.*;
+import com.tombarrasso.android.wp7bar.StatusBarPlusAPI;
 import com.tombarrasso.android.wp7bar.billing.BillingService.RequestPurchase;
 import com.tombarrasso.android.wp7bar.billing.BillingService.RestoreTransactions;
 import com.tombarrasso.android.wp7bar.billing.Consts.PurchaseState;
@@ -551,10 +552,10 @@ public final class AdvancedActivity extends WPActivity
 	{
 		mThemeDark = mPrefs.getBoolean(HomeActivity.THEME_KEY, mThemeDark);
 		
-		final View mStatusBar = findViewById(R.id.statusbarview);
-		if (mStatusBar != null && (mStatusBar instanceof StatusBarView))
+		final View mStatusBarView = findViewById(R.id.statusbarview);
+		if (mStatusBarView != null && (mStatusBarView instanceof StatusBarView))
 		{
-			((StatusBarView) mStatusBar).setAllColors(((mThemeDark) ? Color.WHITE : Color.BLACK));
+			((StatusBarView) mStatusBarView).setAllColors(((mThemeDark) ? Color.WHITE : Color.BLACK));
 		}
 		
 		// Update layout and colors.
@@ -741,6 +742,18 @@ public final class AdvancedActivity extends WPActivity
 			
 			// Update buttons.
 			updateButtons(mRoot);
+			
+			// Log some information for later.
+			final StatusBarPlusAPI mApi = new StatusBarPlusAPI(getApplicationContext());
+			final boolean mPlus = mApi.isStatusBarPlusEnabled();
+			
+			// If StatusBar+ is running and we have the custom status bar enabled,
+			// make StatusBar+ transparent and ignore full screen apps just for us!
+			if (mPlus && mStatusBar) {
+				final View mStatusBarView = findViewById(R.id.statusbarview);
+				if (mStatusBarView != null) mStatusBarView.setVisibility(View.INVISIBLE);
+				mApi.goCommando(mThemeDark);
+			}
 		}
 	};
 	
@@ -899,6 +912,17 @@ public final class AdvancedActivity extends WPActivity
 		final View mStatusBarView = findViewById(R.id.statusbarview);
 		if (mStatusBarView != null) mStatusBarView.setVisibility(
 			((mStatusBar) ? View.VISIBLE : View.GONE));
+			
+		// Log some information for later.
+		final StatusBarPlusAPI mApi = new StatusBarPlusAPI(getApplicationContext());
+		final boolean mPlus = mApi.isStatusBarPlusEnabled();
+		
+		// If StatusBar+ is running and we have the custom status bar enabled,
+		// make StatusBar+ transparent and ignore full screen apps just for us!
+		if (mPlus && mStatusBar) {
+			if (mStatusBarView != null) mStatusBarView.setVisibility(View.INVISIBLE);
+			mApi.goCommando(mThemeDark);
+		}
 
 		// Load the status bar if set to do so.
 		if (mStatusBar) {
@@ -971,11 +995,25 @@ public final class AdvancedActivity extends WPActivity
 		mSet.start();
     }
     
+    private final void fullScreenDialog(Dialog mDialog)
+    {
+    	if (!mStatusBar) {
+    		mDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+			mDialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
+                    		 		 	 WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+        } else {
+    		mDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+			mDialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+										 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		}
+    }
+    
     // Create dialog boxes!
     @Override
 	protected Dialog onCreateDialog(int id)
     {
     	final WPDialog mDialog = new WPDialog(this);
+    	fullScreenDialog(mDialog);
     	
     	switch(id)
     	{
@@ -983,7 +1021,10 @@ public final class AdvancedActivity extends WPActivity
 			{
 				// Get the dialog for the change log.
 				final Changelog mChangeLog = new Changelog(this);
-				return mChangeLog.getLogDialog();
+				
+				final Dialog  mCLDialog = mChangeLog.getLogDialog();
+				fullScreenDialog(mCLDialog);
+				return mCLDialog;
 			}
 			case DIALOG_ANONYMOUS_REPORTING:
 			{

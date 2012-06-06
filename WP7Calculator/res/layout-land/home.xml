@@ -114,6 +114,7 @@
 				android:layout_weight="1">
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -130,6 +131,7 @@
 					calc:color="light" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -147,6 +149,7 @@
 					calc:color="light" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -163,6 +166,7 @@
 					calc:color="light" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -179,6 +183,7 @@
 					calc:color="light" />
 			
 				<com.tombarrasso.android.wp7calculator.CalcImageButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -199,6 +204,7 @@
 					calc:color="light" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -215,6 +221,7 @@
 					calc:color="light" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -231,6 +238,7 @@
 					calc:color="light" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -251,6 +259,7 @@
 				android:layout_weight="1">
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -267,6 +276,7 @@
 					calc:color="light" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -281,6 +291,7 @@
 					calc:color="light" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -295,6 +306,7 @@
 					calc:color="light" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -309,6 +321,7 @@
 					calc:color="dark" />
 			
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -323,6 +336,7 @@
 					calc:color="dark" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -337,6 +351,7 @@
 					calc:color="dark" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -351,6 +366,7 @@
 					calc:color="light" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -373,6 +389,7 @@
 				android:layout_weight="1">
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -389,6 +406,7 @@
 					calc:color="light" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -403,6 +421,7 @@
 					calc:color="light" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -417,6 +436,7 @@
 					calc:color="light" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -431,6 +451,7 @@
 					calc:color="dark" />
 			
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -445,6 +466,7 @@
 					calc:color="dark" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -459,6 +481,7 @@
 					calc:color="dark" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -474,6 +497,7 @@
 					calc:color="light" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -495,6 +519,7 @@
 				android:layout_weight="1">
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -511,6 +536,7 @@
 					calc:color="light" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -525,6 +551,7 @@
 					calc:color="light" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -539,6 +566,7 @@
 					calc:color="light" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -553,6 +581,7 @@
 					calc:color="dark" />
 			
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -567,6 +596,7 @@
 					calc:color="dark" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -581,6 +611,7 @@
 					calc:color="dark" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -595,6 +626,7 @@
 					calc:color="light" />
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="1"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -624,6 +656,7 @@
 					android:layout_marginRight="2dp">
 				
 					<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 						android:layout_weight="1"
 						android:layout_width="0dip"
 						android:layout_height="fill_parent"
@@ -638,6 +671,7 @@
 						calc:color="light" />
 		
 					<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 						android:layout_weight="1"
 						android:layout_width="0dip"
 						android:layout_height="fill_parent"
@@ -653,6 +687,7 @@
 						calc:color="light" />
 		
 					<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 						android:layout_weight="1"
 						android:layout_width="0dip"
 						android:layout_height="fill_parent"
@@ -669,6 +704,7 @@
 				</LinearLayout>
 	
 				<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 					android:layout_weight="2"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
@@ -693,6 +729,7 @@
 					android:layout_marginLeft="2dp">
 		
 					<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 						android:layout_weight="1"
 						android:layout_width="0dip"
 						android:layout_height="fill_parent"
@@ -708,6 +745,7 @@
 						calc:color="dark" />
 		
 					<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 						android:layout_weight="1"
 						android:layout_width="0dip"
 						android:layout_height="fill_parent"
@@ -724,6 +762,7 @@
 						calc:color="accent" />
 		
 					<com.tombarrasso.android.wp7calculator.CalcButton
+					android:focusable="true"
 						android:layout_weight="1"
 						android:layout_width="0dip"
 						android:layout_height="fill_parent"

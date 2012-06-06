@@ -124,6 +124,7 @@ import com.tekle.oss.android.animation.AnimationFactory;
 import com.tekle.oss.android.animation.AnimationFactory.FlipDirection;
 
 // Billing Packages
+import com.tombarrasso.android.wp7bar.StatusBarPlusAPI;
 import com.tombarrasso.android.wp7bar.billing.*;
 import com.tombarrasso.android.wp7bar.billing.BillingService.RequestPurchase;
 import com.tombarrasso.android.wp7bar.billing.BillingService.RestoreTransactions;
@@ -203,7 +204,7 @@ import com.nineoldandroids.view.animation.AnimatorProxy;
  * </ul>
  *
  * @author		Thomas James Barrasso <contact @ tombarrasso.com>
- * @since		06-03-2012
+ * @since		06-05-2012
  * @version		2.1
  * @category	{@link Activity}
  */
@@ -514,7 +515,7 @@ public final class HomeActivity extends WPActivity
     	// This is for localization.
         WPTheme.setThemeColorNames(mResources.getStringArray(R.array.color_names));
 	
-		super.shouldRemoveStatusBarListeners(false);
+		super.shouldRemoveStatusBarListeners(true);
         
         // Set this class as the listener for calculation events.
         // If this is not set, calculations will never display.
@@ -541,7 +542,7 @@ public final class HomeActivity extends WPActivity
 		
 		WPTheme.setThemeDarkUnsynchronized(mThemeDark);
 		WPTheme.setAccentColorUnsynchronized(mPrefs.getInt(ACCENT_KEY, WPTheme.getAccentColor()));
-		
+	
 		updateWindowFlags();
 		
 		final int mRotation = getRotation();
@@ -666,7 +667,6 @@ public final class HomeActivity extends WPActivity
 		if (mChangelog.firstRun())
 		{
 			// Attach listener to show vibration dialog.
-			Log.i(TAG, "Displaying change log.");
 			showDialogSafely(DIALOG_CHANGELOG);
 		}
     }
@@ -713,6 +713,17 @@ public final class HomeActivity extends WPActivity
 		final View mStatusBarView = findViewById(R.id.statusbarview);
 		if (mStatusBarView != null) mStatusBarView.setVisibility(
 			((mStatusBar) ? View.VISIBLE : View.GONE));
+			
+		// Log some information for later.
+		final StatusBarPlusAPI mApi = new StatusBarPlusAPI(getApplicationContext());
+		final boolean mPlus = mApi.isStatusBarPlusEnabled();
+		
+		// If StatusBar+ is running and we have the custom status bar enabled,
+		// make StatusBar+ transparent and ignore full screen apps just for us!
+		if (mPlus && mStatusBar) {
+			if (mStatusBarView != null) mStatusBarView.setVisibility(View.INVISIBLE);
+			mApi.goCommando(mThemeDark);
+		}
 
 		// Load the status bar if set to do so.
 		if (mStatusBar) {
@@ -1069,15 +1080,6 @@ public final class HomeActivity extends WPActivity
     
     private static final int REQUEST_CODE = 0x7;
     
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-    	super.onWindowFocusChanged(hasFocus);
-    	
-    	// if (hasFocus) startAnim();
-    	
-    	Log.v(TAG, "Window focus: " + Boolean.toString(hasFocus) + ".");
-    }
-    
     private final void startAnim() {
     	final Flip3DAnimation mAnim = getStartAnimation();
 			 
@@ -1093,9 +1095,7 @@ public final class HomeActivity extends WPActivity
     	super.onActivityResult(requestCode, resultCode, data);
     
 		 if (resultCode == RESULT_CANCELED && mShouldAnimate) {
-			 startAnim();
-			 
-			 Log.v(TAG, "Activity canceled.");
+			 startAnim();			 
 		}
     }
     
@@ -1145,10 +1145,7 @@ public final class HomeActivity extends WPActivity
     /**
      * Create the fake menu button and make it work!
      */
-    private final void createFakeMenu()
-    {
-    	Log.v(TAG, "ICS w/o physical menu button.");
-    }
+    private final void createFakeMenu() { /* ICS w/o HW menu button. */ }
     
     /**
      * Handle the opening/ closing
