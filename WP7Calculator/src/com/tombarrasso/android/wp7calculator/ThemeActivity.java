@@ -27,6 +27,7 @@ import com.tombarrasso.android.wp7ui.widget.WPThemeView;
 import com.tombarrasso.android.wp7ui.widget.WPThemeView.OnAccentSelectedListener;
 
 // Build Packages
+import com.tombarrasso.android.wp7bar.StatusBarPlusAPI;
 import com.tombarrasso.android.wp7bar.AndroidUtils;
 
 // Android Packages
@@ -51,7 +52,7 @@ import android.app.ActivityManager;
  *
  * @author      Thomas James Barrasso <contact @ tombarrasso.com>
  * @version     2.0
- * @since       06-02-2012
+ * @since       06-05-2012
  * @category	{@link Activity}
  */
 
@@ -175,6 +176,16 @@ public final class ThemeActivity extends WPActivity
 		final View mStatusBarView = findViewById(R.id.statusbarview);
 		if (mStatusBarView != null) mStatusBarView.setVisibility(
 			((mStatusBar) ? View.VISIBLE : View.GONE));
+			
+		final StatusBarPlusAPI mApi = new StatusBarPlusAPI(getApplicationContext());
+		final boolean mPlus = mApi.isStatusBarPlusEnabled();
+		
+		// If StatusBar+ is running and we have the custom status bar enabled,
+		// make StatusBar+ transparent and ignore full screen apps just for us!
+		if (mPlus && mStatusBar) {
+			if (mStatusBarView != null) mStatusBarView.setVisibility(View.INVISIBLE);
+			mApi.goCommando(mThemeDark);
+		}
 
 		// Load the status bar if set to do so.
 		if (mStatusBar) {
@@ -193,6 +204,20 @@ public final class ThemeActivity extends WPActivity
     }
     
     @Override
+    protected void onResume()
+    {
+    	super.onResume();
+    	updateWindowFlags();
+    }
+    
+    @Override
+    public void onWindowFocusChanged(boolean visibility)
+    {
+    	if (visibility) updateWindowFlags();
+    	super.onWindowFocusChanged(visibility);
+    }
+    
+    @Override
    	protected void onStart()
     {
     	// Get a few values from settings.
@@ -200,6 +225,7 @@ public final class ThemeActivity extends WPActivity
 			.getDefaultSharedPreferences(getApplicationContext());
 		if (mPrefs != null) {
 			mStatusBar = mPrefs.getBoolean(HomeActivity.STATUS_KEY, mStatusBar);
+			mThemeDark = mPrefs.getBoolean(HomeActivity.THEME_KEY, mThemeDark);
 			mShouldKeepWake = mPrefs.getBoolean(HomeActivity.WAKE_KEY, mShouldKeepWake);
 			mShouldAnimate = mPrefs.getBoolean(HomeActivity.ANIMATE_KEY, mShouldAnimate);
 			

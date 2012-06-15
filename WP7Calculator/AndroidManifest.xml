@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.tombarrasso.android.wp7calculator"
       android:versionCode="30"
-      android:versionName="@string/version">
+      android:versionName="dandeloin">
       
         <!-- Required to false to offset some Market filtering. -->
     <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false" />

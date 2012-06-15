@@ -1,51 +1,130 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Калькулятор</string>
-	<string name="author">Thomas James Barrasso</string>
-
-	<!-- Settings -->
-	<string name="confirm">подтвердить</string>
-	<string name="settings">настройки</string>
-	<string name="accent">АКЦЕНТЫ</string>
-	<string name="m">M</string>
-
-	<!-- Accent Color -->
-	<string name="accents">Выберите акцентируемый цвет</string>
-	<string name="status">Включить настраиваемую строку состояния?</string>
-	<string name="vibrate">Включить вибрацию при нажатии?</string>
-        <string name="animate">Включить всплывающее анимации?</string>
-	<string name="vibration_activation">Потрясите свое устройство, чтобы включить или выключить вибрацию (Нужен акселерометр).</string>
-	<string name="yes">да</string>
-	<string name="no">нет</string>
-
-	<!-- History -->
-   	<string name="history">История</string>
-  	<string name="history_close">закрыть</string>
-	<string name="history_clear">очистить</string>
+<!-- App Name -->
+    <string name="app_name">Калькулятор</string>
+    <string name="version">Одуванчик</string>
+    
+    <!-- Other -->
+    <string name="confirm">Подтвердить</string>
+    <string name="settings">Настройки</string>
+    <string name="options">More options</string>
+    <string name="share">Отправить</string>
+    <string name="rate">Оценить</string>
+    <string name="prefs">Настройки</string>
+    <string name="accent">ЦВЕТ ЭЛЕМЕНТОВ</string>
+    <string name="m">M</string>
+    <string name="accents">Выберите цвет элементов</string>
+    
+    <!-- Accessibility -->
+    <string name="settings_description">Выберите функции и цвета этого приложения.</string>
+    <string name="share_description">Поделитесь этим приложением со своими друзьями.</string>
+    <string name="rate_description">Если вам нравится это приложение, вы можете поддержать разработчика оценив его в Google Play Store.</string>
+    <string name="home">Перейти на главную страницу калькулятора.</string>
+    <string name="paypal_description">Пожертвовать любую сумму средств через PayPal,
+    безопасный сервис передачи денежных средств через Интернет.</string>
+    <string name="donation_description">Спасибо за вашу поддержку! Если вы хотите дальше помогать этому
+приложению или проекту Seven+ в целом, подумайте о пожертвовании!</string>
+	<string name="donate_description">Поддержать калькулятор или проект Seven+
+	через In-App Purchase!</string>
+	<string name="website_description">Посетите наш сайт, чтобы увидеть другие наши приложения, 
+	участников проекта и многое другое! http://sevenplusandroid.org</string>
+	<string name="history_description">Посмотреть историю ваших недавних расчетов.</string>
 	
-	<!-- Accent colors -->
-	<string-array name="color_names">
-		<item>пурпурный</item>
-		<item>фиолетовый</item>
-		<item>аквамарин</item>
-		<item>лайм</item>
-		<item>коричневый</item>
-		<item>розовый</item>
-		<item>оранжевый</item>
-		<item>синий</item>
-		<item>красный</item>
-		<item>зеленый</item>
-	</string-array>
+	<!-- Anonymous Reporting -->
+    <string name="reporting">Анонимные отчеты</string>
+    <string name="reporting_desc">Анонимные отчеты отправляют нам все случаи ошибок приложения,
+    которые позволяют нам улучшать его.</string>
+    <string name="reporting_description">Анонимные отчеты отправляют случаи ошибок приложения автоматически.
+    Персональная информация ни в коем случае отправлена не бедет. Отчеты содержащие ошибку приложения и
+    системную информацию (такую как модель, прошивка, версия радио, ядро, и т. п.) отправляются нам
+    чтобы понять причину ошибки и помочь нам решить ее. Вы можете отключить отчеты в любое время если хотите.</string>
+    
+    <!-- Share -->
+    <string name="share_subject">The Seven+ Calculator шикарен!</string>
+    <string name="share_text">The Seven+ Calculator – самый лучший калькулятор в стиле WP7 в Google Play!</string>
+    <string name="share_title">Отправить The Seven+ Calculator</string>
+    
+    <!-- Theme -->
+    <string name="background">Фон</string>
+    <string name="accentcolor">Цвет элементов</string>
+    <string name="dark">темный</string>
+<string name="light">светлый</string>
+    <string name="theme">тема</string>
+    <string name="theme_norm">Тема</string>
+    <string name="orange">оранжевый</string>
+    <string name="light_battery_warning">Из-за того что дисплей вашего устройства оптимизирован под черный цвет,
+    светлый фон может тратить большее количество энергии.</string>
+    <string name="theme_description">Измените фон вашего устройства и %1$s который подходит вашему настроению сегодня, на этой неделе, или месяце.</string>
 
-	<!-- Change log -->
-	<string name="changelog_title_full">Change Log</string>
-	<string name="changelog_title">Что нового</string>
-	<string name="changelog_ok">OK</string>
+	<!-- Question Mark/ Dialog -->
+	<string name="app_anims">Анимации</string>
+	<string name="advanced_settings">Настройки</string>
+   
+   <!-- Vibration Option -->
+   <string name="vibrate">Вибрации</string>
+   <string name="status">Измененная строка состояния</string>
+   <string name="yes">да</string>
+   <string name="no">нет</string>
+   <string name="keep_wake">Оставлять экран включенным</string>
+   
+   <!-- Toast shown when text is copied to the clipboard. -->
+	<string name="text_copied_toast">Текст был скопирован.</string>
 
-	<!-- Theme -->
-	<string name="default_theme">Стандартная</string>
-	<string name="theme">Выберите тему</string>
-	<string name="change">изменить</string>
-	<string name="cancel">отменить</string>
+	<!-- NFC Beam -->
+	<string name="message_sent">Результат отправлен!</string>
+	<!-- URLs -->
+	<string name="website">Посетить наш сайт</string>
+    
+    <!-- Billing Stuff -->
+	<string name="billing_not_supported_title">Невозможно совершить покупку</string>
+    <string name="billing_not_supported_message">Сервис покупки Google Play Маркета недоступен в настоящее время. Попробуйте позже.</string>
+    <string name="cannot_connect_title">Невозможно подключиться к Маркету</string>
+    <string name="cannot_connect_message">Приложение не может подключиться к Маркету.
+     Возможно ваша версия Маркета устарела. Попробуйте обновить Маркет, или попробовать позже.</string>
+     <string name="learn_more">Узнать больше</string>
+    <string name="buy">Купить</string>
+    <string name="donate">Пожертвовать</string>
+    <string name="dismiss">Пропустить</string>
+    <string name="thanks">Спасибо</string>
+    <string name="donation_complete_title">Пожертвование завершено</string>
+    <string name="donation_complete">Большое спасибо за вашу поддержку, она помогает нам делать наши продукты лучше!</string>
+    <string name="donation_cancelled_title">Пожертвование отменено.</string>
+    <string name="donation_cancelled">Все равно спасибо. Подумайте о пожертвовании когда это возможною</string>
 
+   <!-- History -->
+   <string name="history">История</string>
+   <string name="history_close">Закрыть</string>
+   <string name="history_back">Назад</string>
+   <string name="history_clear">Очистить</string>
+   <string name="clear_description">Удалить всю историю.</string>
+   <string name="no_history">История подсчетов отсутствует.</string>
+   
+   <!-- Restart -->
+   <string name="restart">Перезапуск</string>
+   <string name="restart_description">Некоторым настройкам требуется перезапуск приложения, для того чтобы они вступили в силу. Перезапустить приложение сейчас?</string>
+    
+    <!-- Change log -->
+    <string name="changelog_title_full">Change Log</string>
+    <string name="changelog_title">Что нового?</string>
+    <string name="changelog_ok">OK</string>
+    
+    <!-- Theme strings -->
+    <string name="default_theme">Стандартная</string>
+    <string name="change">Изменить</string>
+    <string name="cancel">Отменить</string>
+    
+    <!-- Color Names -->
+    <string-array name="color_names">
+        <item>пурпурный</item>
+        <item>фиолетовый</item>
+        <item>бирюзовай</item>
+        <item>лайм</item>
+        <item>коричневый</item>
+        <item>розовый</item>
+        <item>оранжевый</item>
+        <item>синий</item>
+        <item>красный</item>
+        <item>зеленый</item>
+    </string-array>
+    
 </resources>

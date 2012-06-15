@@ -2,9 +2,11 @@
 <resources>
 	<!-- App Name -->
 	<string name="app_name">Calculatrice</string>
+	<string name="version">pissenlit</string>
 	
 	<!-- Other -->
 	<string name="confirm">Confirmer</string>
+	<string name="options">Plus d\'options</string>
 	<string name="advanced_settings">Paramètres</string>
 	<string name="settings">Paramètres</string>
 	<string name="share">Partager</string>
@@ -35,9 +37,10 @@
 	selon vos envies du jour, de la semaine ou du mois.</string>
 	
 	<!-- Accessibility -->
-	<string name="settings_description">Configurare questa applicazione e il suo tema.</string>
-    <string name="share_description">Condividi questa applicazione con i tuoi amici.</string>
-    <string name="rate_description">Mostrate il vostro sostegno e il tasso di questa applicazione.</string>
+	<string name="settings_description">Configurer l\'application et son thème.</string>
+    <string name="share_description">Partager The Seven+ Calculatrice avec vos amis.</string>
+    <string name="share_description">Share this application with your friends.</string>
+    <string name="rate_description">Si vous aimez cette application svp exprimez votre soutien par une note sur Google Play!</string>
 	<string name="donation_description">Merci pour votre soutien. Si vous souhaitez continuer à 
 	contribuer à cette application et ou à The Seven+ Project en générale svp envisagez de faire un don!</string>
 	<string name="donate_description">Contribuer d\'avantage à The Seven+ Calculatrice et ou à 
@@ -47,7 +50,7 @@
 	<string name="home">Vai alla schermata principale di The Seven+ Calculatrice.</string>
     <string name="paypal_description">Donare qualsiasi importo Il Progetto Seven+ via PayPal, 
     la cassaforte, servizio online di trasferimento denaro.</string>
-    <string name="history_description">Visualizzare la cronologia dei calcoli recenti.</string>
+    <string name="history_description">Consulter l\'historique des calculs récents.</string>
 	
 	<!-- Anonymous Reporting -->
     <string name="reporting">Rapports anonymes</string>
@@ -100,6 +103,12 @@
 	<string name="history_clear">Effacer</string>
 	<string name="history_back">Retour</string>
 	<string name="no_history">L\'historique est vide.</string>
+	<string name="clear_description">Supprimer tout l\'historique.</string>
+	
+	<!-- Restart -->
+   <string name="restart">Redémarrer</string>
+   <string name="restart_description">Certains réglages ont besoin d\'un redémarrage avant qu\'ils prennent effet.
+   Voulez-vous redémarrer maintenant?</string>
 	
 	<!-- Change log -->
 	<string name="changelog_title_full">Journal des modifications</string>

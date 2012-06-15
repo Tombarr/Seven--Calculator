@@ -393,6 +393,7 @@ public final class HomeActivity extends WPActivity
     {
 		getMemory();
     	super.onResume();
+    	updateWindowFlags();
     	
     	// Check NFC for ICS.
     	if (android.os.Build.VERSION.SDK_INT >= 14) {
@@ -700,6 +701,13 @@ public final class HomeActivity extends WPActivity
 		WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
 		WindowManager.LayoutParams.FLAG_TOUCHABLE_WHEN_WAKING);
     
+    @Override
+    public void onWindowFocusChanged(boolean visibility)
+    {
+    	if (visibility) updateWindowFlags();
+    	super.onWindowFocusChanged(visibility);
+    }
+    
     private final void updateWindowFlags()
     {
     	// Check if we should keep the screen on, turn it on,
@@ -1000,6 +1008,10 @@ public final class HomeActivity extends WPActivity
 				mRate.setVisibility(View.VISIBLE);
 				mHistory.setVisibility(View.VISIBLE);
 				
+				// Update content descriptions.
+				mSettings.setContentDescription(getString(R.string.settings_description));
+				mShare.setContentDescription(getString(R.string.share_description));
+				
 				// Update text.
 				mSettings.setText(R.string.settings);
 				mShare.setText(R.string.share);
@@ -1027,6 +1039,10 @@ public final class HomeActivity extends WPActivity
 				mShare.setVisibility(View.VISIBLE);
 				mRate.setVisibility(View.GONE);
 				mHistory.setVisibility(View.GONE);
+				
+				// Update content descriptions.
+				mSettings.setContentDescription(getString(R.string.home));
+				mShare.setContentDescription(getString(R.string.clear_description));
 				
 				// Update text.
 				mSettings.setText(R.string.history_back);

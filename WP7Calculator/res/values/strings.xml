@@ -104,6 +104,7 @@
    <string name="history_close">Close</string>
    <string name="history_back">Back</string>
    <string name="history_clear">Clear</string>
+   <string name="clear_description">Delete the entire history.</string>
    <string name="no_history">History is empty.</string>
    
    <!-- Restart -->

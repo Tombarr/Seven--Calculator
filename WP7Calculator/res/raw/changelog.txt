@@ -1,24 +1,24 @@
 <html>
-  <head>
-    <style type='text/css'>
-      a            { color:#a0a0e0 }
-      div.title    { 
-          color:#C0F0C0; 
-          font-size:1.2em; 
-          font-weight:bold; 
-          margin-top:1em; 
-          margin-bottom:0.5em; 
-          text-align:center }
-      div.subtitle { 
-          color:#C0F0C0; 
-          font-size:0.8em; 
-          margin-bottom:1em; 
-          text-align:center }
-      div.freetext { color:#F0F0F0 }
-      div.list     { color:#C0C0F0 }
-    </style>
-  </head>
-  <body>
+	<head>
+		<style type="text/css">
+			  a            { color:#4040FF }
+			  div.title    { 
+				  color:#EE3D3D; 
+				  font-size:1.2em; 
+				  font-weight:bold; 
+				  margin-top:1em; 
+				  margin-bottom:0.5em; 
+				  text-align:center }
+			  div.subtitle { 
+				  color:#4ABE4E; 
+				  font-size:0.8em; 
+				  margin-bottom:1em; 
+				  text-align:center }
+			  div.freetext { color:#9191E9 }
+			  div.list     { color:#A0A0E0 }
+		</style>
+	</head>
+	<body>
 $ 2.7
   % dandelion
   _ 2012-06-09

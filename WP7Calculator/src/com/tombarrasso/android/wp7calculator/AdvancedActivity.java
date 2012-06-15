@@ -151,6 +151,13 @@ public final class AdvancedActivity extends WPActivity
 							 DIALOG_DONATION_PURCHASED = DIALOG_CANNOT_CONNECT_ID * 2,
 							 DIALOG_BILLING_NOT_SUPPORTED_ID = DIALOG_DONATION_PURCHASED * 2,
 							 DIALOG_USER_CANCELLED = DIALOG_BILLING_NOT_SUPPORTED_ID * 2;
+							 
+	private static final int[] DIALOG_IDS =
+	{
+		DIALOG_ANONYMOUS_REPORTING, DIALOG_CHANGELOG, DIALOG_RESTART,
+		DIALOG_CANNOT_CONNECT_ID, DIALOG_DONATION_PURCHASED,
+		DIALOG_BILLING_NOT_SUPPORTED_ID, DIALOG_USER_CANCELLED
+	};
 
 	// Views for settings and such.
 	private View mReporting,
@@ -740,6 +747,8 @@ public final class AdvancedActivity extends WPActivity
 			mThemeContainer.setVisibility(View.VISIBLE);
 			mThemeContainerSelected.setVisibility(View.GONE);
 			
+			restartDialogs();
+			
 			// Update buttons.
 			updateButtons(mRoot);
 			
@@ -792,6 +801,12 @@ public final class AdvancedActivity extends WPActivity
     protected void onDestroy() {
         mBillingService.unbind();
         super.onDestroy();
+    }
+    
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    	updateWindowFlags();
     }
     
     private final View.OnClickListener mBillClick = new View.OnClickListener() {
@@ -1028,18 +1043,7 @@ public final class AdvancedActivity extends WPActivity
 			}
 			case DIALOG_ANONYMOUS_REPORTING:
 			{
-				mDialog.setTitle(R.string.reporting);
-				mDialog.setFullScreen(true);
-				final ScrollView mContainer = new ScrollView(getApplicationContext());
-				mContainer.setFillViewport(true);
-				mContainer.setBackgroundColor(Color.TRANSPARENT);
-				final WPTextView mTV = new WPTextView(getApplicationContext());
-				mTV.setText(R.string.reporting_description);
-				mTV.setTextColor(Color.WHITE);
-				mTV.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18); // 18dp
-				mContainer.addView(mTV);
-				mDialog.setMessageView(mContainer);
-				mDialog.setPositiveButton(R.string.changelog_ok, mDismissListener);
+				setDialog(mDialog, R.string.reporting, R.string.reporting_description);
 				break;
 			}
 			case DIALOG_RESTART:
@@ -1050,8 +1054,9 @@ public final class AdvancedActivity extends WPActivity
 				mContainer.setBackgroundColor(Color.TRANSPARENT);
 				final WPTextView mTV = new WPTextView(getApplicationContext());
 				mTV.setText(R.string.restart_description);
-				mTV.setTextColor(Color.WHITE);
-				mTV.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18); // 18dp
+				mTV.setMovementMethod(LinkMovementMethod.getInstance());
+				mTV.setText(R.string.restart_description);
+				mTV.setTextColor(((WPTheme.isThemeDark()) ? Color.WHITE : Color.BLACK));
 				mContainer.addView(mTV);
 				mDialog.setMessageView(mContainer);
 				mDialog.setPositiveButton(R.string.restart, mRestartListener);
@@ -1090,6 +1095,23 @@ public final class AdvancedActivity extends WPActivity
 
 		return mDialog;
 	}
+	
+	private final void setDialog(WPDialog mDialog, int mTitle, int mText)
+	{
+		mDialog.setTitle(mTitle);
+		mDialog.setFullScreen(true);
+		final ScrollView mContainer = new ScrollView(getApplicationContext());
+		mContainer.setFillViewport(true);
+		mContainer.setBackgroundColor(Color.TRANSPARENT);
+		final WPTextView mTV = new WPTextView(getApplicationContext());
+		mTV.setMovementMethod(LinkMovementMethod.getInstance());
+		mTV.setText(mText);
+		mTV.setTextColor(((WPTheme.isThemeDark()) ? Color.WHITE : Color.BLACK));
+		mTV.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18); // 18dp
+		mContainer.addView(mTV);
+		mDialog.setMessageView(mContainer);
+		mDialog.setPositiveButton(R.string.changelog_ok, mDismissListener);
+	}
     
     /**
      * @return The screen width.
@@ -1114,6 +1136,7 @@ public final class AdvancedActivity extends WPActivity
     	if (focus) {
     		setupThemeChooser();
        		updateThemeColor();
+       		updateWindowFlags();
     	}
     	
     	super.onWindowFocusChanged(focus);
@@ -1127,8 +1150,23 @@ public final class AdvancedActivity extends WPActivity
 		public void onClick(DialogInterface dialog, int which)
 		{
 			dialog.dismiss();
+			
+			restartDialogs();
 		}
 	};
+	
+	private final void restartDialogs()
+	{
+		for (final int mId : DIALOG_IDS)
+		{
+			try {
+				removeDialog(mId);
+			} catch (Throwable t) {
+				// This isn't good but we do need to clear all
+				// dialogs in the event of a theme color change.
+			}
+		}
+	}
 	
 	private DialogInterface.OnClickListener mRestartListener =
 		new DialogInterface.OnClickListener()
